@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "985305558538",
+    "project_id": "projectpaba-78b61",
+    "storage_bucket": "projectpaba-78b61.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985305558538:android:28e8db54939e2c1b8939f3",
+        "android_client_info": {
+          "package_name": "project.paba.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfDsHwX61OPrX7ZH505p_4kl_wepQEGu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
