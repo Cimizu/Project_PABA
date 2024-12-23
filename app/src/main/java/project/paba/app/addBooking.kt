@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.*
 
-class booking : AppCompatActivity() {
+class addBooking : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -23,48 +23,52 @@ class booking : AppCompatActivity() {
             insets
         }
 
-        val edtTanggal: EditText = findViewById(R.id.edt_tanggal)
-        val edtJam: EditText = findViewById(R.id.edt_jam)
+        val _edt_nama: EditText = findViewById(R.id.edt_nama)
+        val _edt_tanggal: EditText = findViewById(R.id.edt_tanggal)
+        val _edt_jam: EditText = findViewById(R.id.edt_jam)
+        val _edt_notelp: EditText = findViewById(R.id.edt_notelp)
+        val _edt_cttn: EditText = findViewById(R.id.edt_cttn)
 
-        edtTanggal.setOnClickListener {
+        _edt_tanggal.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                edtTanggal.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
+                _edt_tanggal.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
             }, year, month, day)
             datePickerDialog.show()
         }
 
-        edtJam.setOnClickListener {
+        _edt_jam.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
             val timePickerDialog = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
-                edtJam.setText("$selectedHour:$selectedMinute")
+                _edt_jam.setText("$selectedHour:$selectedMinute")
             }, hour, minute, true)
             timePickerDialog.show()
         }
 
-        val bookingButton: Button = findViewById(R.id.btn_bookingNow)
-        bookingButton.setOnClickListener {
-            val name = findViewById<EditText>(R.id.edt_nama).text.toString()
-            val date = edtTanggal.text.toString()
-            val time = edtJam.text.toString()
-            val phone = findViewById<EditText>(R.id.edt_notelp).text.toString()
-            val notes = findViewById<EditText>(R.id.edt_cttn).text.toString()
+        val _btn_bookingNow: Button = findViewById(R.id.btn_bookingNow)
+        _btn_bookingNow.setOnClickListener {
+            val name = _edt_nama.text.toString()
+            val date = _edt_tanggal.text.toString()
+            val time = _edt_jam.text.toString()
+            val phone = _edt_notelp.text.toString()
+            val notes = _edt_cttn.text.toString()
 
-            val intent = Intent(this, bookingList::class.java).apply {
-                putExtra("NAME", name)
-                putExtra("DATE", date)
-                putExtra("TIME", time)
-                putExtra("PHONE", phone)
-                putExtra("NOTES", notes)
-            }
-            startActivity(intent)
+            val resultIntent = Intent()
+            resultIntent.putExtra("NAME", name)
+            resultIntent.putExtra("DATE", date)
+            resultIntent.putExtra("TIME", time)
+            resultIntent.putExtra("PHONE", phone)
+            resultIntent.putExtra("NOTES", notes)
+            setResult(RESULT_OK, resultIntent)
+            finish()
+
         }
     }
 }

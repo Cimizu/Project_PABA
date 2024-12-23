@@ -16,7 +16,7 @@
             android:name=".bookingList"
             android:exported="false" />
         <activity
-            android:name=".booking"
+            android:name=".addBooking"
             android:exported="false" />
         <activity
             android:name=".history_recycler"

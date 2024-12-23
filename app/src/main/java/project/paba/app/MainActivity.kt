@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
         val btnTest = findViewById<Button>(R.id.btnStart)
         btnTest.setOnClickListener {
-            val intent = Intent(this, booking::class.java)
+            val intent = Intent(this, addBooking::class.java)
             startActivity(intent)
         }
     }
