@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val btnTest = findViewById<Button>(R.id.btnTest)
+        val btnTest = findViewById<Button>(R.id.btnStart)
         btnTest.setOnClickListener {
             val intent = Intent(this, booking::class.java)
             startActivity(intent)
