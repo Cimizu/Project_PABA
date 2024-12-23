@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="@+id/ivLoc" />
 
     <TextView
-        android:id="@+id/tvTanggal"
+        android:id="@+id/tv_tanggal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -60,13 +60,13 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLoc" />
 
     <TextView
-        android:id="@+id/tvJam"
+        android:id="@+id/tv_jam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Jam : ..."
         app:layout_constraintStart_toEndOf="@+id/ivGambarResto"
-        app:layout_constraintTop_toBottomOf="@+id/tvTanggal" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_tanggal" />
 
     <ImageView
         android:id="@+id/imageView3"

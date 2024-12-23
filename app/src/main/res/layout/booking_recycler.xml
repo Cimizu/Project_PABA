@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_gambarResto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Gambar Resto"
+        app:srcCompat="@drawable/resto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_resto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Resto Jawa Surabaya"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/iv_gambarResto"
+        app:layout_constraintTop_toTopOf="@id/iv_gambarResto"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="16dp" />
+
+    <ImageView
+        android:id="@+id/iv_locIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="Icon Lokasi"
+        app:srcCompat="@drawable/loc"
+        app:layout_constraintStart_toStartOf="@id/tv_resto"
+        app:layout_constraintTop_toBottomOf="@id/tv_resto"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_alamat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jalan Siwalankerto no 121, Surabaya"
+        android:textSize="14sp"
+        android:textColor="#757575"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintStart_toEndOf="@id/iv_locIcon"
+        app:layout_constraintTop_toTopOf="@id/iv_locIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/iv_tglIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="Icon Tanggal"
+        app:srcCompat="@drawable/baseline_calendar_month_24"
+        app:layout_constraintStart_toStartOf="@id/iv_locIcon"
+        app:layout_constraintTop_toBottomOf="@id/iv_locIcon"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_tanggal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tanggal: 01/01/2024"
+        android:textSize="14sp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toEndOf="@id/iv_tglIcon"
+        app:layout_constraintTop_toTopOf="@id/iv_tglIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/iv_jamIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="Icon Jam"
+        app:srcCompat="@drawable/baseline_hourglass_empty_24"
+        app:layout_constraintStart_toStartOf="@id/iv_tglIcon"
+        app:layout_constraintTop_toBottomOf="@id/iv_tglIcon"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_jam"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jam: 12:00 - 14:00"
+        android:textSize="14sp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toEndOf="@id/iv_jamIcon"
+        app:layout_constraintTop_toTopOf="@id/iv_jamIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/iv_noteIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="Icon Catatan"
+        app:srcCompat="@drawable/baseline_sticky_note_2_24"
+        app:layout_constraintStart_toStartOf="@id/iv_jamIcon"
+        app:layout_constraintTop_toBottomOf="@id/iv_jamIcon"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_cttn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Catatan: Tidak ada"
+        android:textSize="14sp"
+        android:textColor="#757575"
+        app:layout_constraintStart_toEndOf="@id/iv_noteIcon"
+        app:layout_constraintTop_toTopOf="@id/iv_noteIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/iv_trash"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="Hapus"
+        app:srcCompat="@drawable/trash"
+        app:layout_constraintTop_toBottomOf="@id/tv_cttn"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,5 +15,18 @@
        android:layout_height="wrap_content"
        android:text="Sign In"
        tools:layout_editor_absoluteX="51dp"
-       tools:layout_editor_absoluteY="565dp" />
+       tools:layout_editor_absoluteY="565dp"
+       android:layout_marginBottom="50dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent" />
+
+   <Button
+       android:id="@+id/btnTest"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="testing button"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:layout_marginTop="50dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
