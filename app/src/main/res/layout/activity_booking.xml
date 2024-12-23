@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".booking"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Booking Now"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tv_nama_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_nama_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:id="@+id/edt_nama" />
+    
+    <TextView
+        android:id="@+id/tv_tanggal_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal dan Jam"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/edt_nama"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <EditText
+        android:id="@+id/edt_tanggal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan tanggal dan jam"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_tanggal_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:focusable="false"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/tv_notelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No. Telp yang bisa dihubungi"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/edt_tanggal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <EditText
+        android:id="@+id/edt_notelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan no.telp disini"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_notelp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:focusable="false"
+        android:clickable="true" />
+
+    <Button
+        android:id="@+id/btn_bookingNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Booking Sekarang"
+        app:layout_constraintTop_toBottomOf="@id/edt_notelp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
