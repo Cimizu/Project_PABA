@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.ArrayList
 
-class BookingListActivity : AppCompatActivity() {
+class bookingList : AppCompatActivity(){
+
     private lateinit var bookingAdapter: BookingAdapter
     private val db = FirebaseFirestore.getInstance()
     private val bookingInfoList = ArrayList<BookingInfo>()
@@ -40,4 +40,5 @@ class BookingListActivity : AppCompatActivity() {
                 Log.e("Firebase", "Error reading documents", e)
             }
     }
+
 }
