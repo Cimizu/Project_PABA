@@ -1,29 +1,43 @@
 package project.paba.app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.ArrayList
 
-class bookingList : AppCompatActivity() {
+class BookingListActivity : AppCompatActivity() {
     private lateinit var bookingAdapter: BookingAdapter
+    private val db = FirebaseFirestore.getInstance()
+    private val bookingInfoList = ArrayList<BookingInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking_list)
 
-        val name = intent.getStringExtra("NAME")
-        val date = intent.getStringExtra("DATE")
-        val time = intent.getStringExtra("TIME")
-        val phone = intent.getStringExtra("PHONE")
-        val notes = intent.getStringExtra("NOTES")
-
-        val bookingInfo = BookingInfo(name ?: "", date ?: "", time ?: "", phone ?: "", notes ?: "")
-
-        bookingAdapter = BookingAdapter(listOf(bookingInfo))
-
         val recyclerView: RecyclerView = findViewById(R.id.rvBooking)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        bookingAdapter = BookingAdapter(bookingInfoList)
         recyclerView.adapter = bookingAdapter
+
+        readData()
+    }
+
+    fun readData() {
+        db.collection("bookings").get()
+            .addOnSuccessListener { result ->
+                bookingInfoList.clear()
+                for (document in result) {
+                    val booking = document.toObject(BookingInfo::class.java)
+                    bookingInfoList.add(booking)
+                }
+                bookingAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Error reading documents", e)
+            }
     }
 }

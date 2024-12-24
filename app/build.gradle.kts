@@ -54,4 +54,6 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.0.5")
     implementation("com.google.firebase:firebase-auth:21.0.3")
     implementation("com.google.firebase:firebase-appcheck:16.0.0")
+
+
 }

@@ -8,27 +8,33 @@ import androidx.recyclerview.widget.RecyclerView
 
 class BookingAdapter(private val bookingList: List<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
-    class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.tv_resto)
-        val dateTextView: TextView = itemView.findViewById(R.id.tv_tanggal)
-        val timeTextView: TextView = itemView.findViewById(R.id.tv_jam)
-        val phoneTextView: TextView = itemView.findViewById(R.id.tv_notelp)
-        val notesTextView: TextView = itemView.findViewById(R.id.tv_cttn)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
-        return BookingViewHolder(view)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
+        return BookingViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
         val bookingInfo = bookingList[position]
-        holder.nameTextView.text = bookingInfo.name
-        holder.dateTextView.text = bookingInfo.date
-        holder.timeTextView.text = bookingInfo.time
-        holder.phoneTextView.text = bookingInfo.phone
-        holder.notesTextView.text = bookingInfo.notes
+        holder.bind(bookingInfo)
     }
 
-    override fun getItemCount() = bookingList.size
+    override fun getItemCount(): Int{
+        return bookingList.size
+    }
+
+    inner class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvName: TextView = itemView.findViewById(R.id.tv_resto)
+        val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
+        val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
+        val tvPhone: TextView = itemView.findViewById(R.id.tv_notelp)
+        val tvNotes: TextView = itemView.findViewById(R.id.tv_cttn)
+
+        fun bind(booking: BookingInfo) {
+            tvName.text = booking.name
+            tvDate.text = booking.date
+            tvTime.text = booking.time
+            tvPhone.text = booking.phone
+            tvNotes.text = booking.notes
+        }
+    }
 }
