@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameContainer"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundhome"
@@ -68,14 +68,14 @@
 
         <!-- Email -->
         <EditText
-            android:id="@+id/inputPassword"
+            android:id="@+id/inputNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/kotak_putih"
             android:drawableStart="@drawable/baseline_account_circle_24"
-            android:hint="Username"
-            android:inputType="textPassword"
+            android:hint="Name"
+            android:inputType="text"
             android:padding="12dp" />
 
         <EditText
@@ -91,16 +91,18 @@
         <!-- Password -->
 
         <EditText
+            android:id="@+id/inputTelfon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/kotak_putih"
             android:drawableStart="@drawable/baseline_phone_24"
             android:hint="No. Telp"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:padding="12dp" />
 
         <EditText
+            android:id="@+id/inputPass1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -111,6 +113,7 @@
             android:padding="12dp" />
 
         <EditText
+            android:id="@+id/inputPass2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -121,6 +124,7 @@
             android:padding="12dp" />
 
         <TextView
+            android:id="@+id/kembaliKelohgin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -133,16 +137,20 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btnRegister"
         android:layout_width="377dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#01C000"
         android:text="Register Now"
         android:textSize="20sp"
-        android:backgroundTint="#01C000"
-        tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="615dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/linear1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/linear1" />
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
