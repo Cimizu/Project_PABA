@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".profile">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="40dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="370dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="130dp"
+        app:cardCornerRadius="20dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top|right"
+            android:layout_margin="10dp"
+            android:src="@drawable/baseline_edit_24"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/baseline_account_circle_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ambamad Muani"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tiramizucake@gmail.com"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08981235676"
+            android:layout_gravity="center"
+            android:layout_marginTop="75dp"
+            android:textSize="20sp"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:text="Pesanan"
+        android:textSize="20sp"
+        android:backgroundTint="#01C000"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:text="Sign out"
+        android:textSize="20sp"
+        android:backgroundTint="#01C000"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

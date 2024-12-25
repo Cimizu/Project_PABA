@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom"
+            android:src="@drawable/kotak_putih"
+            tools:layout_editor_absoluteX="-50dp"
+            tools:layout_editor_absoluteY="660dp" />
+
+        <Button
+            android:id="@+id/btnhome"
+            android:layout_width="80dp"
+            android:layout_height="58dp"
+            android:backgroundTint="@color/white"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="663dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/baseline_home_filled_24"
+            tools:layout_editor_absoluteX="51dp"
+            tools:layout_editor_absoluteY="667dp" />
+
+        <Button
+            android:id="@+id/btnhistory"
+            android:layout_width="80dp"
+            android:layout_height="58dp"
+            android:backgroundTint="@color/white"
+            tools:layout_editor_absoluteX="165dp"
+            tools:layout_editor_absoluteY="663dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="18dp"
+            android:textColor="#01C000"
+            tools:layout_editor_absoluteX="51dp"
+            tools:layout_editor_absoluteY="697dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/baseline_history_24"
+            tools:layout_editor_absoluteX="180dp"
+            tools:layout_editor_absoluteY="667dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textSize="18dp"
+            android:textColor="#01C000"
+            tools:layout_editor_absoluteX="177dp"
+            tools:layout_editor_absoluteY="697dp" />
+
+        <Button
+            android:id="@+id/btnprofile"
+            android:layout_width="80dp"
+            android:layout_height="58dp"
+            android:backgroundTint="@color/white"
+            tools:layout_editor_absoluteX="298dp"
+            tools:layout_editor_absoluteY="663dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/baseline_person_24"
+            tools:layout_editor_absoluteX="314dp"
+            tools:layout_editor_absoluteY="667dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="#01C000"
+            android:textSize="18dp"
+            tools:layout_editor_absoluteX="314dp"
+            tools:layout_editor_absoluteY="696dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

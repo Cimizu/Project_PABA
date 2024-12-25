@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/frameContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundhome"
@@ -89,15 +89,27 @@
           android:inputType="textPassword"
           android:padding="12dp" />
 
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Lupa Password?"
+          android:layout_gravity="right"
+          android:textColor="#FFFF"
+          android:textSize="15sp"
+          tools:layout_editor_absoluteX="97dp"
+          tools:layout_editor_absoluteY="624dp" />
+
    </LinearLayout>
 
    <Button
        android:id="@+id/btnStart"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_width="377dp"
+       android:layout_height="70dp"
        android:text="Sign In"
-       tools:layout_editor_absoluteX="51dp"
-       tools:layout_editor_absoluteY="565dp" />
+       android:textSize="20sp"
+       android:backgroundTint="#01C000"
+       tools:layout_editor_absoluteX="19dp"
+       tools:layout_editor_absoluteY="537dp" />
 
    <TextView
        android:id="@+id/textView"
@@ -105,18 +117,21 @@
        android:layout_height="wrap_content"
        android:text="Tidak punya akun?"
        android:textColor="#FFFF"
+       android:textSize="15sp"
        tools:layout_editor_absoluteX="97dp"
        tools:layout_editor_absoluteY="624dp" />
+
 
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:text="Sign In"
        android:textColor="#72B63A"
+       android:textSize="15sp"
        app:layout_constraintBottom_toBottomOf="@+id/textView"
        app:layout_constraintTop_toTopOf="@+id/textView"
-       tools:layout_editor_absoluteX="221dp" />
-
+       app:layout_constraintVertical_bias="0.0"
+       tools:layout_editor_absoluteX="230dp" />
 
    <TextView
        android:layout_width="wrap_content"
