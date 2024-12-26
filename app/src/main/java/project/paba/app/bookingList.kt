@@ -1,7 +1,6 @@
 package project.paba.app
 
-import android.app.Activity
-import android.content.Intent
+import BookingInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -26,39 +25,24 @@ class bookingList : AppCompatActivity() {
         recyclerView.adapter = bookingAdapter
 
         readData()
-
-        // Start addBooking activity for result
-        val intent = Intent(this, addBooking::class.java)
-        startActivityForResult(intent, REQUEST_CODE_ADD_BOOKING)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_ADD_BOOKING && resultCode == Activity.RESULT_OK) {
-            val newBooking = data?.getParcelableExtra<BookingInfo>("BOOKING_INFO")
-            newBooking?.let {
-                bookingInfoList.add(it)
-                bookingAdapter.notifyDataSetChanged()
-            }
-        }
     }
 
     private fun readData() {
         db.collection("bookings").get()
             .addOnSuccessListener { result ->
-                bookingInfoList.clear()
+                bookingInfoList.clear()  // Menghapus data lama
                 for (document in result) {
+                    // Menambahkan data dari Firebase ke list bookingInfoList
                     val booking = document.toObject(BookingInfo::class.java)
                     bookingInfoList.add(booking)
                 }
+                // Pastikan Adapter di-update setelah data berhasil dimuat
                 bookingAdapter.notifyDataSetChanged()
+                Log.d("Firebase", "Data fetched: ${bookingInfoList.size} items")
             }
             .addOnFailureListener { e ->
                 Log.e("Firebase", "Error reading documents", e)
             }
     }
 
-    companion object {
-        const val REQUEST_CODE_ADD_BOOKING = 1
-    }
 }

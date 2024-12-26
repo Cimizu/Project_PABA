@@ -74,12 +74,11 @@ class addBooking : AppCompatActivity() {
             val notes = edtCttn.text.toString()
 
             if (name.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty() && phone.isNotEmpty() && notes.isNotEmpty()) {
-                val bookingInfo = BookingInfo(name, date, time, phone, notes)
+                val bookingInfo = BookingInfo("resto 1", name, date, time, phone, notes)
                 db.collection("bookings").add(bookingInfo)
                     .addOnSuccessListener {
-                        val resultIntent = Intent()
-                        resultIntent.putExtra("BOOKING_INFO", bookingInfo)
-                        setResult(RESULT_OK, resultIntent)
+                        val listIntent = Intent(this, bookingList::class.java)
+                        startActivity(listIntent)
                         finish()
                     }
                     .addOnFailureListener { e ->

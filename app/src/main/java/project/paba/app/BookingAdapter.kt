@@ -7,30 +7,32 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class BookingAdapter(private val bookingList: List<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
+class BookingAdapter(private val bookingList: ArrayList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
-        return BookingViewHolder(itemView)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
+        return BookingViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
-        val bookingInfo = bookingList[position]
-        holder.bind(bookingInfo)
+        val booking = bookingList[position]
+        holder.bind(booking)
     }
 
-    override fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return bookingList.size
     }
 
-    inner class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvName: TextView = itemView.findViewById(R.id.tv_resto)
-        val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
-        val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
-        val tvPhone: TextView = itemView.findViewById(R.id.tv_notelp)
-        val tvNotes: TextView = itemView.findViewById(R.id.tv_cttn)
+    class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
+        private val tvName: TextView = itemView.findViewById(R.id.tv_nama)
+        private val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
+        private val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
+        private val tvPhone: TextView = itemView.findViewById(R.id.tv_notelp)
+        private val tvNotes: TextView = itemView.findViewById(R.id.tv_cttn)
 
         fun bind(booking: BookingInfo) {
+            tvResto.text = booking.resto
             tvName.text = booking.name
             tvDate.text = booking.date
             tvTime.text = booking.time
@@ -39,3 +41,4 @@ class BookingAdapter(private val bookingList: List<BookingInfo>) : RecyclerView.
         }
     }
 }
+
