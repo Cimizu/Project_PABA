@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundprofile"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".profile">
 
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Profile"
+        android:textColor="#FFFF"
         android:textStyle="bold"
         android:textSize="30sp"
         android:layout_gravity="center|top"
@@ -64,6 +66,7 @@
 
             <!-- Form Inputs -->
             <EditText
+                android:id="@+id/inputNama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -72,6 +75,7 @@
                 android:padding="12dp" />
 
             <EditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -80,6 +84,7 @@
                 android:padding="12dp" />
 
             <EditText
+                android:id="@+id/inputNomor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -88,6 +93,7 @@
                 android:padding="12dp" />
 
             <EditText
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -97,6 +103,7 @@
 
             <!-- Button -->
             <Button
+                android:id="@+id/btnSimpan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
