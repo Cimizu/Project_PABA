@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/frameContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundhome"
@@ -89,15 +89,30 @@
           android:inputType="textPassword"
           android:padding="12dp" />
 
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Lupa Password?"
+          android:layout_gravity="right"
+          android:textColor="#FFFF"
+          android:textSize="15sp"
+          tools:layout_editor_absoluteX="97dp"
+          tools:layout_editor_absoluteY="624dp" />
+
    </LinearLayout>
+
 
    <Button
        android:id="@+id/btnStart"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="Sign In"
-       tools:layout_editor_absoluteX="51dp"
-       tools:layout_editor_absoluteY="565dp" />
+       android:layout_width="377dp"
+       android:layout_height="70dp"
+       android:layout_marginBottom="92dp"
+       android:backgroundTint="#01C000"
+       android:text="Log In"
+       android:textSize="20sp"
+       app:layout_constraintBottom_toTopOf="@+id/textView6"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent" />
 
    <TextView
        android:id="@+id/textView"
@@ -105,20 +120,27 @@
        android:layout_height="wrap_content"
        android:text="Tidak punya akun?"
        android:textColor="#FFFF"
-       tools:layout_editor_absoluteX="97dp"
-       tools:layout_editor_absoluteY="624dp" />
+       android:textSize="15sp"
+       app:layout_constraintEnd_toStartOf="@+id/inputSignIn"
+       app:layout_constraintHorizontal_bias="1.0"
+       app:layout_constraintStart_toStartOf="@+id/btnStart"
+       app:layout_constraintTop_toBottomOf="@+id/btnStart" />
 
    <TextView
+       android:id="@+id/inputSignIn"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:text="Sign In"
+       android:layout_marginEnd="112dp"
+       android:text="@string/sign_in"
        android:textColor="#72B63A"
+       android:textSize="15sp"
        app:layout_constraintBottom_toBottomOf="@+id/textView"
+       app:layout_constraintEnd_toEndOf="@+id/btnStart"
        app:layout_constraintTop_toTopOf="@+id/textView"
-       tools:layout_editor_absoluteX="221dp" />
-
+       app:layout_constraintVertical_bias="1.0" />
 
    <TextView
+       android:id="@+id/textView6"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginBottom="16dp"
