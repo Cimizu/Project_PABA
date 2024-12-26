@@ -1,69 +1,57 @@
 package project.paba.app
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [restaurants.newInstance] factory method to
- * create an instance of this fragment.
- */
 class restaurants : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var restaurantsAdapter: RestaurantsAdapter
+    private val db = FirebaseFirestore.getInstance()
+    private val restaurantList = mutableListOf<dataRestoran>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_restaurants, container, false)
 
-        val btnTemp: Button = view.findViewById(R.id.btn_temp)
-        btnTemp.setOnClickListener {
-            // Create an Intent to start the addBooking activity
-            val intent = Intent(activity, addBooking::class.java)
-            startActivity(intent)
+        val recyclerView: RecyclerView = view.findViewById(R.id.rvRestaurants)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        restaurantsAdapter = RestaurantsAdapter(restaurantList) { restaurantId ->
+            val fragment = paket.newInstance(restaurantId)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
         }
+        recyclerView.adapter = restaurantsAdapter
+
+        fetchRestaurants()
+
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment restaurants.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            restaurants().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun fetchRestaurants() {
+        db.collection("resto").get()
+            .addOnSuccessListener { result ->
+                restaurantList.clear()
+                for (document in result) {
+                    val restaurant = document.toObject(dataRestoran::class.java)
+                    restaurantList.add(restaurant)
                 }
+                restaurantsAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
+                Toast.makeText(context, "Failed to fetch restaurants", Toast.LENGTH_SHORT).show()
             }
     }
 }
