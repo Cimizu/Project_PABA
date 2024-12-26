@@ -89,8 +89,8 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:backgroundTint="#C53024"
         android:text="Sign out"
-        android:textSize="20sp"
-        android:backgroundTint="#01C000" />
+        android:textSize="20sp" />
 
 </LinearLayout>
