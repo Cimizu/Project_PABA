@@ -9,27 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 
 class BookingAdapter(private val bookingList: ArrayList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
-        return BookingViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
-        val booking = bookingList[position]
-        holder.bind(booking)
-    }
-
-    override fun getItemCount(): Int {
-        return bookingList.size
-    }
-
     class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
-        private val tvName: TextView = itemView.findViewById(R.id.tv_nama)
-        private val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
-        private val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
-        private val tvPhone: TextView = itemView.findViewById(R.id.tv_notelp)
-        private val tvNotes: TextView = itemView.findViewById(R.id.tv_cttn)
+        val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
+        val tvName: TextView = itemView.findViewById(R.id.tv_nama)
+        val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
+        val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
+        val tvPhone: TextView = itemView.findViewById(R.id.tv_notelp)
+        val tvNotes: TextView = itemView.findViewById(R.id.tv_cttn)
 
         fun bind(booking: BookingInfo) {
             tvResto.text = booking.resto
@@ -40,5 +26,18 @@ class BookingAdapter(private val bookingList: ArrayList<BookingInfo>) : Recycler
             tvNotes.text = booking.notes
         }
     }
-}
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.booking_recycler, parent, false)
+        return BookingViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return bookingList.size
+    }
+
+    override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
+        val booking = bookingList[position]
+        holder.bind(booking)
+    }
+}

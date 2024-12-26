@@ -2,12 +2,12 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class BookingInfo(
-    val resto: String,
-    val name: String,
-    val date: String,
-    val time: String,
-    val phone: String,
-    val notes: String
+    val resto: String = "",
+    val name: String = "",
+    val date: String = "",
+    val time: String = "",
+    val phone: String = "",
+    val notes: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
