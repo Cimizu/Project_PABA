@@ -1,10 +1,12 @@
 package project.paba.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,15 @@ class restaurants : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurants, container, false)
+        val view = inflater.inflate(R.layout.fragment_restaurants, container, false)
+
+        val btnTemp: Button = view.findViewById(R.id.btn_temp)
+        btnTemp.setOnClickListener {
+            // Create an Intent to start the addBooking activity
+            val intent = Intent(activity, addBooking::class.java)
+            startActivity(intent)
+        }
+        return view
     }
 
     companion object {

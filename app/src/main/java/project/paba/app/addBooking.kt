@@ -1,21 +1,24 @@
 package project.paba.app
 
+import BookingInfo
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class addBooking : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val bookingInfoList = ArrayList<BookingInfo>()
 
-    private lateinit var bookingAdapter: BookingAdapter
     private lateinit var edtNama: EditText
     private lateinit var edtTanggal: EditText
     private lateinit var edtJam: EditText
@@ -24,7 +27,13 @@ class addBooking : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_booking)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         edtNama = findViewById(R.id.edt_nama)
         edtTanggal = findViewById(R.id.edt_tanggal)
@@ -65,41 +74,20 @@ class addBooking : AppCompatActivity() {
             val notes = edtCttn.text.toString()
 
             if (name.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty() && phone.isNotEmpty() && notes.isNotEmpty()) {
-                TambahData(name, date, time, phone, notes)
+                val bookingInfo = BookingInfo(name, date, time, phone, notes)
+                db.collection("bookings").add(bookingInfo)
+                    .addOnSuccessListener {
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("BOOKING_INFO", bookingInfo)
+                        setResult(RESULT_OK, resultIntent)
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firebase", "Error adding document", e)
+                    }
             } else {
                 Log.e("Validation", "All fields must be filled")
             }
         }
-    }
-
-    private fun TambahData(name: String, date: String, time: String, phone: String, notes: String) {
-        val bookingInfo = BookingInfo(name, date, time, phone, notes)
-
-        db.collection("bookings").add(bookingInfo)
-            .addOnSuccessListener {
-                Log.d("Firebase", "Data successfully saved")
-                readData()
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firebase", "Error adding document", e)
-            }
-    }
-
-    private fun readData() {
-        db.collection("bookings").get()
-            .addOnSuccessListener { result ->
-                bookingInfoList.clear()
-                for (document in result) {
-                    val booking = document.toObject(BookingInfo::class.java)
-                    bookingInfoList.add(booking)
-                }
-
-                if (::bookingAdapter.isInitialized) {
-                    bookingAdapter.notifyDataSetChanged()
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firebase", "Error reading documents", e)
-            }
     }
 }
