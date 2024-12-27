@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -66,6 +67,10 @@ class addBooking : AppCompatActivity() {
             timePickerDialog.show()
         }
 
+        val restoName = intent.getStringExtra("namaResto")
+        val restoImage = intent.getStringExtra("imageResto")
+        val restoAddress = intent.getStringExtra("alamatResto")
+
         btnBookingNow.setOnClickListener {
             val name = edtNama.text.toString()
             val date = edtTanggal.text.toString()
@@ -74,7 +79,7 @@ class addBooking : AppCompatActivity() {
             val notes = edtCttn.text.toString()
 
             if (name.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty() && phone.isNotEmpty() && notes.isNotEmpty()) {
-                val bookingInfo = BookingInfo("resto 1", name, date, time, phone, notes)
+                val bookingInfo = BookingInfo(restoName ?: "", name, restoAddress ?: "", date, time, phone, notes)
                 db.collection("bookings").add(bookingInfo)
                     .addOnSuccessListener {
                         val listIntent = Intent(this, bookingList::class.java)
@@ -86,6 +91,7 @@ class addBooking : AppCompatActivity() {
                     }
             } else {
                 Log.e("Validation", "All fields must be filled")
+                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
             }
         }
     }

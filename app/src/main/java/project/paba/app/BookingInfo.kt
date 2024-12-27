@@ -4,6 +4,7 @@ import android.os.Parcelable
 data class BookingInfo(
     val resto: String = "",
     val name: String = "",
+    val address: String = "",
     val date: String = "",
     val time: String = "",
     val phone: String = "",
@@ -15,12 +16,14 @@ data class BookingInfo(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
+        parcel.readString() ?: "",
         parcel.readString() ?: ""
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(resto)
         parcel.writeString(name)
+        parcel.writeString(address)
         parcel.writeString(date)
         parcel.writeString(time)
         parcel.writeString(phone)
