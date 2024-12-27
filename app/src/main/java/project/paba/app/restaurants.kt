@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,23 @@ class restaurants : Fragment() {
             Toast.makeText(requireContext(), "Reservasi untuk ${restaurant.namaResto}", Toast.LENGTH_SHORT).show()
         }
         restaurantListRecyclerView.adapter = adapter
+
+        // Inisialisasi SearchView
+        val searchView: SearchView = view.findViewById(R.id.searchView)
+
+        // Menambahkan listener pada SearchView untuk melakukan pencarian
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Bisa dibiarkan kosong atau digunakan untuk aksi lain jika diperlukan
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter daftar restoran berdasarkan nama
+                filterRestaurants(newText)
+                return true
+            }
+        })
 
         if (auth.currentUser != null) {
             fetchRestaurantData()
@@ -86,6 +104,19 @@ class restaurants : Fragment() {
             .addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+    private fun filterRestaurants(query: String?) {
+        val filteredList = mutableListOf<dataRestoran>()
+        if (query.isNullOrEmpty()) {
+            filteredList.addAll(restaurantData) // Tampilkan semua restoran jika pencarian kosong
+        } else {
+            for (restaurant in restaurantData) {
+                if (restaurant.namaResto.contains(query, ignoreCase = true)) {
+                    filteredList.add(restaurant)
+                }
+            }
+        }
+        adapter.updateData(filteredList)
     }
 
     companion object {

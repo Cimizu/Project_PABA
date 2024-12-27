@@ -20,8 +20,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPaket"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />  <!-- Gunakan layout_weight agar RecyclerView mengambil sisa ruang -->

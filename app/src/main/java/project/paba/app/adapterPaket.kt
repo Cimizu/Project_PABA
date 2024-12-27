@@ -1,4 +1,3 @@
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ class adapterPaket(
         val kapasitas: TextView = view.findViewById(R.id.kapasitas)
         val harga: TextView = view.findViewById(R.id.harga)
         val uangDp: TextView = view.findViewById(R.id.uangDp)
-        val reserveButton: Button = view.findViewById(R.id.btnPesan)
+        val pesanButton: Button = view.findViewById(R.id.btnPesan)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaketViewHolder {
@@ -37,6 +36,11 @@ class adapterPaket(
         holder.kapasitas.text = paket.kapasitas
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
+
+        // Handle button click event
+        holder.pesanButton.setOnClickListener {
+            onReserveClick(paket) // Panggil lambda event handler
+        }
     }
 
     override fun getItemCount(): Int {

@@ -14,15 +14,20 @@ import project.paba.app.detrestaurant
 import project.paba.app.restaurants
 
 class adapterRestoran(
-    private val restaurantList: List<dataRestoran>,
+    private var restaurantList: List<dataRestoran>, // Menggunakan var untuk memungkinkan modifikasi data
     private val onReserveClick: (dataRestoran) -> Unit // Menggunakan lambda untuk event handler
 ) : RecyclerView.Adapter<adapterRestoran.RestaurantViewHolder>() {
+
+    // Menambahkan metode untuk memperbarui data
+    fun updateData(newList: List<dataRestoran>) {
+        restaurantList = newList
+        notifyDataSetChanged()
+    }
 
     inner class RestaurantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val restaurantImage: ImageView = view.findViewById(R.id.restaurantImage)
         val namaResto: TextView = view.findViewById(R.id.namaResto)
         val namaResto2: TextView = view.findViewById(R.id.namaResto2)
-
         val reserveButton: Button = view.findViewById(R.id.reserveButton)
     }
 
@@ -38,7 +43,6 @@ class adapterRestoran(
         // Set text data
         holder.namaResto.text = restaurants.namaResto
         holder.namaResto2.text = restaurants.namaResto2
-
 
         holder.reserveButton.setOnClickListener {
             val context = holder.itemView.context
@@ -66,5 +70,20 @@ class adapterRestoran(
 
     override fun getItemCount(): Int {
         return restaurantList.size
+    }
+
+    // Menambahkan fungsi filter berdasarkan nama restoran
+    fun filterRestaurants(query: String?) {
+        val filteredList = mutableListOf<dataRestoran>()
+        if (query.isNullOrEmpty()) {
+            filteredList.addAll(restaurantList) // Menampilkan semua restoran jika query kosong
+        } else {
+            for (restaurant in restaurantList) {
+                if (restaurant.namaResto.contains(query, ignoreCase = true)) {
+                    filteredList.add(restaurant)
+                }
+            }
+        }
+        updateData(filteredList)
     }
 }
