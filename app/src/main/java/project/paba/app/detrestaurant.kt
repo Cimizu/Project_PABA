@@ -44,11 +44,17 @@ class detrestaurant : AppCompatActivity() {
             _deskripsi.text = dataIntent.deskripsi
         }
 
+        // Mengatur listener untuk tombol btnreservasi
         _btnreservasi.setOnClickListener {
+            // Pindah ke Activity Booking
             val intent = Intent(this, addBooking::class.java)
-            intent.putExtra("namaResto", dataIntent?.namaResto)
-            intent.putExtra("imageResto", dataIntent?.foto)
-            intent.putExtra("alamatResto", dataIntent?.lokasi)
+            startActivity(intent)
+        }
+
+        // Mengatur listener untuk tombol btnLihatpaket
+        _btnLihatpaket.setOnClickListener {
+            // Pindah ke Activity Paket Recycle
+            val intent = Intent(this, paket::class.java)
             startActivity(intent)
         }
     }
