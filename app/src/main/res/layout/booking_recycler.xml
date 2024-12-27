@@ -43,7 +43,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:contentDescription="Icon Person"
-            app:srcCompat="@drawable/baseline_person_24"
+            app:srcCompat="@drawable/baseline_person_25"
             app:layout_constraintStart_toStartOf="@id/tv_resto"
             app:layout_constraintTop_toBottomOf="@id/tv_resto"
             android:layout_marginTop="8dp" />

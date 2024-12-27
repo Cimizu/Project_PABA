@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/restaurantImage"
         android:layout_width="match_parent"
-        android:layout_height="310dp"
+        android:layout_height="380dp"
         android:scaleType="centerCrop"
         android:src="@drawable/restoran" />
 
@@ -45,7 +45,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginTop="256dp"
+        android:layout_marginTop="332dp"
         app:cardCornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

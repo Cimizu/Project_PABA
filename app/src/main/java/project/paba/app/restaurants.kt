@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +66,27 @@ class restaurants : Fragment() {
             }
         })
 
+        // Menginisialisasi tombol filter
+        val btnSurabaya: Button = view.findViewById(R.id.btnSurabaya)
+        val btnJakarta: Button = view.findViewById(R.id.btnJakarta)
+        val btnSemua: Button = view.findViewById(R.id.btnSemua)
+
+        // Listener untuk btnSemua
+        btnSemua.setOnClickListener {
+            // Menampilkan semua restoran (reset filter)
+            filterRestaurants(null)
+        }
+
+        // Listener untuk btnSurabaya
+        btnSurabaya.setOnClickListener {
+            filterByLocation("Surabaya")
+        }
+
+        // Listener untuk btnJakarta
+        btnJakarta.setOnClickListener {
+            filterByLocation("Jakarta")
+        }
+
         if (auth.currentUser != null) {
             fetchRestaurantData()
         } else {
@@ -114,6 +136,16 @@ class restaurants : Fragment() {
                 if (restaurant.namaResto.contains(query, ignoreCase = true)) {
                     filteredList.add(restaurant)
                 }
+            }
+        }
+        adapter.updateData(filteredList)
+    }
+
+    private fun filterByLocation(location: String) {
+        val filteredList = mutableListOf<dataRestoran>()
+        for (restaurant in restaurantData) {
+            if (restaurant.lokasi.contains(location, ignoreCase = true)) {
+                filteredList.add(restaurant)
             }
         }
         adapter.updateData(filteredList)
