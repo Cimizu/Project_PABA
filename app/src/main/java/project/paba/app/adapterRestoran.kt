@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import project.paba.app.R
 import project.paba.app.dataRestoran
 import project.paba.app.detail_resto
-import project.paba.app.detrestaurant
 import project.paba.app.restaurants
 
 class adapterRestoran(
