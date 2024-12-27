@@ -13,46 +13,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class paket : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var paketListRecyclerView: RecyclerView
     private lateinit var adapter: adapterPaket
     private val paketData = mutableListOf<paketRestoran>()
+    private var restoranId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+
+        // Mengambil data ID restoran dari arguments
+        restoranId = arguments?.getString("restoranId")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_paket, container, false)
 
-        // Inisialisasi RecyclerView
         paketListRecyclerView = view.findViewById(R.id.rvPaket)
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = adapterPaket(paketData) { paket ->
-            // Aksi ketika paket dipilih
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
         paketListRecyclerView.adapter = adapter
 
-        // Ambil data dari Firestore
         fetchPaketData()
 
         return view
     }
 
     private fun fetchPaketData() {
-        db.collection("paket")
+        // Mengakses subkoleksi "paket" dalam koleksi "restoran" berdasarkan restoranId
+        db.collection("restoran") // Koleksi restoran
+            .document(restoranId ?: "") // ID restoran yang diterima sebagai argument
+            .collection("paket") // Subkoleksi "paket" dalam setiap restoran
             .get()
             .addOnSuccessListener { result ->
                 paketData.clear()
@@ -66,28 +66,14 @@ class paket : Fragment() {
                         val harga = document.getString("harga") ?: "Harga tidak tersedia"
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
 
-                        Log.d("FirebaseData", "namaPaket: $namaPaket, deskripsi: $deskripsi, kapasitas: $kapasitas, harga: $harga, uangDp: $uangDp")
-
-                        // Tambahkan data paket ke dalam list
                         paketData.add(paketRestoran(namaPaket, deskripsi, kapasitas, harga, uangDp))
                     }
                 }
 
-                // Notifikasi bahwa data telah diperbarui
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            profile().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
             }
     }
 }

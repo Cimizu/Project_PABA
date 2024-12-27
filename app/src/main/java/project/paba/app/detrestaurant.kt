@@ -5,21 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class detrestaurant : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_det_restaurants)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.detrestoran)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val _restoranImage = findViewById<ImageView>(R.id.restaurantImage)
         val _namaResto = findViewById<TextView>(R.id.namaResto)
@@ -30,35 +21,45 @@ class detrestaurant : AppCompatActivity() {
         val _noTelp = findViewById<TextView>(R.id.noTelp)
         val _deskripsi = findViewById<TextView>(R.id.deskripsi)
         val _btnreservasi = findViewById<Button>(R.id.btnreservasi)
-        val _btnLihatpaket= findViewById<Button>(R.id.btnLihatpaket)
+        val _btnLihatpaket = findViewById<Button>(R.id.btnLihatpaket)
 
-        val dataIntent = intent.getParcelableExtra("kirimData",dataRestoran::class.java)
-        if (dataIntent != null){
-//            Picasso.get().load(dataIntent.foto).into(_restoranImage)
-            _namaResto.text = dataIntent.namaResto
-            _namaResto2.text = dataIntent.namaResto2
-            _jambuka.text = dataIntent.jambuka
-            _jamtutup.text = dataIntent.jamtutup
-            _lokasi.text = dataIntent.lokasi
-            _noTelp.text = dataIntent.noTelp
-            _deskripsi.text = dataIntent.deskripsi
+        val dataIntent = intent.getParcelableExtra<dataRestoran>("kirimData")
+        dataIntent?.let {
+            _namaResto.text = it.namaResto
+            _namaResto2.text = it.namaResto2
+            _jambuka.text = it.jambuka
+            _jamtutup.text = it.jamtutup
+            _lokasi.text = it.lokasi
+            _noTelp.text = it.noTelp
+            _deskripsi.text = it.deskripsi
         }
 
-        // Mengatur listener untuk tombol btnreservasi
+        // Tombol untuk pindah ke Booking
         _btnreservasi.setOnClickListener {
-            // Pindah ke Activity Booking
             val intent = Intent(this, addBooking::class.java)
             intent.putExtra("namaResto", dataIntent?.namaResto)
-            intent.putExtra("imageResto", dataIntent?.foto)
-            intent.putExtra("alamatResto", dataIntent?.lokasi)
             startActivity(intent)
         }
 
-        // Mengatur listener untuk tombol btnLihatpaket
+        // Tombol untuk pindah ke Paket (Fragment)
         _btnLihatpaket.setOnClickListener {
-            // Pindah ke Activity Paket Recycle
-            val intent = Intent(this, paket::class.java)
-            startActivity(intent)
+            val restoranId = dataIntent?.namaResto // Atau gunakan ID restoran jika ada
+
+            // Membuat Fragment baru
+            val paketFragment = paket().apply {
+                arguments = Bundle().apply {
+                    putString("restoranId", restoranId) // Kirimkan ID restoran ke Fragment
+                }
+            }
+
+            // Check if the fragment is already added
+            val existingFragment = supportFragmentManager.findFragmentByTag(paket::class.java.simpleName)
+            if (existingFragment == null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameContainer, paketFragment, paket::class.java.simpleName) // Ganti dengan ID container yang sesuai
+                    .addToBackStack(null) // Agar bisa kembali ke fragment sebelumnya
+                    .commit() // Commit the transaction
+            }
         }
     }
 }

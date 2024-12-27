@@ -24,7 +24,8 @@
         <activity
             android:name=".bookingList"
             android:exported="false" />
-        <activity android:name=".detrestaurant"
+        <activity
+            android:name=".detrestaurant"
             android:exported="false"/>
         <activity
             android:name=".addBooking"

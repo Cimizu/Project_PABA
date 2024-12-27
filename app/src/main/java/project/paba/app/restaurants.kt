@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +36,6 @@ class restaurants : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_restaurants, container, false)
 
         // Inisialisasi RecyclerView
@@ -49,11 +47,9 @@ class restaurants : Fragment() {
         }
         restaurantListRecyclerView.adapter = adapter
 
-        // Verifikasi apakah pengguna sudah login
         if (auth.currentUser != null) {
             fetchRestaurantData()
         } else {
-            // Menampilkan pesan jika pengguna belum login
             restaurantData.clear()
             restaurantData.add(dataRestoran("Silakan login untuk melihat data restoran.", "", "", "", "", "", ""))
             adapter.notifyDataSetChanged()
@@ -71,6 +67,7 @@ class restaurants : Fragment() {
                     restaurantData.add(dataRestoran("Tidak ada restoran yang ditemukan.", "", "", "", "", "", "", ""))
                 } else {
                     for (document in result) {
+                        val uidRestoran = document.id  // Mendapatkan ID dokumen (UID)
                         val namaResto = document.getString("namaResto") ?: "Tidak Ada Nama"
                         val namaResto2 = document.getString("namaResto2") ?: "Tidak Ada Nama"
                         val deskripsi = document.getString("deskripsi") ?: "Tidak Ada Deskripsi"
@@ -80,20 +77,15 @@ class restaurants : Fragment() {
                         val jambuka = document.getString("jambuka") ?: ""
                         val jamtutup = document.getString("jamtutup") ?: ""
 
-                        Log.d("FirebaseData", "namaResto: $namaResto, namaResto2: $namaResto2, deskripsi: $deskripsi, lokasi: $lokasi, foto: $foto, noTelp: $noTelp, jambuka: $jambuka, jamtutup: $jamtutup")
-
-                        // Tambahkan data restoran ke daftar
+                        Log.d("FirebaseData", "UID: $uidRestoran, namaResto: $namaResto")
                         restaurantData.add(dataRestoran(namaResto, namaResto2, deskripsi, lokasi, foto, noTelp, jambuka, jamtutup))
                     }
                 }
-
-                // Notifikasi bahwa data telah diperbarui
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
-
     }
 
     companion object {
@@ -106,4 +98,5 @@ class restaurants : Fragment() {
                 }
             }
     }
+
 }

@@ -1,4 +1,5 @@
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import project.paba.app.R
 import project.paba.app.dataRestoran
+import project.paba.app.detail_resto
 import project.paba.app.detrestaurant
 import project.paba.app.restaurants
 
@@ -40,9 +42,25 @@ class adapterRestoran(
 
         holder.reserveButton.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, detrestaurant::class.java)
-            intent.putExtra("kirimData", restaurants) // Kirim data dengan parcelable
-            context.startActivity(intent)
+            if (context is androidx.fragment.app.FragmentActivity) { // Pastikan context adalah FragmentActivity
+                val detailFragment = detail_resto().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(
+                            "kirimData",
+                            restaurants
+                        ) // Kirim data restoran sebagai Parcelable
+                    }
+                }
+
+                // Ganti fragment
+                context.supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frameContainer,
+                        detailFragment
+                    ) // Gunakan ID container dari layout utama
+                    .addToBackStack(null) // Untuk mendukung back navigation
+                    .commit()
+            }
         }
     }
 

@@ -89,15 +89,15 @@
           android:inputType="textPassword"
           android:padding="12dp" />
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Lupa Password?"
-          android:layout_gravity="right"
-          android:textColor="#FFFF"
-          android:textSize="15sp"
-          tools:layout_editor_absoluteX="97dp"
-          tools:layout_editor_absoluteY="624dp" />
+<!--      <TextView-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:text="Lupa Password?"-->
+<!--          android:layout_gravity="right"-->
+<!--          android:textColor="#FFFF"-->
+<!--          android:textSize="15sp"-->
+<!--          tools:layout_editor_absoluteX="97dp"-->
+<!--          tools:layout_editor_absoluteY="624dp" />-->
 
    </LinearLayout>
 
