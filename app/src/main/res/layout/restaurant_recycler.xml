@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -22,22 +23,24 @@
             android:src="@drawable/restoran" />
 
         <TextView
+            android:id="@+id/namaResto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:padding="8dp"
             android:text="Resto Enak Surabaya"
             android:textColor="@android:color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:layout_marginTop="2dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="1dp" />
 
         <TextView
+            android:id="@+id/namaResto2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:layout_marginLeft="2dp"
+            android:padding="8dp"
             android:text="Resto Enak Surabaya"
             android:textColor="@android:color/white"
             android:textSize="30sp"
@@ -49,55 +52,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|left"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center|left"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="35dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center|left"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="60dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center|left"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="85dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center|left"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="110dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/baseline_starkosong_24" />
 
         <Button
             android:id="@+id/reserveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#01C000"
-            android:text="Reservasi"
             android:layout_gravity="bottom|right"
             android:layout_margin="10dp"
+            android:backgroundTint="#01C000"
+            android:text="Reservasi"
             android:textColor="@android:color/white"
             tools:layout_editor_absoluteX="271dp"
             tools:layout_editor_absoluteY="94dp" />

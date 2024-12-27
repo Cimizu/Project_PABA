@@ -2,184 +2,217 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detrestoran"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/restaurantImage"
-            android:layout_width="match_parent"
-            android:layout_height="310dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/restoran" />
+    <ImageView
+        android:id="@+id/restaurantImage"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/restoran" />
 
     <TextView
-        android:id="@+id/restaurantName"
+        android:id="@+id/namaResto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
         android:padding="8dp"
         android:text="Resto Enak Surabaya"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="71dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/namaResto2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
         android:padding="8dp"
         android:text="Resto Enak Surabaya"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="74dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:layout_marginTop="332dp"
         app:cardCornerRadius="50dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="261dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="45dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="70dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="95dp"
-            android:src="@drawable/baseline_star_24"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_star_24" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="120dp"
             android:src="@drawable/baseline_starkosong_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4/5"
-            android:textSize="20sp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="28dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="150dp"/>
+            android:text="4/5"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_watch_later_24"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="80dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:src="@drawable/baseline_watch_later_24" />
 
         <TextView
+            android:id="@+id/jambuka"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="09.00 - 21.00"
-            android:textSize="20sp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="77dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="60dp"/>
-
-        <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/loc"
-        android:layout_marginTop="130dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"/>
+            android:text="09.00"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jalan Siwalankerto No 1, Siwalankerto, Surabaya"
-            android:textSize="20sp"
+            android:layout_marginLeft="117dp"
+            android:layout_marginTop="77dp"
+            android:layout_marginBottom="20dp"
+            android:text="-"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/jamtutup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="77dp"
+            android:layout_marginBottom="20dp"
+            android:text="21.00"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/loc" />
+
+        <TextView
+            android:id="@+id/lokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="127dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="60dp"/>
+            android:text="Jalan Siwalankerto No 1, Siwalankerto, Surabaya"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_local_phone_24"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="200dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:src="@drawable/baseline_local_phone_24" />
 
         <TextView
+            android:id="@+id/noTelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="08981235676"
-            android:textSize="20sp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="197dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="60dp"/>
+            android:text="08981235676"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_info_24"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="250dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:src="@drawable/baseline_info_24" />
 
         <TextView
+            android:id="@+id/deskripsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Merupakan Restoran dengan menu masakan khas Indonesia"
-            android:textSize="20sp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="248dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="60dp"/>
+            android:text="Merupakan Restoran dengan menu masakan khas Indonesia"
+            android:textSize="20sp" />
 
         <Button
+            android:id="@+id/btnreservasi"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="110dp"
-            android:text="Reservasi"
-            android:textSize="20sp"
-            android:textColor="@color/black"
             android:backgroundTint="#01C000"
-            android:layout_gravity="center"/>
+            android:text="Reservasi"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <Button
+            android:id="@+id/btnLihatpaket"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="170dp"
+            android:backgroundTint="#01C000"
             android:text="Lihat Paket"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:backgroundTint="#01C000"
-            android:layout_gravity="center"/>
+            android:textSize="20sp" />
 
     </androidx.cardview.widget.CardView>
 

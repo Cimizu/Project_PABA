@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".restaurants">
+    tools:context=".restaurants"
+    android:paddingBottom="80dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,6 +46,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnSemua"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -53,6 +55,7 @@
                 android:textColor="@android:color/white" />
 
             <Button
+                android:id="@+id/btnSurabaya"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -61,6 +64,7 @@
                 android:textColor="@android:color/white" />
 
             <Button
+                android:id="@+id/btnJakarta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -90,18 +94,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvHistory"
+        android:id="@+id/rvRestorant"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"/>
-
-    <Button
-        android:id="@+id/btn_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Booking Temp"
-        android:layout_marginBottom="100dp"/>
 
 </LinearLayout>

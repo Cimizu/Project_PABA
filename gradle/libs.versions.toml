@@ -10,6 +10,7 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 vroom = "2.6.1"
+parcelize = "2.0.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.1.1"
 firebaseAuth = "23.1.0"
@@ -38,4 +39,4 @@ firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx",
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
+kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" , version.ref="parcelize"}

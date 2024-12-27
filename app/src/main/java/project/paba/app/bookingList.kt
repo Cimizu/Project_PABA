@@ -30,13 +30,11 @@ class bookingList : AppCompatActivity() {
     private fun readData() {
         db.collection("bookings").get()
             .addOnSuccessListener { result ->
-                bookingInfoList.clear()  // Menghapus data lama
+                bookingInfoList.clear()
                 for (document in result) {
-                    // Menambahkan data dari Firebase ke list bookingInfoList
                     val booking = document.toObject(BookingInfo::class.java)
                     bookingInfoList.add(booking)
                 }
-                // Pastikan Adapter di-update setelah data berhasil dimuat
                 bookingAdapter.notifyDataSetChanged()
                 Log.d("Firebase", "Data fetched: ${bookingInfoList.size} items")
             }
@@ -44,5 +42,4 @@ class bookingList : AppCompatActivity() {
                 Log.e("Firebase", "Error reading documents", e)
             }
     }
-
 }
