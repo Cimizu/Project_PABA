@@ -7,7 +7,8 @@ data class BookingInfo(
     val date: String = "",
     val time: String = "",
     val phone: String = "",
-    val notes: String = ""
+    val notes: String = "",
+    val status: String = "Active"
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
@@ -15,7 +16,8 @@ data class BookingInfo(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        parcel.readString() ?: "Active"
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -25,6 +27,7 @@ data class BookingInfo(
         parcel.writeString(time)
         parcel.writeString(phone)
         parcel.writeString(notes)
+        parcel.writeString(status)
     }
 
     override fun describeContents(): Int {

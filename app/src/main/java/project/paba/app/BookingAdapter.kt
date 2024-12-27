@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class BookingAdapter(private val bookingList: ArrayList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
+class BookingAdapter(private val bookingList: ArrayList<BookingInfo>) : RecyclerView
+    .Adapter<BookingAdapter.BookingViewHolder>() {
 
     class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
