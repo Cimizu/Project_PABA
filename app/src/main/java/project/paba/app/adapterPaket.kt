@@ -1,15 +1,18 @@
-import android.view.LayoutInflater
+package project.paba.app
+
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import project.paba.app.R
-import project.paba.app.paketRestoran
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.os.Bundle
+import android.widget.Button
+
 
 class adapterPaket(
     private val paketList: List<paketRestoran>,
-    private val onReserveClick: (paketRestoran) -> Unit // Menggunakan lambda untuk event handler
+    private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterPaket.PaketViewHolder>() {
 
     inner class PaketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,16 +33,27 @@ class adapterPaket(
     override fun onBindViewHolder(holder: PaketViewHolder, position: Int) {
         val paket = paketList[position]
 
-        // Set text data
         holder.namaPaket.text = paket.namaPaket
         holder.deskripsi.text = paket.deskripsi
         holder.kapasitas.text = paket.kapasitas
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
 
-        // Handle button click event
         holder.pesanButton.setOnClickListener {
-            onReserveClick(paket) // Panggil lambda event handler
+            onReserveClick(paket)
+
+            val activity = holder.itemView.context as FragmentActivity
+            val addBookingFragment = AddBookingFragment().apply {
+                arguments = Bundle().apply {
+                    putString("restoName", paket.namaPaket)
+                    putString("address", paket.deskripsi)
+                }
+            }
+
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.frameContainer, addBookingFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

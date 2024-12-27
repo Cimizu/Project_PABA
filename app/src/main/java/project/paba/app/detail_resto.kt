@@ -69,6 +69,7 @@ class detail_resto : Fragment() {
         _btnreservasi.setOnClickListener {
             val intent = Intent(requireContext(), addBooking::class.java)
             intent.putExtra("namaResto", dataIntent?.namaResto)
+            intent.putExtra("alamatResto", dataIntent?.lokasi)
             startActivity(intent)
         }
 
