@@ -1,17 +1,18 @@
 package project.paba.app
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import android.os.Bundle
-import android.widget.Button
-
 
 class adapterPaket(
     private val paketList: List<paketRestoran>,
+    private val restoranId: String?, // Tambahkan restoranId
     private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterPaket.PaketViewHolder>() {
 
@@ -21,7 +22,6 @@ class adapterPaket(
         val kapasitas: TextView = view.findViewById(R.id.kapasitas)
         val harga: TextView = view.findViewById(R.id.harga)
         val uangDp: TextView = view.findViewById(R.id.uangDp)
-
         val pesanButton: Button = view.findViewById(R.id.btnPesan)
     }
 
@@ -41,14 +41,18 @@ class adapterPaket(
         holder.uangDp.text = paket.uangDp
 
         holder.pesanButton.setOnClickListener {
-            onReserveClick(paket)
+            Log.d(
+                "adapterPaket",
+                "Restoran: ${paket.namaRestoran}, Alamat: ${paket.alamatRestoran}"
+            )
 
             val activity = holder.itemView.context as FragmentActivity
             val addBookingFragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
-                    putString("restoName", paket.namaRestoran)
-                    putString("paketName", paket.namaPaket)
-                    putString("address", paket.alamatRestoran)
+                    putString("idRestoran", restoranId) // Gunakan restoranId dari parameter adapter
+                    putString("restoName", paket.namaRestoran) // Nama restoran
+                    putString("paketName", paket.namaPaket) // Nama paket
+                    putString("address", paket.alamatRestoran) // Alamat restoran
                 }
             }
 
@@ -59,7 +63,8 @@ class adapterPaket(
         }
     }
 
-    override fun getItemCount(): Int {
+
+        override fun getItemCount(): Int {
         return paketList.size
     }
 }

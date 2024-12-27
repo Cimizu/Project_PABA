@@ -30,15 +30,11 @@ class paket : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        // Mengambil ID Restoran dari arguments
         restoranId = arguments?.getString("restoranId")
         Log.d("PaketFragment", "Restoran ID: $restoranId")
 
-        namaRestoran = arguments?.getString("namaRestoran")
-        Log.d("PaketFragment", "Nama Restoran: $namaRestoran")
-
-        alamatRestoran = arguments?.getString("alamatRestoran")
-        Log.d("PaketFragment", "Alamat Restoran: $alamatRestoran")
-
+        fetchRestoranData()
     }
 
     override fun onCreateView(
@@ -49,26 +45,63 @@ class paket : Fragment() {
 
         paketListRecyclerView = view.findViewById(R.id.rvPaket)
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = adapterPaket(paketData) { paket ->
+
+        adapter = adapterPaket(paketData, restoranId) { paket ->
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
+
         paketListRecyclerView.adapter = adapter
 
+        // Panggil fetch paket data
         fetchPaketData()
 
         return view
     }
 
+    /**
+     * Mengambil data restoran seperti nama dan alamat
+     */
+    private fun fetchRestoranData() {
+        if (restoranId.isNullOrEmpty()) {
+            Log.e("fetchRestoranData", "Restoran ID kosong.")
+            return
+        }
+
+        db.collection("restoran")
+            .document(restoranId!!)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    namaRestoran = document.getString("namaRestoran") ?: "Nama tidak tersedia"
+                    alamatRestoran = document.getString("alamatRestoran") ?: "Alamat tidak tersedia"
+
+                    Log.d("fetchRestoranData", "Nama Restoran: $namaRestoran, Alamat: $alamatRestoran")
+                } else {
+                    Log.e("fetchRestoranData", "Dokumen restoran tidak ditemukan.")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("fetchRestoranData", "Error: ${exception.message}")
+            }
+    }
+
+    /**
+     * Mengambil data paket berdasarkan ID restoran
+     */
     private fun fetchPaketData() {
-        // Mengakses subkoleksi "paket" dalam koleksi "restoran" berdasarkan restoranId
-        db.collection("restoran") // Koleksi restoran
-            .document(restoranId ?: "") // ID restoran yang diterima sebagai argument
-            .collection("paket") // Subkoleksi "paket" dalam setiap restoran
+        if (restoranId.isNullOrEmpty()) {
+            Log.e("fetchPaketData", "Restoran ID kosong.")
+            return
+        }
+
+        db.collection("restoran")
+            .document(restoranId!!)
+            .collection("paket")
             .get()
             .addOnSuccessListener { result ->
                 paketData.clear()
                 if (result.isEmpty) {
-                    paketData.add(paketRestoran("Tidak ada paket yang ditemukan.", "", "", "", "","",""))
+                    Log.d("fetchPaketData", "Tidak ada paket ditemukan.")
                 } else {
                     for (document in result) {
                         val namaPaket = document.getString("namaPaket") ?: "Nama tidak tersedia"
@@ -76,19 +109,30 @@ class paket : Fragment() {
                         val kapasitas = document.getString("kapasitas") ?: "Kapasitas tidak tersedia"
                         val harga = document.getString("harga") ?: "Harga tidak tersedia"
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
-                        val namaResto = document.getString("namaRestoran") ?: "Nama Restoran tidak tersedia"
-                        val alamatResto = document.getString("alamatRestoran") ?: "Alamat Restoran tidak tersedia"
+                        val idResto = document.getString("restoranId") ?: "ID tidak tersedia"
 
-                        paketData.add(paketRestoran(namaPaket, deskripsi, kapasitas, harga, uangDp, namaResto, alamatResto))
+                        // Menggunakan namaRestoran dan alamatRestoran dari fetchRestoranData
+                        paketData.add(
+                            paketRestoran(
+                                namaPaket,
+                                deskripsi,
+                                kapasitas,
+                                harga,
+                                uangDp,
+                                namaRestoran ?: "Nama restoran tidak tersedia",
+                                alamatRestoran ?: "Alamat tidak tersedia",
+                                idResto
+                            )
+                        )
                     }
                 }
-
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Log.e("fetchPaketData", "Error: ${exception.message}")
             }
     }
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

@@ -11,5 +11,6 @@ data class paketRestoran(
     val harga: String = "",
     val uangDp: String = "",
     val namaRestoran: String = "",
-    val alamatRestoran: String = ""
+    val alamatRestoran: String = "",
+    val idRestoran : String =""
 ): Parcelable

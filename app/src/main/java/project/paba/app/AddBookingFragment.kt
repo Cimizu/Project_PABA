@@ -44,9 +44,9 @@ class AddBookingFragment : Fragment() {
         tvAddress = view.findViewById(R.id.tv_alamatResto)
         val btnBookingNow: Button = view.findViewById(R.id.btn_bookingNow)
 
+        // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
-        val restoName = arguments?.getString("restoName")
-        val address = arguments?.getString("address")
+        val idRestoran = arguments?.getString("idRestoran")
         val name = arguments?.getString("name")
         val date = arguments?.getString("date")
         val time = arguments?.getString("time")
@@ -54,11 +54,19 @@ class AddBookingFragment : Fragment() {
         val notes = arguments?.getString("notes")
         val bookingId = arguments?.getString("bookingId")
 
-        // Set the package name, restaurant name, and address
-        tvPaketName.text = paketName
-        tvRestoName.text = restoName
-        tvAddress.text = address
+        Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran")
 
+        // Set nilai ke TextView
+        tvPaketName.text = paketName ?: "Nama Paket Tidak Ditemukan"
+
+        if (!idRestoran.isNullOrEmpty()) {
+            fetchRestoranData(idRestoran)
+        } else {
+            tvRestoName.text = "Nama Restoran Tidak Ditemukan"
+            tvAddress.text = "Alamat Tidak Ditemukan"
+        }
+
+        // Jika data sudah ada (update booking)
         if (bookingId != null) {
             edtNama.setText(name)
             edtTanggal.setText(date)
@@ -67,6 +75,7 @@ class AddBookingFragment : Fragment() {
             edtCttn.setText(notes)
         }
 
+        // Date picker
         edtTanggal.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
@@ -79,6 +88,7 @@ class AddBookingFragment : Fragment() {
             datePickerDialog.show()
         }
 
+        // Time picker
         edtJam.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -90,6 +100,7 @@ class AddBookingFragment : Fragment() {
             timePickerDialog.show()
         }
 
+        // Tombol booking
         btnBookingNow.setOnClickListener {
             val newName = edtNama.text.toString()
             val newDate = edtTanggal.text.toString()
@@ -100,10 +111,10 @@ class AddBookingFragment : Fragment() {
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 val bookingInfo = BookingInfo(
                     bookingId?.toInt() ?: 0,
-                    restoName ?: "",
+                    tvRestoName.text.toString(),
                     paketName ?: "",
                     newName,
-                    address ?: "",
+                    tvAddress.text.toString(),
                     newDate,
                     newTime,
                     newPhone,
@@ -127,12 +138,30 @@ class AddBookingFragment : Fragment() {
                         }
                 }
             } else {
-                Log.e("Validation", "All fields must be filled")
-                Toast.makeText(requireContext(), "All fields must be filled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Semua field harus diisi!", Toast.LENGTH_SHORT).show()
             }
         }
 
         return view
+    }
+
+    private fun fetchRestoranData(idRestoran: String) {
+        db.collection("restoran").document(idRestoran)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val restoName = document.getString("namaResto") ?: "Nama Restoran Tidak Ditemukan"
+                    val address = document.getString("lokasi") ?: "Alamat Tidak Ditemukan"
+
+                    tvRestoName.text = restoName
+                    tvAddress.text = address
+                } else {
+                    Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $idRestoran")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("AddBookingFragment", "Error mengambil data restoran: ${exception.message}", exception)
+            }
     }
 
     private fun navigateToBookingList() {
