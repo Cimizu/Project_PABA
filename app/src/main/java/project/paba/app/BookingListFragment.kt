@@ -15,7 +15,7 @@ class BookingListFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private lateinit var bookingListRecyclerView: RecyclerView
     private lateinit var adapter: BookingAdapter
-    private val bookingList = mutableListOf<BookingInfo>()
+    private val bookingList = arrayListOf<BookingInfo>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
