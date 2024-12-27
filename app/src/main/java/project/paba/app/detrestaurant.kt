@@ -1,5 +1,6 @@
 package project.paba.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -41,6 +42,20 @@ class detrestaurant : AppCompatActivity() {
             _lokasi.text = dataIntent.lokasi
             _noTelp.text = dataIntent.noTelp
             _deskripsi.text = dataIntent.deskripsi
+        }
+
+        // Mengatur listener untuk tombol btnreservasi
+        _btnreservasi.setOnClickListener {
+            // Pindah ke Activity Booking
+            val intent = Intent(this, addBooking::class.java)
+            startActivity(intent)
+        }
+
+        // Mengatur listener untuk tombol btnLihatpaket
+        _btnLihatpaket.setOnClickListener {
+            // Pindah ke Activity Paket Recycle
+            val intent = Intent(this, paket::class.java)
+            startActivity(intent)
         }
     }
 }
