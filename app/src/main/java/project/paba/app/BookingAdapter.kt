@@ -50,6 +50,13 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             val context = holder.itemView.context
             val intent = Intent(context, addBooking::class.java)
             intent.putExtra("bookingId", booking.id)
+            if (booking.id != null) {
+                Log.d("BookingAdapter", "Booking ID: ${booking.id}")
+                holder.tvNama.text = booking.name
+                holder.tvTanggal.text = booking.date
+                holder.tvJam.text = booking.time
+                holder.tvCttn.text = booking.notes
+            }
             intent.putExtra("restoName", booking.resto)
             intent.putExtra("name", booking.name)
             intent.putExtra("address", booking.address)
@@ -57,6 +64,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             intent.putExtra("time", booking.time)
             intent.putExtra("phone", booking.phone)
             intent.putExtra("notes", booking.notes)
+
             context.startActivity(intent)
         }
 

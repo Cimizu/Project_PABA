@@ -79,6 +79,7 @@ class addBooking : AppCompatActivity() {
         val restoImage = intent.getStringExtra("imageResto")
         val restoAddress = intent.getStringExtra("alamatResto")
 
+
         btnBookingNow.setOnClickListener {
             val name = edtNama.text.toString()
             val date = edtTanggal.text.toString()
