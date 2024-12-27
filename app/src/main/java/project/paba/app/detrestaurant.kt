@@ -48,6 +48,9 @@ class detrestaurant : AppCompatActivity() {
         _btnreservasi.setOnClickListener {
             // Pindah ke Activity Booking
             val intent = Intent(this, addBooking::class.java)
+            intent.putExtra("namaResto", dataIntent?.namaResto)
+            intent.putExtra("imageResto", dataIntent?.foto)
+            intent.putExtra("alamatResto", dataIntent?.lokasi)
             startActivity(intent)
         }
 
