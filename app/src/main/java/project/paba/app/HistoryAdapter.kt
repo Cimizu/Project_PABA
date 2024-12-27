@@ -22,7 +22,7 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : Recycle
         fun bind(booking: BookingInfo, restoran: dataRestoran) {
             tvResto.text = restoran.namaResto
             tvGambarResto.text = restoran.foto
-            tvAddress.text = restoran.alamat
+//            tvAddress.text = restoran.alamat
             tvDate.text = booking.date
             tvTime.text = booking.time
             tvStatus.text = booking.status
@@ -41,8 +41,8 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : Recycle
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
         val booking = BookingInfoo[position]
-        val restoran = dataRestoran[position]
-        holder.bind(booking, restoran)
+//        val restoran = dataRestoran[position]
+//        holder.bind(booking, restoran)
     }
 
 }

@@ -54,11 +54,11 @@ class history : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lvAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            BookingInfo
-        )
+//        lvAdapter = ArrayAdapter(
+//            this,
+//            android.R.layout.simple_list_item_1,
+//            BookingInfo
+//        )
     }
 
     override fun onCreateView(
