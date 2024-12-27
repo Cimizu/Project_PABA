@@ -18,11 +18,13 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
     class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivGambarResto: ImageView = itemView.findViewById(R.id.iv_gambarResto)
         val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
+        val tvPaket: TextView = itemView.findViewById(R.id.tv_paket)
         val tvNama: TextView = itemView.findViewById(R.id.tv_nama)
         val tvAlamat: TextView = itemView.findViewById(R.id.tv_alamat)
         val tvTanggal: TextView = itemView.findViewById(R.id.tv_tanggal)
         val tvJam: TextView = itemView.findViewById(R.id.tv_jam)
         val tvCttn: TextView = itemView.findViewById(R.id.tv_cttn)
+
         val ibTrash: ImageButton = itemView.findViewById(R.id.ib_trash)
         val ibEdit : ImageButton = itemView.findViewById(R.id.ib_edit)
         val btnCekStatus : Button = itemView.findViewById(R.id.btn_cekStatus)
@@ -37,6 +39,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
     override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
         val booking = bookingList[position]
         holder.tvResto.text = booking.resto
+        holder.tvPaket.text = booking.paket
         holder.tvNama.text = booking.name
         holder.tvAlamat.text = booking.address
         holder.tvTanggal.text = booking.date
@@ -58,6 +61,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 holder.tvCttn.text = booking.notes
             }
             intent.putExtra("restoName", booking.resto)
+            intent.putExtra("paketName", booking.paket)
             intent.putExtra("name", booking.name)
             intent.putExtra("address", booking.address)
             intent.putExtra("date", booking.date)

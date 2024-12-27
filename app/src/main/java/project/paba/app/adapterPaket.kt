@@ -21,6 +21,7 @@ class adapterPaket(
         val kapasitas: TextView = view.findViewById(R.id.kapasitas)
         val harga: TextView = view.findViewById(R.id.harga)
         val uangDp: TextView = view.findViewById(R.id.uangDp)
+
         val pesanButton: Button = view.findViewById(R.id.btnPesan)
     }
 
@@ -45,8 +46,9 @@ class adapterPaket(
             val activity = holder.itemView.context as FragmentActivity
             val addBookingFragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
-                    putString("restoName", paket.namaPaket)
-                    putString("address", paket.deskripsi)
+                    putString("restoName", paket.namaRestoran)
+                    putString("paketName", paket.namaPaket)
+                    putString("address", paket.alamatRestoran)
                 }
             }
 

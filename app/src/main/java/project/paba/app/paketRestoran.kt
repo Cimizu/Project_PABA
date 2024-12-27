@@ -9,5 +9,7 @@ data class paketRestoran(
     val deskripsi: String = "",
     val kapasitas: String = "",
     val harga: String = "",
-    val uangDp: String = ""
+    val uangDp: String = "",
+    val namaRestoran: String = "",
+    val alamatRestoran: String = ""
 ): Parcelable

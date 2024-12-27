@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +24,9 @@ class AddBookingFragment : Fragment() {
     private lateinit var edtJam: EditText
     private lateinit var edtNotelp: EditText
     private lateinit var edtCttn: EditText
+    private lateinit var tvPaketName: TextView
+    private lateinit var tvRestoName: TextView
+    private lateinit var tvAddress: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,16 +39,25 @@ class AddBookingFragment : Fragment() {
         edtJam = view.findViewById(R.id.edt_jam)
         edtNotelp = view.findViewById(R.id.edt_notelp)
         edtCttn = view.findViewById(R.id.edt_cttn)
+        tvPaketName = view.findViewById(R.id.tv_paketAdd)
+        tvRestoName = view.findViewById(R.id.tv_namaResto)
+        tvAddress = view.findViewById(R.id.tv_alamatResto)
         val btnBookingNow: Button = view.findViewById(R.id.btn_bookingNow)
 
-        val bookingId = arguments?.getString("bookingId")
+        val paketName = arguments?.getString("paketName")
         val restoName = arguments?.getString("restoName")
-        val name = arguments?.getString("name")
         val address = arguments?.getString("address")
+        val name = arguments?.getString("name")
         val date = arguments?.getString("date")
         val time = arguments?.getString("time")
         val phone = arguments?.getString("phone")
         val notes = arguments?.getString("notes")
+        val bookingId = arguments?.getString("bookingId")
+
+        // Set the package name, restaurant name, and address
+        tvPaketName.text = paketName
+        tvRestoName.text = restoName
+        tvAddress.text = address
 
         if (bookingId != null) {
             edtNama.setText(name)
@@ -85,7 +98,17 @@ class AddBookingFragment : Fragment() {
             val newNotes = edtCttn.text.toString()
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
-                val bookingInfo = BookingInfo(bookingId?.toInt() ?: 0, restoName ?: "", newName, address ?: "", newDate, newTime, newPhone, newNotes)
+                val bookingInfo = BookingInfo(
+                    bookingId?.toInt() ?: 0,
+                    restoName ?: "",
+                    paketName ?: "",
+                    newName,
+                    address ?: "",
+                    newDate,
+                    newTime,
+                    newPhone,
+                    newNotes
+                )
                 if (bookingId != null) {
                     db.collection("bookings").document(bookingId).set(bookingInfo)
                         .addOnSuccessListener {

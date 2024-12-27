@@ -34,13 +34,73 @@
                 android:layout_gravity="center_horizontal" />
 
             <TextView
+                android:id="@+id/tv_namaResto_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Resto"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_namaResto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nama Resto"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/tv_namaResto_label"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_alamatResto_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alamat Resto"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tv_namaResto_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_alamatResto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="alamat Resto"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/tv_alamatResto_label"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_jenisPaket_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jenis Paket"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tv_alamatResto_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_paketAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paket Resto"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/tv_jenisPaket_label"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_nama_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_paketAdd"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="12dp"/>
 

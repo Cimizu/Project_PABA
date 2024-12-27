@@ -22,6 +22,8 @@ class paket : Fragment() {
     private lateinit var adapter: adapterPaket
     private val paketData = mutableListOf<paketRestoran>()
     private var restoranId: String? = null
+    private var namaRestoran: String? = null
+    private var alamatRestoran: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,13 @@ class paket : Fragment() {
 
         restoranId = arguments?.getString("restoranId")
         Log.d("PaketFragment", "Restoran ID: $restoranId")
+
+        namaRestoran = arguments?.getString("namaRestoran")
+        Log.d("PaketFragment", "Nama Restoran: $namaRestoran")
+
+        alamatRestoran = arguments?.getString("alamatRestoran")
+        Log.d("PaketFragment", "Alamat Restoran: $alamatRestoran")
+
     }
 
     override fun onCreateView(
@@ -59,7 +68,7 @@ class paket : Fragment() {
             .addOnSuccessListener { result ->
                 paketData.clear()
                 if (result.isEmpty) {
-                    paketData.add(paketRestoran("Tidak ada paket yang ditemukan.", "", "", "", ""))
+                    paketData.add(paketRestoran("Tidak ada paket yang ditemukan.", "", "", "", "","",""))
                 } else {
                     for (document in result) {
                         val namaPaket = document.getString("namaPaket") ?: "Nama tidak tersedia"
@@ -67,8 +76,10 @@ class paket : Fragment() {
                         val kapasitas = document.getString("kapasitas") ?: "Kapasitas tidak tersedia"
                         val harga = document.getString("harga") ?: "Harga tidak tersedia"
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
+                        val namaResto = document.getString("namaRestoran") ?: "Nama Restoran tidak tersedia"
+                        val alamatResto = document.getString("alamatRestoran") ?: "Alamat Restoran tidak tersedia"
 
-                        paketData.add(paketRestoran(namaPaket, deskripsi, kapasitas, harga, uangDp))
+                        paketData.add(paketRestoran(namaPaket, deskripsi, kapasitas, harga, uangDp, namaResto, alamatResto))
                     }
                 }
 
