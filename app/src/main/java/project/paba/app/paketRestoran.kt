@@ -1,10 +1,15 @@
 package project.paba.app
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class paketRestoran(
     val idResto: String = "",
+    val namaPaket: String = "",
     val deskripsi: String = "",
-    val kapasitas: Int ,
+    val kapasitas: String = "",
     val foto : String = "",
-    val harga: Double,
-    val uangDp:Double
-)
+    val harga: String = "",
+    val uangDp: String = ""
+): Parcelable

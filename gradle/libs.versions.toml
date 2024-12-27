@@ -13,6 +13,7 @@ vroom = "2.6.1"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.1.1"
 firebaseAuth = "23.1.0"
+firebaseAuthKtx = "23.1.0"
 
 
 [libraries]
@@ -29,6 +30,7 @@ androidx-room-compiler = { group= "androidx.room" , name = "room-compiler", vers
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "vroom"}
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 
 
 
@@ -36,4 +38,4 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" }
