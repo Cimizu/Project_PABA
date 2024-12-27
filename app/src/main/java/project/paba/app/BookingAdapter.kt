@@ -1,10 +1,12 @@
 package project.paba.app
 
 import BookingInfo
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +24,9 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         val tvJam: TextView = itemView.findViewById(R.id.tv_jam)
         val tvCttn: TextView = itemView.findViewById(R.id.tv_cttn)
         val ibTrash: ImageButton = itemView.findViewById(R.id.ib_trash)
+        val ibEdit : ImageButton = itemView.findViewById(R.id.ib_edit)
+        val btnCekStatus : Button = itemView.findViewById(R.id.btn_cekStatus)
+        val btnBatal : Button = itemView.findViewById(R.id.btn_batal)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
@@ -40,6 +45,34 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
         holder.ibTrash.setOnClickListener {
             deleteBooking(position)
+        }
+        holder.ibEdit.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, addBooking::class.java)
+            intent.putExtra("bookingId", booking.id)
+            intent.putExtra("restoName", booking.resto)
+            intent.putExtra("name", booking.name)
+            intent.putExtra("address", booking.address)
+            intent.putExtra("date", booking.date)
+            intent.putExtra("time", booking.time)
+            intent.putExtra("phone", booking.phone)
+            intent.putExtra("notes", booking.notes)
+            context.startActivity(intent)
+        }
+
+        // jadi kalau dia batalin maka status akan berubah menjadi batal
+
+
+        holder.btnCekStatus.setOnClickListener {
+//            disable button
+            holder.btnCekStatus.isEnabled = false
+            holder.btnCekStatus.text = "Pembayaran Berhasil"
+        }
+
+        holder.btnBatal.setOnClickListener {
+//            disable button
+            holder.btnBatal.isEnabled = false
+
         }
     }
 

@@ -152,15 +152,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="8dp" />
 
+        <Button
+            android:id="@+id/btn_cekStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cek Status Pembayaran"
+            app:layout_constraintTop_toBottomOf="@id/tv_cttn"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/btn_batal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F01E2C"
+            android:text="Batalkan Reservasi"
+            app:layout_constraintTop_toBottomOf="@id/btn_cekStatus"/>
+
         <ImageButton
             android:id="@+id/ib_trash"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="Hapus"
             app:srcCompat="@drawable/trash"
-            app:layout_constraintTop_toBottomOf="@id/tv_cttn"
+            app:layout_constraintTop_toBottomOf="@id/btn_batal"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
+
+        <ImageButton
+            android:id="@+id/ib_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_edit_square_24"
+            android:contentDescription="Edit"
+            app:layout_constraintTop_toTopOf="@id/ib_trash"
+            app:layout_constraintEnd_toStartOf="@id/ib_trash"
+            android:layout_marginRight="8dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

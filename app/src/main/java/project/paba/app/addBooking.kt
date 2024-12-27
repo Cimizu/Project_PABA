@@ -13,12 +13,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class addBooking : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
+    private val bookingIdRef = db.collection("metadata").document("bookingId")
 
     private lateinit var edtNama: EditText
     private lateinit var edtTanggal: EditText
@@ -67,6 +69,12 @@ class addBooking : AppCompatActivity() {
             timePickerDialog.show()
         }
 
+        bookingIdRef.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                bookingIdRef.set(mapOf("currentId" to 0))
+            }
+        }
+
         val restoName = intent.getStringExtra("namaResto")
         val restoImage = intent.getStringExtra("imageResto")
         val restoAddress = intent.getStringExtra("alamatResto")
@@ -79,16 +87,21 @@ class addBooking : AppCompatActivity() {
             val notes = edtCttn.text.toString()
 
             if (name.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty() && phone.isNotEmpty() && notes.isNotEmpty()) {
-                val bookingInfo = BookingInfo(restoName ?: "", name, restoAddress ?: "", date, time, phone, notes)
-                db.collection("bookings").add(bookingInfo)
-                    .addOnSuccessListener {
-                        val listIntent = Intent(this, bookingList::class.java)
-                        startActivity(listIntent)
-                        finish()
+                bookingIdRef.update("currentId", FieldValue.increment(1)).addOnSuccessListener {
+                    bookingIdRef.get().addOnSuccessListener { document ->
+                        val bookingId = document.getLong("currentId")?.toInt() ?: 0
+                        val bookingInfo = BookingInfo(bookingId, restoName ?: "", name, restoAddress ?: "", date, time, phone, notes)
+                        db.collection("bookings").add(bookingInfo)
+                            .addOnSuccessListener {
+                                val listIntent = Intent(this, bookingList::class.java)
+                                startActivity(listIntent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Firebase", "Error adding document", e)
+                            }
                     }
-                    .addOnFailureListener { e ->
-                        Log.e("Firebase", "Error adding document", e)
-                    }
+                }
             } else {
                 Log.e("Validation", "All fields must be filled")
                 Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
