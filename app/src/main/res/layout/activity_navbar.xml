@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:background="@drawable/kotak_putih"
+        android:background="@color/white"
         android:paddingVertical="10dp"
         android:elevation="4dp">
 
