@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/kotak_putih"
+    android:layout_margin="6dp"
     android:padding="16dp">
 
     <ImageView
@@ -14,142 +12,132 @@
         android:layout_height="100dp"
         android:contentDescription="Gambar Resto"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/resto" />
 
     <TextView
         android:id="@+id/namaPaket"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:text="Paket Ulang Tahun"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/gambarPaket"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/gambarPaket" />
 
+    <!-- Harga -->
 
     <TextView
+        android:id="@+id/hargaLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Max:"
+        android:layout_marginTop="4dp"
+        android:text="Harga : Rp"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/gambarPaket"
-        app:layout_constraintTop_toTopOf="@id/gambarPaket" />
+        app:layout_constraintTop_toBottomOf="@id/namaPaket" />
 
-
-    <TextView
-        android:id="@+id/kapasitas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="10"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
-        app:layout_constraintStart_toEndOf="@id/gambarPaket"
-        app:layout_constraintTop_toTopOf="@id/gambarPaket" />
-
-    <TextView
-        android:id="@+id/deskripsi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="deksripsi"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.377"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="174dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Rp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/deskripsi"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Kapasitas -->
 
     <TextView
         android:id="@+id/harga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="174dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:text="200.000"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/deskripsi"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/hargaLabel"
+        app:layout_constraintTop_toBottomOf="@id/namaPaket" />
 
     <TextView
+        android:id="@+id/kapasitasLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="52dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:text="Max:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/gambarPaket"
+        app:layout_constraintTop_toBottomOf="@id/hargaLabel" />
+
+    <!-- DP Uang -->
+
+    <TextView
+        android:id="@+id/kapasitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="10"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/dpLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toEndOf="@id/kapasitasLabel"
+        app:layout_constraintTop_toBottomOf="@id/harga"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/dpLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="DP Uang : Rp"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/gambarPaket"
+        app:layout_constraintTop_toBottomOf="@id/kapasitasLabel" />
+
 
     <TextView
         android:id="@+id/uangDp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="174dp"
-        android:layout_marginTop="36dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:text="8.000"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/deskripsi"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dpLabel"
+        app:layout_constraintStart_toEndOf="@id/dpLabel"
+        app:layout_constraintTop_toBottomOf="@id/kapasitas" />
 
+    <TextView
+        android:id="@+id/deskripsi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Deskripsi paket"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gambarPaket" />
+
+    <!-- Tombol Pesan -->
     <Button
         android:id="@+id/btnPesan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#45A84A"
         android:text="Pesan"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gambarPaket" />
-
+        app:layout_constraintTop_toBottomOf="@id/deskripsi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

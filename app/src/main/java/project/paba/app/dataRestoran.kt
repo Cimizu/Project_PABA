@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class dataRestoran(
+    val idResto : String = "",
     val namaResto : String = "",
     val namaResto2: String = "",
     val deskripsi : String = "",

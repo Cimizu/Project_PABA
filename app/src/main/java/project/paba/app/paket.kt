@@ -26,8 +26,8 @@ class paket : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Mengambil data ID restoran dari arguments
         restoranId = arguments?.getString("restoranId")
+        Log.d("PaketFragment", "Restoran ID: $restoranId")
     }
 
     override fun onCreateView(

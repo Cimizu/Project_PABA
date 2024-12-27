@@ -78,7 +78,7 @@ class restaurants : Fragment() {
                         val jamtutup = document.getString("jamtutup") ?: ""
 
                         Log.d("FirebaseData", "UID: $uidRestoran, namaResto: $namaResto")
-                        restaurantData.add(dataRestoran(namaResto, namaResto2, deskripsi, lokasi, foto, noTelp, jambuka, jamtutup))
+                        restaurantData.add(dataRestoran(uidRestoran, namaResto, namaResto2, deskripsi, lokasi, foto, noTelp, jambuka, jamtutup))
                     }
                 }
                 adapter.notifyDataSetChanged()

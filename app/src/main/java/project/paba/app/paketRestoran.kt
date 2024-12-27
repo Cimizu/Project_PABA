@@ -5,7 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class paketRestoran(
-    val idResto: String = "",
     val namaPaket: String = "",
     val deskripsi: String = "",
     val kapasitas: String = "",
