@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import project.paba.app.BookingAdapter.BookingViewHolder
 
-class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : RecyclerView
+class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>,
+                     private val dataRestoran: ArrayList<dataRestoran>
+                     ) : RecyclerView
 .Adapter<HistoryAdapter.HistoryHolder> () {
 
     inner class HistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
@@ -22,7 +24,7 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : Recycle
         fun bind(booking: BookingInfo, restoran: dataRestoran) {
             tvResto.text = restoran.namaResto
             tvGambarResto.text = restoran.foto
-            tvAddress.text = restoran.alamat
+            tvAddress.text = restoran.lokasi
             tvDate.text = booking.date
             tvTime.text = booking.time
             tvStatus.text = booking.status

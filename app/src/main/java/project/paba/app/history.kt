@@ -24,7 +24,8 @@ private const val ARG_PARAM2 = "param2"
 class history : Fragment() {
     val db = Firebase.firestore
     var DataBooking = ArrayList<BookingInfo>()
-    lateinit var lvAdapter : ArrayAdapter<BookingInfo>
+    var DataRestaurant = ArrayList<dataRestoran>()
+    lateinit var lvAdapter : HistoryAdapter
 
     private lateinit var _resto : Array<String>
     private lateinit var _gambarResto : Array<String>
@@ -53,12 +54,6 @@ class history : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        lvAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            BookingInfo
-        )
     }
 
     override fun onCreateView(
@@ -66,9 +61,12 @@ class history : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         _rvHistory = view.findViewById<RecyclerView>(R.id.rvHistory)
 
+        lvAdapter = HistoryAdapter(arBooking, arRestoran)
+        _rvHistory.adapter = lvAdapter
         // Inflate the layout for this fragment
         return view
 
