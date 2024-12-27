@@ -70,19 +70,4 @@ class adapterRestoran(
     override fun getItemCount(): Int {
         return restaurantList.size
     }
-
-    // Menambahkan fungsi filter berdasarkan nama restoran
-    fun filterRestaurants(query: String?) {
-        val filteredList = mutableListOf<dataRestoran>()
-        if (query.isNullOrEmpty()) {
-            filteredList.addAll(restaurantList) // Menampilkan semua restoran jika query kosong
-        } else {
-            for (restaurant in restaurantList) {
-                if (restaurant.namaResto.contains(query, ignoreCase = true)) {
-                    filteredList.add(restaurant)
-                }
-            }
-        }
-        updateData(filteredList)
-    }
 }
