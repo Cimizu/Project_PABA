@@ -10,8 +10,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
@@ -74,6 +78,34 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             .addOnFailureListener { e ->
                 Log.e("BookingAdapter", "Error getting document", e)
             }
+//        cek status aktif
+        val currentDate = Calendar.getInstance().time
+        val bookingDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse("${booking.date} ${booking.time}")
+
+        if (bookingDate != null && currentDate.before(bookingDate)) {
+            holder.btnBatal.isEnabled = true
+            holder.btnBatal.text = "Batal"
+            db.collection("bookings").document(booking.id.toString())
+                .update("status_aktif", true)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status aktif updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingAdapter", "Error updating status aktif", e)
+                }
+        } else {
+            holder.btnCekStatus.isVisible = false
+            holder.btnBatal.isEnabled = false
+            holder.btnBatal.text = "Dibatalkan"
+            db.collection("bookings").document(booking.id.toString())
+                .update("status_aktif", false)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status aktif updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingAdapter", "Error updating status aktif", e)
+                }
+        }
 
         holder.ibTrash.setOnClickListener {
             deleteBooking(position)
@@ -121,6 +153,16 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         holder.btnBatal.setOnClickListener {
             // Disable button
             holder.btnBatal.isEnabled = false
+            holder.btnBatal.text = "Dibatalkan"
+            holder.btnCekStatus.isEnabled = false
+            db.collection("bookings").document(booking.id.toString())
+                .update("status_aktif", false)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status aktif updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingAdapter", "Error updating status aktif", e)
+                }
         }
     }
 
