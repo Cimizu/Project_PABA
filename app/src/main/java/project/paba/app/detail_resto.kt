@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,7 +53,7 @@ class detail_resto : Fragment() {
         val _lokasi = view.findViewById<TextView>(R.id.lokasi)
         val _noTelp = view.findViewById<TextView>(R.id.noTelp)
         val _deskripsi = view.findViewById<TextView>(R.id.deskripsi)
-        val _btnreservasi = view.findViewById<Button>(R.id.btnreservasi)
+//        val _btnreservasi = view.findViewById<Button>(R.id.btnreservasi)
         val _btnLihatpaket = view.findViewById<Button>(R.id.btnLihatpaket)
 
         // Get data passed from arguments
@@ -67,25 +67,25 @@ class detail_resto : Fragment() {
             _noTelp.text = it.noTelp
             _deskripsi.text = it.deskripsi
 
-            if (it.foto.isNotEmpty()) {
-                Picasso.get()
-                    .load(it.foto) // Load the image from the URL
-                    .placeholder(R.drawable.restoran) // Placeholder image while loading
-                    .error(R.drawable.restoran) // Error image if loading fails
-                    .into(_restoranImage) // Set the image into the ImageView
-            } else {
-                // Fallback if no photo URL is provided
-                _restoranImage.setImageResource(R.drawable.restoran)
-            }
+//            if (it.foto.isNotEmpty()) {
+//                Picasso.get()
+//                    .load(it.foto) // Load the image from the URL
+//                    .placeholder(R.drawable.restoran) // Placeholder image while loading
+//                    .error(R.drawable.restoran) // Error image if loading fails
+//                    .into(_restoranImage) // Set the image into the ImageView
+//            } else {
+//                // Fallback if no photo URL is provided
+//                _restoranImage.setImageResource(R.drawable.restoran)
+//            }
         }
 
         // Button for booking
-        _btnreservasi.setOnClickListener {
-            val intent = Intent(requireContext(), addBooking::class.java)
-            intent.putExtra("namaResto", dataIntent?.namaResto)
-            intent.putExtra("alamatResto", dataIntent?.lokasi)
-            startActivity(intent)
-        }
+//        _btnreservasi.setOnClickListener {
+//            val intent = Intent(requireContext(), addBooking::class.java)
+//            intent.putExtra("namaResto", dataIntent?.namaResto)
+//            intent.putExtra("alamatResto", dataIntent?.lokasi)
+//            startActivity(intent)
+//        }
 
         // Button to navigate to Paket (Fragment)
         _btnLihatpaket.setOnClickListener {

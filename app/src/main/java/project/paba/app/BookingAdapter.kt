@@ -35,6 +35,8 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         val ibEdit: ImageButton = itemView.findViewById(R.id.ib_edit)
         val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
         val btnBatal: Button = itemView.findViewById(R.id.btn_batal)
+
+        val btnCheckin : Button = itemView.findViewById(R.id.btn_checkin)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
@@ -148,6 +150,13 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 .addOnFailureListener { e ->
                     Log.e("BookingAdapter", "Error updating status bayar", e)
                 }
+        }
+
+        //kode unik
+        holder.btnCheckin.setOnClickListener {
+            if(booking.status_bayar == true && booking.status_aktif == true){
+
+            }
         }
 
         holder.btnBatal.setOnClickListener {
