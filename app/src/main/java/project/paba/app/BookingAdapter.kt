@@ -160,9 +160,26 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
         //kode unik
         holder.btnCheckin.setOnClickListener {
-            if(booking.status_bayar == true && booking.status_aktif == true){
+            if (booking.status_bayar == true && booking.status_aktif == true) {
                 val uniqueCode = generateUniqueCode() // Generate unique code
-                Log.d("BookingAdapter", "Kode Unik = $uniqueCode")
+                val timestamp = System.currentTimeMillis() // Get current timestamp
+
+                // Update booking with unique code and timestamp
+                db.collection("bookings").document(booking.id.toString())
+                    .update(mapOf(
+                        "uniqueCode" to uniqueCode,
+                        "timestamp" to timestamp
+                    ))
+                    .addOnSuccessListener {
+                        Log.d("BookingAdapter", "Unique code and timestamp updated successfully")
+
+                        // Show QR code dialog
+                        val qrCodeDialog = QRCodeDialogFragment.newInstance(uniqueCode)
+                        qrCodeDialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "QRCodeDialog")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("BookingAdapter", "Error updating unique code and timestamp", e)
+                    }
             }
         }
 
