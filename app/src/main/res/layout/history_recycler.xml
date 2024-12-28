@@ -102,7 +102,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/btnHapus"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="10dp"

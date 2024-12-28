@@ -25,7 +25,7 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : Recycle
 //            tvAddress.text = restoran.alamat
             tvDate.text = booking.date
             tvTime.text = booking.time
-            tvStatus.text = booking.status
+//            tvStatus.text = booking.status
         }
     }
 

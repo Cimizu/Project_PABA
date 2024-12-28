@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".HistoryDetail">
 
 
@@ -132,25 +133,53 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#01C000"
-            android:text="Edit"
-            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/linearLayout3"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">-->
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Kode Unik : " />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv_kodeUnik"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="abcdefgh" />-->
+        <!--        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#01C000"
-            android:text="Delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnEdit"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/btnCheckIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:backgroundTint="#01C000"
+                android:text="CheckIn"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:backgroundTint="#01C000"
+                android:text="Delete"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
