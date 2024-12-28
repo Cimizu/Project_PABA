@@ -2,6 +2,7 @@ package project.paba.app
 
 import BookingInfo
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -112,25 +114,23 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         }
         holder.ibEdit.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, addBooking::class.java)
-            intent.putExtra("bookingId", booking.id)
-            if (booking.id != null) {
-                Log.d("BookingAdapter", "Booking ID: ${booking.id}")
-                holder.tvNama.text = booking.name
-                holder.tvTanggal.text = booking.date
-                holder.tvJam.text = booking.time
-                holder.tvCttn.text = booking.notes
+            val fragment = AddBookingFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("bookingId", booking.id)
+                    putString("restoName", booking.resto)
+                    putString("paketName", booking.paket)
+                    putString("name", booking.name)
+                    putString("address", booking.address)
+                    putString("date", booking.date)
+                    putString("time", booking.time)
+                    putString("phone", booking.phone)
+                    putString("notes", booking.notes)
+                }
             }
-            intent.putExtra("restoName", booking.resto)
-            intent.putExtra("paketName", booking.paket)
-            intent.putExtra("name", booking.name)
-            intent.putExtra("address", booking.address)
-            intent.putExtra("date", booking.date)
-            intent.putExtra("time", booking.time)
-            intent.putExtra("phone", booking.phone)
-            intent.putExtra("notes", booking.notes)
-
-            context.startActivity(intent)
+            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.frameContainer, fragment, AddBookingFragment::class.java.simpleName)
+                .addToBackStack(null)
+                .commit()
         }
 
         holder.btnCekStatus.setOnClickListener {
