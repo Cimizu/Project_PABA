@@ -49,7 +49,7 @@ class AddBookingFragment : Fragment() {
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
         val idRestoran = arguments?.getString("idRestoran")
-        bookingId = arguments?.getInt("bookingId") // Ganti dengan getInt jika bookingId bertipe Int
+        bookingId = arguments?.getInt("bookingId")
 
         Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran, bookingId: $bookingId")
 
@@ -101,6 +101,7 @@ class AddBookingFragment : Fragment() {
             val newPhone = edtNotelp.text.toString()
             val newNotes = edtCttn.text.toString()
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+            val uniqueCode = generateUniqueCode()
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 if (bookingId != null) {
@@ -117,9 +118,10 @@ class AddBookingFragment : Fragment() {
                         newNotes,
                         false,
                         true,
-                        userId
+                        userId,
+                        uniqueCode
                     )
-                    db.collection("bookings").document(bookingId.toString()) // Simpan bookingId dalam bentuk String untuk Firestore document ID
+                    db.collection("bookings").document(bookingId.toString())
                         .set(bookingInfo)
                         .addOnSuccessListener {
                             navigateToBookingList()
@@ -143,9 +145,10 @@ class AddBookingFragment : Fragment() {
                                 newNotes,
                                 false,
                                 true,
-                                userId
+                                userId,
+                                uniqueCode
                             )
-                            db.collection("bookings").document(nextId.toString()).set(bookingInfo) // Simpan sebagai String ID
+                            db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                                 .addOnSuccessListener {
                                     navigateToBookingList()
                                 }
@@ -185,7 +188,7 @@ class AddBookingFragment : Fragment() {
     }
 
     private fun fetchBookingData(bookingId: Int) {
-        db.collection("bookings").document(bookingId.toString()) // Gunakan toString untuk document ID
+        db.collection("bookings").document(bookingId.toString())
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -238,5 +241,9 @@ class AddBookingFragment : Fragment() {
             Log.e("AddBookingFragment", "Error getting next id", e)
             onComplete(-1)
         }
+    }
+
+    private fun generateUniqueCode(): String {
+        return "BOOK-" + UUID.randomUUID().toString()
     }
 }

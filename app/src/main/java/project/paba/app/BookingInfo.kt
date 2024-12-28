@@ -1,5 +1,6 @@
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.Timestamp
 
 data class BookingInfo(
     val id: Int = 0,
@@ -13,7 +14,9 @@ data class BookingInfo(
     val notes: String = "",
     val status_bayar : Boolean = false,
     val status_aktif : Boolean = true,
-    val userId: String = ""
+    val userId: String = "",
+    val uniqueCode: String = "",
+    val timestamp: Long? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -27,6 +30,7 @@ data class BookingInfo(
         parcel.readString() ?: "",
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
+        parcel.readString() ?: "",
         parcel.readString() ?: ""
     )
 
@@ -43,6 +47,7 @@ data class BookingInfo(
         parcel.writeByte(if (status_bayar) 1 else 0)
         parcel.writeByte(if (status_aktif) 1 else 0)
         parcel.writeString(userId)
+        parcel.writeString(uniqueCode)
     }
 
     override fun describeContents(): Int {
