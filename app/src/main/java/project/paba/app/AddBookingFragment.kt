@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -109,33 +110,31 @@ class AddBookingFragment : Fragment() {
             val newNotes = edtCttn.text.toString()
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
-                val bookingInfo = BookingInfo(
-                    bookingId?.toInt() ?: 0,
-                    tvRestoName.text.toString(),
-                    paketName ?: "",
-                    newName,
-                    tvAddress.text.toString(),
-                    newDate,
-                    newTime,
-                    newPhone,
-                    newNotes
-                )
-                if (bookingId != null) {
-                    db.collection("bookings").document(bookingId).set(bookingInfo)
-                        .addOnSuccessListener {
-                            navigateToBookingList()
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Firebase", "Error updating document", e)
-                        }
-                } else {
-                    db.collection("bookings").add(bookingInfo)
-                        .addOnSuccessListener {
-                            navigateToBookingList()
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Firebase", "Error adding document", e)
-                        }
+                getNextId { nextId ->
+                    if (nextId != -1) {
+                        val bookingInfo = BookingInfo(
+                            nextId,
+                            tvRestoName.text.toString(),
+                            paketName ?: "",
+                            newName,
+                            tvAddress.text.toString(),
+                            newDate,
+                            newTime,
+                            newPhone,
+                            newNotes,
+                            false,
+                            true
+                        )
+                        db.collection("bookings").document(nextId.toString()).set(bookingInfo)
+                            .addOnSuccessListener {
+                                navigateToBookingList()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Firebase", "Error adding document", e)
+                            }
+                    } else {
+                        Toast.makeText(requireContext(), "Error generating booking ID", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
                 Toast.makeText(requireContext(), "Semua field harus diisi!", Toast.LENGTH_SHORT).show()
@@ -169,5 +168,23 @@ class AddBookingFragment : Fragment() {
             .replace(R.id.frameContainer, BookingListFragment())
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun getNextId(onComplete: (Int) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val idDocRef = db.collection("metadata").document("bookingId")
+
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(idDocRef)
+            val currentId = snapshot.getLong("lastId") ?: 0
+            val nextId = currentId + 1
+            transaction.update(idDocRef, "lastId", nextId)
+            nextId
+        }.addOnSuccessListener { nextId ->
+            onComplete(nextId.toInt())
+        }.addOnFailureListener { e ->
+            Log.e("AddBookingFragment", "Error getting next id", e)
+            onComplete(-1)
+        }
     }
 }

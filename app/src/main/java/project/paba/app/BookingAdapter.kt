@@ -26,9 +26,9 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         val tvCttn: TextView = itemView.findViewById(R.id.tv_cttn)
 
         val ibTrash: ImageButton = itemView.findViewById(R.id.ib_trash)
-        val ibEdit : ImageButton = itemView.findViewById(R.id.ib_edit)
-        val btnCekStatus : Button = itemView.findViewById(R.id.btn_cekStatus)
-        val btnBatal : Button = itemView.findViewById(R.id.btn_batal)
+        val ibEdit: ImageButton = itemView.findViewById(R.id.ib_edit)
+        val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
+        val btnBatal: Button = itemView.findViewById(R.id.btn_batal)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
@@ -45,6 +45,35 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         holder.tvTanggal.text = booking.date
         holder.tvJam.text = booking.time
         holder.tvCttn.text = booking.notes
+
+        // Check status_bayar and update button state
+        val db = FirebaseFirestore.getInstance()
+        db.collection("bookings").document(booking.id.toString())
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val statusBayar = document.getBoolean("status_bayar") ?: false
+                    if (statusBayar) {
+                        holder.btnCekStatus.isEnabled = false
+                        holder.btnCekStatus.text = "Pembayaran Berhasil"
+                        db.collection("bookings").document(booking.id.toString())
+                            .update("status_bayar", true)
+                            .addOnSuccessListener {
+                                Log.d("BookingAdapter", "Status bayar updated successfully")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("BookingAdapter", "Error updating status bayar", e)
+                            }
+
+                    } else {
+                        holder.btnCekStatus.isEnabled = true
+                        holder.btnCekStatus.text = "Cek Status"
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("BookingAdapter", "Error getting document", e)
+            }
 
         holder.ibTrash.setOnClickListener {
             deleteBooking(position)
@@ -72,19 +101,26 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             context.startActivity(intent)
         }
 
-        // jadi kalau dia batalin maka status akan berubah menjadi batal
-
-
         holder.btnCekStatus.setOnClickListener {
-//            disable button
+            // Disable button
             holder.btnCekStatus.isEnabled = false
             holder.btnCekStatus.text = "Pembayaran Berhasil"
+
+            // Update status_bayar to true in Firestore
+            val db = FirebaseFirestore.getInstance()
+            db.collection("bookings").document(booking.id.toString())
+                .update("status_bayar", true)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status bayar updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("BookingAdapter", "Error updating status bayar", e)
+                }
         }
 
         holder.btnBatal.setOnClickListener {
-//            disable button
+            // Disable button
             holder.btnBatal.isEnabled = false
-
         }
     }
 
