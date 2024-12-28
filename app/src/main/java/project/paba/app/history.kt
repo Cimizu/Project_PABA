@@ -1,6 +1,8 @@
 package project.paba.app
 
 import BookingInfo
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
@@ -35,12 +38,14 @@ class history : Fragment() {
     var DataRestaurant = ArrayList<dataRestoran>()
     lateinit var lvAdapter : HistoryAdapter
 
-    private lateinit var _resto : Array<String>
-    private lateinit var _gambarResto : Array<String>
-    private lateinit var _alamatresto : Array<String>
-    private lateinit var _jam : Array<String>
-    private lateinit var _tanggal : Array<String>
-    private lateinit var _status : Array<String>
+    private var _nama: MutableList<String> = emptyList<String>().toMutableList()
+    private var _resto: MutableList<String> = emptyList<String>().toMutableList()
+    private var _gambarResto: MutableList<String> = emptyList<String>().toMutableList()
+    private var _alamatresto: MutableList<String> = emptyList<String>().toMutableList()
+    private var _jam: MutableList<String> = emptyList<String>().toMutableList()
+    private var _tanggal: MutableList<String> = emptyList<String>().toMutableList()
+    private var _status: MutableList<String> = emptyList<String>().toMutableList()
+
 
     private var arBooking = arrayListOf<BookingInfo>()
     private var arRestoran = arrayListOf<dataRestoran>()
@@ -58,6 +63,53 @@ class history : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+    }
+
+    fun TampilkanData(){
+        _rvHistory.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapterHistory = HistoryAdapter(arBooking, arRestoran)
+        _rvHistory.adapter = adapterHistory
+
+        adapterHistory.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback{
+            override fun onItemClicked(data1: BookingInfo, data2: dataRestoran) {
+                // Create the HistoryDetail fragment
+                val fragment = HistoryDetail.newInstance(data1, data2)
+
+                // Replace the current fragment with HistoryDetail
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameContainer, fragment)  // Replace the container with the HistoryDetail fragment
+                    .addToBackStack(null)  // Optional: Add this transaction to the back stack, so the user can navigate back
+                    .commit()  // Commit the transaction to execute the change
+            }
+
+            override fun delData(pos: Int) {
+                AlertDialog.Builder(requireContext())
+                    .setTitle("HAPUS DATA")
+                    .setMessage("Apakah Benar Data Booking "+ _resto[pos] + " Akan Dihapus? ")
+                    .setPositiveButton(
+                        "HAPUS",
+                        DialogInterface.OnClickListener{ dialog, which ->
+                            _alamatresto.removeAt(pos)
+                            _status.removeAt(pos)
+                            _gambarResto.removeAt(pos)
+                            _jam.removeAt(pos)
+                            _tanggal.removeAt(pos)
+                            TampilkanData()
+                        }
+                    )
+                    .setNegativeButton(
+                        "BATAL",
+                        DialogInterface.OnClickListener{ dialog, which ->
+                            Toast.makeText(
+                                requireContext(),
+                                "Data Batal Dihapus",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    ).show()
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,6 +152,49 @@ class history : Fragment() {
         _btnExpired.setOnClickListener {
             filterByStatus("Expired")  // Filter expired bookings
         }
+
+        // Assuming pos is passed from somewhere, here is how to use it:
+        val _btnHapus: Button = view.findViewById(R.id.btnHapus)
+        _btnHapus.setOnClickListener {
+            val pos = getSelectedItemPosition()
+            if (pos != -1) {  // cek posisi
+                delData(pos)
+            } else {
+                Toast.makeText(requireContext(), "No item selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // fungsi delData pindah
+        fun delData(pos: Int) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("HAPUS DATA")
+                .setMessage("Apakah Benar Data Booking ${_resto[pos]} Akan Dihapus? ")
+                .setPositiveButton(
+                    "HAPUS",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        // Remove data from lists at position `pos`
+                        _alamatresto.removeAt(pos)
+                        _status.removeAt(pos)
+                        _gambarResto.removeAt(pos)
+                        _jam.removeAt(pos)
+                        _tanggal.removeAt(pos)
+                        // Refresh data
+                        TampilkanData()
+                    }
+                )
+                .setNegativeButton(
+                    "BATAL",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        Toast.makeText(
+                            requireContext(),
+                            "Data Batal Dihapus",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                ).show()
+        }
+
+
     }
 
     override fun onCreateView(

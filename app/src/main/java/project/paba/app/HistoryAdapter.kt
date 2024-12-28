@@ -19,8 +19,13 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>,
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
+//    fun delData(position: Int) {
+//        BookingInfoo.removeAt(position)
+//        notifyItemRemoved(position)
+//    }
+
     interface OnItemClickCallback {
-        fun onItemClicked(data:BookingInfo)
+        fun onItemClicked(data:BookingInfo, data2:dataRestoran)
         fun delData(pos: Int)
     }
 
@@ -73,7 +78,7 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>,
 
         holder.tvGambarResto.setOnClickListener{
 //            Toast.makeText(holder.itemView.context, wayang.nama, Toast.LENGTH_LONG).show()
-            onItemClickCallback.onItemClicked(BookingInfoo[position])
+            onItemClickCallback.onItemClicked(BookingInfoo[position], dataRestoran[position])
         }
 
         holder._btnHapus.setOnClickListener{
