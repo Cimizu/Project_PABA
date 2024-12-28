@@ -146,11 +146,11 @@ class history : Fragment() {
         }
 
         _btnActive.setOnClickListener {
-            filterByStatus("Active")  // Filter active bookings
+            filterHistory("true")  // Filter active bookings
         }
 
         _btnExpired.setOnClickListener {
-            filterByStatus("Expired")  // Filter expired bookings
+            filterHistory("false")  // Filter expired bookings
         }
 
         // Assuming pos is passed from somewhere, here is how to use it:
@@ -263,21 +263,20 @@ class history : Fragment() {
         val filteredRestaurants = mutableListOf<dataRestoran>()
 
         if (query.isNullOrEmpty()) {
-            // If query is empty, show all items
             filteredBookings.addAll(arBooking)
             filteredRestaurants.addAll(arRestoran)
         } else {
-            // Filter the bookings based on the query
             for (booking in arBooking) {
-                if (booking.status.contains(query, ignoreCase = true) || booking.date.contains(query, ignoreCase = true)) {
-                    filteredBookings.add(booking)
-                }
-            }
+                // ubah query ke boolean ("true" or "false")
+                val queryBoolean = query.toBooleanStrictOrNull()
 
-            // Filter the restaurants based on the query
-            for (restaurant in arRestoran) {
-                if (restaurant.namaResto.contains(query, ignoreCase = true)) {
-                    filteredRestaurants.add(restaurant)
+                if (queryBoolean != null) {
+                    if (booking.status_aktif == queryBoolean) {
+                        filteredBookings.add(booking)
+                    }
+                } else {
+                    Log.e("FilterHistory",
+                        "Gagal filter: Invalid boolean value in query '$query'")
                 }
             }
         }
@@ -285,6 +284,7 @@ class history : Fragment() {
         // Update the adapter with the filtered data
         lvAdapter.updateData(filteredBookings, filteredRestaurants)
     }
+
 
 
     private fun filterByStatus(status: String) {

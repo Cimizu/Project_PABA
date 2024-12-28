@@ -19,10 +19,6 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>,
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-//    fun delData(position: Int) {
-//        BookingInfoo.removeAt(position)
-//        notifyItemRemoved(position)
-//    }
 
     interface OnItemClickCallback {
         fun onItemClicked(data:BookingInfo, data2:dataRestoran)
