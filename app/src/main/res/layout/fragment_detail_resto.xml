@@ -192,23 +192,13 @@
             android:text="Merupakan Restoran dengan menu masakan khas Indonesia"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnreservasi"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="110dp"
-            android:backgroundTint="#01C000"
-            android:text="Reservasi"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnLihatpaket"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="120dp"
             android:backgroundTint="#01C000"
             android:text="Lihat Paket"
             android:textColor="@color/black"

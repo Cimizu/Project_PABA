@@ -2,12 +2,14 @@ package project.paba.app
 
 import BookingInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class BookingListFragment : Fragment() {
@@ -34,18 +36,25 @@ class BookingListFragment : Fragment() {
     }
 
     private fun fetchBookingData() {
-        db.collection("bookings")
-            .get()
-            .addOnSuccessListener { result ->
-                bookingList.clear()
-                for (document in result) {
-                    val booking = document.toObject(BookingInfo::class.java)
-                    bookingList.add(booking)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            db.collection("bookings")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
+                    bookingList.clear()
+                    for (document in result) {
+                        val booking = document.toObject(BookingInfo::class.java)
+                        bookingList.add(booking)
+                    }
+                    adapter.notifyDataSetChanged()
+                    Log.d("Firebase", "Data fetched: ${bookingList.size} items")
                 }
-                adapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { exception ->
-                // Handle error
-            }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Error reading documents", e)
+                }
+        } else {
+            Log.e("Firebase", "User ID is null")
+        }
     }
 }

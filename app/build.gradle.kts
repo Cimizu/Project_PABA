@@ -52,5 +52,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.picasso)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android.embedded)
+
 
 }

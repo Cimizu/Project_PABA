@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import project.paba.app.R
 import project.paba.app.dataRestoran
 import project.paba.app.detail_resto
@@ -42,6 +43,17 @@ class adapterRestoran(
         // Set text data
         holder.namaResto.text = restaurants.namaResto
         holder.namaResto2.text = restaurants.namaResto2
+
+        if (restaurants.foto.isNotEmpty()) {
+            Picasso.get()
+                .load(restaurants.foto) // Load the image from the URL stored in the foto field
+                .placeholder(R.drawable.restoran) // Placeholder image while loading
+                .error(R.drawable.restoran) // Error image if loading fails
+                .into(holder.restaurantImage) // Set the image into the ImageView
+        } else {
+            // Fallback if no photo URL is provided
+            holder.restaurantImage.setImageResource(R.drawable.restoran)
+        }
 
         holder.reserveButton.setOnClickListener {
             val context = holder.itemView.context
