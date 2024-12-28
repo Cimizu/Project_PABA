@@ -46,6 +46,7 @@ class profile : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val _btnEdit = view.findViewById<ImageView>(R.id.btnEdit)
+        val _btnPesanan = view.findViewById<Button>(R.id.btnPesanan)
 
 
         _btnEdit.setOnClickListener {
@@ -54,6 +55,17 @@ class profile : Fragment() {
             val mFragmentManager = parentFragmentManager
             mFragmentManager.beginTransaction().apply {
                 replace(R.id.frameContainer, mfDua, editProfile::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+        _btnPesanan.setOnClickListener {
+            val mfTiga = BookingListFragment()
+
+            val mFragmentManager = parentFragmentManager
+            mFragmentManager.beginTransaction().apply {
+                replace(R.id.frameContainer, mfTiga, BookingListFragment::class.java.simpleName)
                 addToBackStack(null)
                 commit()
             }
