@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
@@ -151,11 +152,17 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status bayar", e)
                 }
         }
+        fun generateUniqueCode(): String {
+            // You can use UUID or combine with the timestamp to make it even more unique
+            val uniqueCode = "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
+            return uniqueCode
+        }
 
         //kode unik
         holder.btnCheckin.setOnClickListener {
             if(booking.status_bayar == true && booking.status_aktif == true){
-
+                val uniqueCode = generateUniqueCode() // Generate unique code
+                Log.d("BookingAdapter", "Kode Unik = $uniqueCode")
             }
         }
 
