@@ -41,21 +41,23 @@ class paket : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_paket, container, false)
+        return inflater.inflate(R.layout.fragment_paket, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Initialize RecyclerView
         paketListRecyclerView = view.findViewById(R.id.rvPaket)
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = adapterPaket(paketData, restoranId) { paket ->
+        // Set up the adapter
+        adapter = adapterPaket(paketData,restoranId) { paket ->
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
-
         paketListRecyclerView.adapter = adapter
 
-        // Panggil fetch paket data
+        // Fetch data for the "paket"
         fetchPaketData()
-
-        return view
     }
 
     /**

@@ -80,7 +80,8 @@ class editProfile : Fragment() {
 
             val updates = hashMapOf<String,Any>(
                 "nama" to nama,
-                "nomorTelepon" to nomorTelepon
+                "nomorTelepon" to nomorTelepon,
+                "password" to passwordBaru
             )
 
             if (passwordBaru.isNotEmpty()) {

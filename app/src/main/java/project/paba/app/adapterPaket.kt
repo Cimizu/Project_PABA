@@ -40,6 +40,18 @@ class adapterPaket(
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
 
+        // Check if the package has valid data to enable/disable the button
+        if (paket.namaPaket.isNullOrEmpty() || paket.harga.isNullOrEmpty()) {
+            // Disable the button if the data is incomplete
+            holder.pesanButton.isEnabled = false
+            holder.pesanButton.alpha = 0.5f  // Optional: reduce opacity to indicate disabled state
+        } else {
+            // Enable the button if the data is valid
+            holder.pesanButton.isEnabled = true
+            holder.pesanButton.alpha = 1f  // Restore opacity to normal
+        }
+
+
         holder.pesanButton.setOnClickListener {
             Log.d(
                 "adapterPaket",
