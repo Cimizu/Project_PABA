@@ -37,7 +37,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
         val btnBatal: Button = itemView.findViewById(R.id.btn_batal)
 
-        val btnCheckin: Button = itemView.findViewById(R.id.btn_checkin)
+        val btnCheckin : Button = itemView.findViewById(R.id.btn_checkin)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
@@ -83,8 +83,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             .addOnFailureListener { e ->
                 Log.e("BookingAdapter", "Error getting document", e)
             }
-
-        // Check status_aktif
+//        cek status aktif
         val currentDate = Calendar.getInstance().time
         val bookingDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse("${booking.date} ${booking.time}")
 
@@ -143,6 +142,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             holder.btnCekStatus.text = "Pembayaran Berhasil"
 
             // Update status_bayar to true in Firestore
+            val db = FirebaseFirestore.getInstance()
             db.collection("bookings").document(booking.id.toString())
                 .update("status_bayar", true)
                 .addOnSuccessListener {
@@ -152,34 +152,17 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status bayar", e)
                 }
         }
-
         fun generateUniqueCode(): String {
             // You can use UUID or combine with the timestamp to make it even more unique
-            return "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
+            val uniqueCode = "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
+            return uniqueCode
         }
 
-        // Unique code
+        //kode unik
         holder.btnCheckin.setOnClickListener {
-            if (booking.status_bayar == true && booking.status_aktif == true) {
+            if(booking.status_bayar == true && booking.status_aktif == true){
                 val uniqueCode = generateUniqueCode() // Generate unique code
-                val timestamp = System.currentTimeMillis() // Get current timestamp
-
-                // Update booking with unique code and timestamp
-                db.collection("bookings").document(booking.id.toString())
-                    .update(mapOf(
-                        "uniqueCode" to uniqueCode,
-                        "timestamp" to timestamp
-                    ))
-                    .addOnSuccessListener {
-                        Log.d("BookingAdapter", "Unique code and timestamp updated successfully")
-
-                        // Show QR code dialog
-                        val qrCodeDialog = QRCodeDialogFragment.newInstance(uniqueCode)
-                        qrCodeDialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "QRCodeDialog")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("BookingAdapter", "Error updating unique code and timestamp", e)
-                    }
+                Log.d("BookingAdapter", "Kode Unik = $uniqueCode")
             }
         }
 
