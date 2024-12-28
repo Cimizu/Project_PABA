@@ -152,10 +152,9 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status bayar", e)
                 }
         }
+
         fun generateUniqueCode(): String {
-            // You can use UUID or combine with the timestamp to make it even more unique
-            val uniqueCode = "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
-            return uniqueCode
+            return "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
         }
 
         //kode unik
@@ -163,6 +162,17 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             if(booking.status_bayar == true && booking.status_aktif == true){
                 val uniqueCode = generateUniqueCode() // Generate unique code
                 Log.d("BookingAdapter", "Kode Unik = $uniqueCode")
+
+                // Update db
+                db.collection("bookings").document(booking.id.toString())
+                    .update("kodeunik", uniqueCode)
+                    .addOnSuccessListener {
+                        Log.d("BookingAdapter", "Kodeunik added to Firestore")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("BookingAdapter", "Error adding kodeunik", e)
+                    }
+
             }
         }
 
