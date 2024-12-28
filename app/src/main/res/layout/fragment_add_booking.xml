@@ -225,6 +225,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="12dp"/>
+
+            <Button
+                android:id="@+id/btn_updateBooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Booking"
+                app:layout_constraintTop_toBottomOf="@id/btn_bookingNow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

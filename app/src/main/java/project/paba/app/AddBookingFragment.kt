@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -45,6 +46,7 @@ class AddBookingFragment : Fragment() {
         tvRestoName = view.findViewById(R.id.tv_namaResto)
         tvAddress = view.findViewById(R.id.tv_alamatResto)
         val btnBookingNow: Button = view.findViewById(R.id.btn_bookingNow)
+        val btnUpdateBooking: Button = view.findViewById(R.id.btn_updateBooking)
 
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
@@ -66,6 +68,14 @@ class AddBookingFragment : Fragment() {
         // Jika bookingId tidak null, fetch existing booking data
         if (bookingId != null) {
             fetchBookingData(bookingId!!)
+        } else {
+            // New reservation: hide update button and clear EditText fields
+            btnUpdateBooking.isVisible = false
+            edtNama.text.clear()
+            edtTanggal.text.clear()
+            edtJam.text.clear()
+            edtNotelp.text.clear()
+            edtCttn.text.clear()
         }
 
         // Date picker
@@ -104,6 +114,51 @@ class AddBookingFragment : Fragment() {
             val uniqueCode = generateUniqueCode()
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
+                // Create new booking
+                getNextId { nextId ->
+                    if (nextId != -1) {
+                        val bookingInfo = BookingInfo(
+                            nextId,
+                            tvRestoName.text.toString(),
+                            paketName ?: "",
+                            newName,
+                            tvAddress.text.toString(),
+                            newDate,
+                            newTime,
+                            newPhone,
+                            newNotes,
+                            false,
+                            true,
+                            userId,
+                            uniqueCode
+                        )
+                        db.collection("bookings").document(nextId.toString()).set(bookingInfo)
+                            .addOnSuccessListener {
+                                navigateToBookingList()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Firebase", "Error adding document", e)
+                            }
+                    } else {
+                        Toast.makeText(requireContext(), "Error generating booking ID", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Semua field harus diisi!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Tombol update
+        btnUpdateBooking.setOnClickListener {
+            val newName = edtNama.text.toString()
+            val newDate = edtTanggal.text.toString()
+            val newTime = edtJam.text.toString()
+            val newPhone = edtNotelp.text.toString()
+            val newNotes = edtCttn.text.toString()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+            val uniqueCode = generateUniqueCode()
+
+            if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 if (bookingId != null) {
                     // Update existing booking
                     val bookingInfo = BookingInfo(
@@ -130,35 +185,7 @@ class AddBookingFragment : Fragment() {
                             Log.e("Firebase", "Error updating document", e)
                         }
                 } else {
-                    // Create new booking
-                    getNextId { nextId ->
-                        if (nextId != -1) {
-                            val bookingInfo = BookingInfo(
-                                nextId,
-                                tvRestoName.text.toString(),
-                                paketName ?: "",
-                                newName,
-                                tvAddress.text.toString(),
-                                newDate,
-                                newTime,
-                                newPhone,
-                                newNotes,
-                                false,
-                                true,
-                                userId,
-                                uniqueCode
-                            )
-                            db.collection("bookings").document(nextId.toString()).set(bookingInfo)
-                                .addOnSuccessListener {
-                                    navigateToBookingList()
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.e("Firebase", "Error adding document", e)
-                                }
-                        } else {
-                            Toast.makeText(requireContext(), "Error generating booking ID", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                    Toast.makeText(requireContext(), "Booking ID tidak ditemukan!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(requireContext(), "Semua field harus diisi!", Toast.LENGTH_SHORT).show()
