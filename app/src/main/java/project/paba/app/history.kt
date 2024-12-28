@@ -153,16 +153,6 @@ class history : Fragment() {
             filterHistory("false")  // Filter expired bookings
         }
 
-        // Assuming pos is passed from somewhere, here is how to use it:
-        val _btnHapus: Button = view.findViewById(R.id.btnHapus)
-        _btnHapus.setOnClickListener {
-            val pos = getSelectedItemPosition()
-            if (pos != -1) {  // cek posisi
-                delData(pos)
-            } else {
-                Toast.makeText(requireContext(), "No item selected", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         // fungsi delData pindah
         fun delData(pos: Int) {
@@ -193,6 +183,18 @@ class history : Fragment() {
                     }
                 ).show()
         }
+
+
+        val _btnHapus: Button = view.findViewById(R.id.btnHapus)
+        _btnHapus.setOnClickListener {
+            val pos = getSelectedItemPosition()
+            if (pos != -1) {  // cek posisi
+                delData(pos)
+            } else {
+                Toast.makeText(requireContext(), "No item selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
 
     }
@@ -284,25 +286,6 @@ class history : Fragment() {
         // Update the adapter with the filtered data
         lvAdapter.updateData(filteredBookings, filteredRestaurants)
     }
-
-
-
-    private fun filterByStatus(status: String) {
-        // Create a filtered list to hold bookings with the specified status
-        val filteredBookings = mutableListOf<BookingInfo>()
-
-        // Loop through the BookingInfoo list and filter by status
-        for (booking in arBooking) {
-            if (booking.status.equals(status, ignoreCase = true)) {
-                filteredBookings.add(booking)
-            }
-        }
-
-        // Update the adapter with the filtered bookings
-        lvAdapter.updateData(filteredBookings, arRestoran)
-    }
-
-
 
     companion object {
         /**

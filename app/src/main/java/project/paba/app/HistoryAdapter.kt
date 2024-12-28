@@ -44,7 +44,7 @@ class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>,
             tvAddress.text = restoran.lokasi
             tvDate.text = booking.date
             tvTime.text = booking.time
-            tvStatus.text = booking.status
+            tvStatus.text = booking.status_aktif.toString()
 
             Log.d("TEST", restoran.foto)
             Picasso.get()
