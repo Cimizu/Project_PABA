@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -108,6 +109,7 @@ class AddBookingFragment : Fragment() {
             val newTime = edtJam.text.toString()
             val newPhone = edtNotelp.text.toString()
             val newNotes = edtCttn.text.toString()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 getNextId { nextId ->
@@ -123,7 +125,8 @@ class AddBookingFragment : Fragment() {
                             newPhone,
                             newNotes,
                             false,
-                            true
+                            true,
+                            userId // Ensure userId is set here
                         )
                         db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                             .addOnSuccessListener {
