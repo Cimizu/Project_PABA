@@ -26,6 +26,9 @@ class AddBookingFragment : Fragment() {
     private lateinit var edtJam: EditText
     private lateinit var edtNotelp: EditText
     private lateinit var edtCttn: EditText
+    private lateinit var edtJumlahOrang: EditText
+    private lateinit var tvHargaTotal: TextView
+    private lateinit var tvHargaDP: TextView
     private lateinit var tvPaketName: TextView
     private lateinit var tvRestoName: TextView
     private lateinit var tvAddress: TextView
@@ -42,6 +45,9 @@ class AddBookingFragment : Fragment() {
         edtJam = view.findViewById(R.id.edt_jam)
         edtNotelp = view.findViewById(R.id.edt_notelp)
         edtCttn = view.findViewById(R.id.edt_cttn)
+        edtJumlahOrang = view.findViewById(R.id.edt_jumlahOrang)
+        tvHargaTotal = view.findViewById(R.id.tv_hargaTotal)
+        tvHargaDP = view.findViewById(R.id.tv_hargaDP)
         tvPaketName = view.findViewById(R.id.tv_paketAdd)
         tvRestoName = view.findViewById(R.id.tv_namaResto)
         tvAddress = view.findViewById(R.id.tv_alamatResto)
@@ -69,13 +75,16 @@ class AddBookingFragment : Fragment() {
         if (bookingId != null) {
             fetchBookingData(bookingId!!)
         } else {
-            // New reservation: hide update button and clear EditText fields
+            // Jika bookingId null, maka create baru, sembunyikan tombol update, kosongkan field
             btnUpdateBooking.isVisible = false
             edtNama.text.clear()
             edtTanggal.text.clear()
             edtJam.text.clear()
             edtNotelp.text.clear()
             edtCttn.text.clear()
+            edtJumlahOrang.text.clear()
+            tvHargaTotal.text = "0"
+            tvHargaDP.text = "0"
         }
 
         // Date picker
@@ -110,6 +119,9 @@ class AddBookingFragment : Fragment() {
             val newTime = edtJam.text.toString()
             val newPhone = edtNotelp.text.toString()
             val newNotes = edtCttn.text.toString()
+            val newJumlahOrang = edtJumlahOrang.text.toString().toIntOrNull() ?: 0
+            val newHargaTotal = tvHargaTotal.text.toString().toIntOrNull() ?: 0
+            val newHargaDP = tvHargaDP.text.toString().toIntOrNull() ?: 0
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val uniqueCode = generateUniqueCode()
 
@@ -130,7 +142,10 @@ class AddBookingFragment : Fragment() {
                             false,
                             true,
                             userId,
-                            uniqueCode
+                            uniqueCode,
+                            hargaTotal = newHargaTotal,
+                            hargaDP = newHargaDP,
+                            jumlahOrang = newJumlahOrang
                         )
                         db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                             .addOnSuccessListener {
@@ -155,6 +170,10 @@ class AddBookingFragment : Fragment() {
             val newTime = edtJam.text.toString()
             val newPhone = edtNotelp.text.toString()
             val newNotes = edtCttn.text.toString()
+            val newJumlahOrang = edtJumlahOrang.text.toString().toIntOrNull() ?: 0
+            val newHargaTotal = tvHargaTotal.text.toString().toIntOrNull() ?: 0
+            val newHargaDP = tvHargaDP.text.toString().toIntOrNull() ?: 0
+            val newHargaSisa = newHargaTotal - newHargaDP
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val uniqueCode = generateUniqueCode()
 
@@ -174,7 +193,11 @@ class AddBookingFragment : Fragment() {
                         false,
                         true,
                         userId,
-                        uniqueCode
+                        uniqueCode,
+                        hargaTotal = newHargaTotal,
+                        hargaDP = newHargaDP,
+                        hargaSisa = newHargaSisa,
+                        jumlahOrang = newJumlahOrang
                     )
                     db.collection("bookings").document(bookingId.toString())
                         .set(bookingInfo)
@@ -227,6 +250,10 @@ class AddBookingFragment : Fragment() {
                     val oldTime = document.getString("time")
                     val oldPhone = document.getString("phone")
                     val oldNotes = document.getString("notes")
+                    val oldHargaTotal = document.getLong("hargaTotal")?.toInt() ?: 0
+                    val oldHargaDP = document.getLong("hargaDP")?.toInt() ?: 0
+                    val oldHargaSisa = document.getLong("hargaSisa")?.toInt() ?: 0
+                    val oldJumlahOrang = document.getLong("jumlahOrang")?.toInt() ?: 0
 
                     tvRestoName.text = oldResto
                     tvPaketName.text = oldPaket
@@ -236,6 +263,9 @@ class AddBookingFragment : Fragment() {
                     edtJam.setText(oldTime)
                     edtNotelp.setText(oldPhone)
                     edtCttn.setText(oldNotes)
+                    tvHargaTotal.text = oldHargaTotal.toString()
+                    tvHargaDP.text = oldHargaDP.toString()
+                    edtJumlahOrang.setText(oldJumlahOrang.toString())
 
                 } else {
                     Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $bookingId")

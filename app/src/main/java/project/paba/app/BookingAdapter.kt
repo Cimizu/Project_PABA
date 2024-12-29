@@ -138,19 +138,20 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
         holder.btnCekStatus.setOnClickListener {
             // Disable button
-            holder.btnCekStatus.isEnabled = false
-            holder.btnCekStatus.text = "Pembayaran Berhasil"
-
-            // Update status_bayar to true in Firestore
-            val db = FirebaseFirestore.getInstance()
-            db.collection("bookings").document(booking.id.toString())
-                .update("status_bayar", true)
-                .addOnSuccessListener {
-                    Log.d("BookingAdapter", "Status bayar updated successfully")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("BookingAdapter", "Error updating status bayar", e)
-                }
+//            holder.btnCekStatus.isEnabled = false
+//            holder.btnCekStatus.text = "Pembayaran Berhasil"
+//
+//            // Update status_bayar to true in Firestore
+//            val db = FirebaseFirestore.getInstance()
+//            db.collection("bookings").document(booking.id.toString())
+//                .update("status_bayar", true)
+//                .addOnSuccessListener {
+//                    Log.d("BookingAdapter", "Status bayar updated successfully")
+//                }
+//                .addOnFailureListener { e ->
+//                    Log.e("BookingAdapter", "Error updating status bayar", e)
+//                }
+            updatePaymentStatus(booking)
         }
         fun generateUniqueCode(): String {
             // You can use UUID or combine with the timestamp to make it even more unique
@@ -225,5 +226,41 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             .addOnFailureListener { e ->
                 Log.e("Firebase", "Error finding document", e)
             }
+    }
+
+    private fun updatePaymentStatus(bookingInfo: BookingInfo) {
+        val db = FirebaseFirestore.getInstance()
+        // kalau sudah bayar dp
+        if (!bookingInfo.statusDP) {
+            db.collection("bookings").document(bookingInfo.id.toString())
+                .set("statusDP", true)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status dp updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Error updating document", e)
+                }
+        }
+        // kalau sudah bayar sisanya
+        else if (!bookingInfo.statusSisa) {
+            db.collection("bookings").document(bookingInfo.id.toString())
+                .set("statusSisa", true)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status sisa updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Error updating document", e)
+                }
+        } // kalau sudah bayar semua
+        else if (bookingInfo.statusDP && bookingInfo.statusSisa) {
+            db.collection("bookings").document(bookingInfo.id.toString())
+                .set("status_bayar", true)
+                .addOnSuccessListener {
+                    Log.d("BookingAdapter", "Status bayar updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Error updating document", e)
+                }
+        }
     }
 }
