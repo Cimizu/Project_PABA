@@ -61,8 +61,9 @@ class adapterPaket(
             val activity = holder.itemView.context as FragmentActivity
             val addBookingFragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
-                    putString("idRestoran", restoranId) // Gunakan restoranId dari parameter adapter
-                    putString("paketName", paket.namaPaket) // Nama paket
+                    putString("idRestoran", restoranId)
+                    putString("paketName", paket.namaPaket)
+
                 }
             }
 

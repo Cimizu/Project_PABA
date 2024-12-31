@@ -34,6 +34,7 @@ class AddBookingFragment : Fragment() {
     private lateinit var tvAddress: TextView
     private var bookingId: Int? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +49,7 @@ class AddBookingFragment : Fragment() {
         edtJumlahOrang = view.findViewById(R.id.edt_jumlahOrang)
         tvHargaTotal = view.findViewById(R.id.tv_hargaTotal)
         tvHargaDP = view.findViewById(R.id.tv_hargaDP)
-        tvPaketName = view.findViewById(R.id.tv_paketAdd)
+        tvPaketName = view.findViewById(R.id.namaPaket)
         tvRestoName = view.findViewById(R.id.tv_namaResto)
         tvAddress = view.findViewById(R.id.tv_alamatResto)
         val btnBookingNow: Button = view.findViewById(R.id.btn_bookingNow)
@@ -57,15 +58,17 @@ class AddBookingFragment : Fragment() {
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
         val idRestoran = arguments?.getString("idRestoran")
+//        tvPaketName.text = paketName ?: "Nama Paket Tidak Ditemukan"
         bookingId = arguments?.getInt("bookingId")
 
         Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran, bookingId: $bookingId")
 
         // Set nilai ke TextView
-        tvPaketName.text = paketName ?: "Nama Paket Tidak Ditemukan"
+
 
         if (!idRestoran.isNullOrEmpty()) {
             fetchRestoranData(idRestoran)
+
         } else {
             tvRestoName.text = "Nama Restoran Tidak Ditemukan"
             tvAddress.text = "Alamat Tidak Ditemukan"
@@ -132,7 +135,7 @@ class AddBookingFragment : Fragment() {
                         val bookingInfo = BookingInfo(
                             nextId,
                             tvRestoName.text.toString(),
-                            paketName ?: "",
+                            paketName?:"",
                             newName,
                             tvAddress.text.toString(),
                             newDate,
@@ -183,7 +186,7 @@ class AddBookingFragment : Fragment() {
                     val bookingInfo = BookingInfo(
                         bookingId!!,
                         tvRestoName.text.toString(),
-                        paketName ?: "",
+                        paketName?:"",
                         newName,
                         tvAddress.text.toString(),
                         newDate,
@@ -226,8 +229,12 @@ class AddBookingFragment : Fragment() {
                     val restoName = document.getString("namaResto") ?: "Nama Restoran Tidak Ditemukan"
                     val address = document.getString("lokasi") ?: "Alamat Tidak Ditemukan"
 
+                    val paketName = arguments?.getString("paketName")
+
                     tvRestoName.text = restoName
                     tvAddress.text = address
+                    tvPaketName.text = paketName
+
                 } else {
                     Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $idRestoran")
                 }
