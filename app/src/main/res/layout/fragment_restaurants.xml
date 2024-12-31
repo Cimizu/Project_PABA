@@ -93,15 +93,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnAddResto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="#01C000"
-        android:text="Add Resto"
-        android:textColor="@android:color/white" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestorant"

@@ -70,18 +70,8 @@ class restaurants : Fragment() {
         val btnSurabaya: Button = view.findViewById(R.id.btnSurabaya)
         val btnJakarta: Button = view.findViewById(R.id.btnJakarta)
         val btnSemua: Button = view.findViewById(R.id.btnSemua)
-        val btnAddResto: Button = view.findViewById(R.id.btnAddResto)
 
-        btnAddResto.setOnClickListener {
-            val mfDua = AddResto()
 
-            val mFragmentManager = parentFragmentManager
-            mFragmentManager.beginTransaction().apply {
-                replace(R.id.frameContainer, mfDua, AddResto::class.java.simpleName)
-                addToBackStack(null)
-                commit()
-            }
-        }
 
         // Listener untuk btnSemua
         btnSemua.setOnClickListener {
