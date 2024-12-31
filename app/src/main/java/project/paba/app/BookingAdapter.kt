@@ -32,7 +32,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         val tvJam: TextView = itemView.findViewById(R.id.tv_jam)
         val tvCttn: TextView = itemView.findViewById(R.id.tv_cttn)
 
-        val ibTrash: ImageButton = itemView.findViewById(R.id.ib_trash)
+        val ibTrash: ImageView = itemView.findViewById(R.id.ib_trash)
         val ibEdit: ImageButton = itemView.findViewById(R.id.ib_edit)
         val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
         val btnBatal: Button = itemView.findViewById(R.id.btn_batal)

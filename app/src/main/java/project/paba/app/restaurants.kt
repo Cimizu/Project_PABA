@@ -38,53 +38,52 @@ class restaurants : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_restaurants, container, false)
+        // Inflate the layout
+        return inflater.inflate(R.layout.fragment_restaurants, container, false)
+    }
 
-        // Inisialisasi RecyclerView
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize RecyclerView
         restaurantListRecyclerView = view.findViewById(R.id.rvRestorant)
         restaurantListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = adapterRestoran(restaurantData) { restaurant ->
-            // Tindakan saat tombol reserve diklik
+            // Action when the reserve button is clicked
             Toast.makeText(requireContext(), "Reservasi untuk ${restaurant.namaResto}", Toast.LENGTH_SHORT).show()
         }
         restaurantListRecyclerView.adapter = adapter
 
-        // Inisialisasi SearchView
+        // Initialize SearchView
         val searchView: SearchView = view.findViewById(R.id.searchView)
-
-        // Menambahkan listener pada SearchView untuk melakukan pencarian
+        // Adding listener for SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Bisa dibiarkan kosong atau digunakan untuk aksi lain jika diperlukan
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Filter daftar restoran berdasarkan nama
                 filterRestaurants(newText)
                 return true
             }
         })
 
-        // Menginisialisasi tombol filter
+        // Initialize filter buttons
         val btnSurabaya: Button = view.findViewById(R.id.btnSurabaya)
         val btnJakarta: Button = view.findViewById(R.id.btnJakarta)
         val btnSemua: Button = view.findViewById(R.id.btnSemua)
 
-
-
-        // Listener untuk btnSemua
+        // Listener for btnSemua
         btnSemua.setOnClickListener {
-            // Menampilkan semua restoran (reset filter)
             filterRestaurants(null)
         }
 
-        // Listener untuk btnSurabaya
+        // Listener for btnSurabaya
         btnSurabaya.setOnClickListener {
             filterByLocation("Surabaya")
         }
 
-        // Listener untuk btnJakarta
+        // Listener for btnJakarta
         btnJakarta.setOnClickListener {
             filterByLocation("Jakarta")
         }
@@ -96,8 +95,6 @@ class restaurants : Fragment() {
             restaurantData.add(dataRestoran("Silakan login untuk melihat data restoran.", "", "", "", "", "", ""))
             adapter.notifyDataSetChanged()
         }
-
-        return view
     }
 
     private fun fetchRestaurantData() {
@@ -106,10 +103,10 @@ class restaurants : Fragment() {
             .addOnSuccessListener { result ->
                 restaurantData.clear()
                 if (result.isEmpty) {
-                    restaurantData.add(dataRestoran("Tidak ada restoran yang ditemukan.", "", "", "", "", "", "", ""))
+                    restaurantData.add(dataRestoran("Tidak ada restoran yang ditemukan.", "", "", "", "", "", ""))
                 } else {
                     for (document in result) {
-                        val uidRestoran = document.id  // Mendapatkan ID dokumen (UID)
+                        val uidRestoran = document.id
                         val namaResto = document.getString("namaResto") ?: "Tidak Ada Nama"
                         val namaResto2 = document.getString("namaResto2") ?: "Tidak Ada Nama"
                         val deskripsi = document.getString("deskripsi") ?: "Tidak Ada Deskripsi"
@@ -129,10 +126,11 @@ class restaurants : Fragment() {
                 Toast.makeText(requireContext(), "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
     private fun filterRestaurants(query: String?) {
         val filteredList = mutableListOf<dataRestoran>()
         if (query.isNullOrEmpty()) {
-            filteredList.addAll(restaurantData) // Tampilkan semua restoran jika pencarian kosong
+            filteredList.addAll(restaurantData)
         } else {
             for (restaurant in restaurantData) {
                 if (restaurant.namaResto.contains(query, ignoreCase = true)) {
@@ -163,5 +161,4 @@ class restaurants : Fragment() {
                 }
             }
     }
-
 }

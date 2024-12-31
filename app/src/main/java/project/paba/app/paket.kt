@@ -24,6 +24,7 @@ class paket : Fragment() {
     private var restoranId: String? = null
     private var namaRestoran: String? = null
     private var alamatRestoran: String? = null
+    private var idPaketResto : String?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class paket : Fragment() {
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Set up the adapter
-        adapter = adapterPaket(paketData,restoranId) { paket ->
+        adapter = adapterPaket(paketData,restoranId,idPaketResto) { paket ->
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
         paketListRecyclerView.adapter = adapter
@@ -106,6 +107,7 @@ class paket : Fragment() {
                     Log.d("fetchPaketData", "Tidak ada paket ditemukan.")
                 } else {
                     for (document in result) {
+                        val idPaket = document.id
                         val namaPaket = document.getString("namaPaket") ?: "Nama tidak tersedia"
                         val deskripsi = document.getString("deskripsi") ?: "Deskripsi tidak tersedia"
                         val kapasitas = document.getString("kapasitas") ?: "Kapasitas tidak tersedia"
@@ -113,7 +115,7 @@ class paket : Fragment() {
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
                         val idResto = document.getString("restoranId") ?: "ID tidak tersedia"
 
-                        // Menggunakan namaRestoran dan alamatRestoran dari fetchRestoranData
+                        idPaketResto = idPaket
                         paketData.add(
                             paketRestoran(
                                 namaPaket,

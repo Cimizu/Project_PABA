@@ -214,12 +214,12 @@
             android:text="Batalkan Reservasi"
             app:layout_constraintTop_toBottomOf="@id/btn_checkin"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_trash"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="Hapus"
-            app:srcCompat="@drawable/trash"
+            android:src="@drawable/trash"
             app:layout_constraintTop_toBottomOf="@id/btn_batal"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />

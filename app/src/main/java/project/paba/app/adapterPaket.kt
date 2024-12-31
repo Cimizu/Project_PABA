@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class adapterPaket(
     private val paketList: List<paketRestoran>,
     private val restoranId: String?,
+    private val idPaket:String?,
     private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterPaket.PaketViewHolder>() {
 
@@ -40,29 +41,25 @@ class adapterPaket(
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
 
-        // Check if the package has valid data to enable/disable the button
+
         if (paket.namaPaket.isNullOrEmpty() || paket.harga.isNullOrEmpty()) {
-            // Disable the button if the data is incomplete
+
             holder.pesanButton.isEnabled = false
-            holder.pesanButton.alpha = 0.5f  // Optional: reduce opacity to indicate disabled state
+            holder.pesanButton.alpha = 0.5f
         } else {
-            // Enable the button if the data is valid
             holder.pesanButton.isEnabled = true
-            holder.pesanButton.alpha = 1f  // Restore opacity to normal
+            holder.pesanButton.alpha = 1f
         }
 
 
         holder.pesanButton.setOnClickListener {
-//            Log.d(
-//                "adapterPaket",
-//                "Restoran: ${paket.namaRestoran}, Alamat: ${paket.alamatRestoran}"
-//            )
 
             val activity = holder.itemView.context as FragmentActivity
             val addBookingFragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
                     putString("idRestoran", restoranId)
                     putString("paketName", paket.namaPaket)
+                    putString("idPaket", idPaket)
 
                 }
             }

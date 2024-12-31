@@ -58,10 +58,12 @@ class AddBookingFragment : Fragment() {
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
         val idRestoran = arguments?.getString("idRestoran")
+
+        val idPaket = arguments?.getString("idPaket")
 //        tvPaketName.text = paketName ?: "Nama Paket Tidak Ditemukan"
         bookingId = arguments?.getInt("bookingId")
 
-        Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran, bookingId: $bookingId")
+        Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran, bookingId: $bookingId , idPaket: $idPaket")
 
         // Set nilai ke TextView
 
