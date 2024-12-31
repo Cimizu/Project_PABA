@@ -19,6 +19,13 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Informasi Pemesan"
+        android:textStyle="bold" />
     <!-- Informasi Pemesan -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,12 +35,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Informasi Pemesan"
-            android:textStyle="bold" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,6 +53,13 @@
             android:text="Waktu Pemesanan: 28 Nov 2024 | 08.00" />
     </LinearLayout>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Reservasi"
+        android:textStyle="bold" />
     <!-- Reservasi Section -->
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -61,12 +70,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Reservasi"
-            android:textStyle="bold" />
+
 
         <!-- Reservasi Item -->
         <LinearLayout
@@ -130,6 +134,14 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <LinearLayout

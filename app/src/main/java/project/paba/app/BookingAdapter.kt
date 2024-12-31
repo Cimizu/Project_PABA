@@ -233,7 +233,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         // kalau sudah bayar dp
         if (!bookingInfo.statusDP) {
             db.collection("bookings").document(bookingInfo.id.toString())
-                .set("statusDP", true)
+                .update("statusDP", true)
                 .addOnSuccessListener {
                     Log.d("BookingAdapter", "Status dp updated successfully")
                 }
@@ -244,7 +244,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         // kalau sudah bayar sisanya
         else if (!bookingInfo.statusSisa) {
             db.collection("bookings").document(bookingInfo.id.toString())
-                .set("statusSisa", true)
+                .update("statusSisa", true)
                 .addOnSuccessListener {
                     Log.d("BookingAdapter", "Status sisa updated successfully")
                 }
@@ -254,7 +254,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         } // kalau sudah bayar semua
         else if (bookingInfo.statusDP && bookingInfo.statusSisa) {
             db.collection("bookings").document(bookingInfo.id.toString())
-                .set("status_bayar", true)
+                .update("status_bayar", true)
                 .addOnSuccessListener {
                     Log.d("BookingAdapter", "Status bayar updated successfully")
                 }

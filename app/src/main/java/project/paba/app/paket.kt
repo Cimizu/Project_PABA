@@ -121,8 +121,6 @@ class paket : Fragment() {
                                 kapasitas,
                                 harga,
                                 uangDp,
-                                namaRestoran ?: "Nama restoran tidak tersedia",
-                                alamatRestoran ?: "Alamat tidak tersedia",
                                 idResto
                             )
                         )
