@@ -128,6 +128,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     putString("time", booking.time)
                     putString("phone", booking.phone)
                     putString("notes", booking.notes)
+                    putInt("addEdit", 1)
                 }
             }
             (context as AppCompatActivity).supportFragmentManager.beginTransaction()

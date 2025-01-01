@@ -58,6 +58,7 @@ class AddBookingFragment : Fragment() {
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
         val idRestoran = arguments?.getString("idRestoran")
+        val addEdit = arguments?.getInt("addEdit")
 
 
         val idPaket = arguments?.getString("idPaket")
@@ -78,11 +79,15 @@ class AddBookingFragment : Fragment() {
         }
 
         // Jika bookingId tidak null, fetch existing booking data
-        if (bookingId != null) {
+        if (addEdit == 0) {
+            btnBookingNow.visibility = View.VISIBLE
+            btnUpdateBooking.visibility = View.GONE
             fetchBookingData(bookingId!!)
-        } else {
+        } else { // masih salah
             // Jika bookingId null, maka create baru, sembunyikan tombol update, kosongkan field
-            btnUpdateBooking.isVisible = false
+//            btnUpdateBooking.isVisible = false
+            btnUpdateBooking.visibility=View.VISIBLE
+            btnBookingNow.visibility=View.GONE
             edtNama.text.clear()
             edtTanggal.text.clear()
             edtJam.text.clear()
