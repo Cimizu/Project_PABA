@@ -49,7 +49,7 @@ class AddBookingFragment : Fragment() {
         edtJumlahOrang = view.findViewById(R.id.edt_jumlahOrang)
         tvHargaTotal = view.findViewById(R.id.tv_hargaTotal)
         tvHargaDP = view.findViewById(R.id.tv_hargaDP)
-        tvPaketName = view.findViewById(R.id.namaPaket)
+        tvPaketName = view.findViewById(R.id.tv_paketAdd)
         tvRestoName = view.findViewById(R.id.tv_namaResto)
         tvAddress = view.findViewById(R.id.tv_alamatResto)
         val btnBookingNow: Button = view.findViewById(R.id.btn_bookingNow)
