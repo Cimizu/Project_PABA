@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
@@ -32,12 +33,14 @@ class addPaket : Fragment() {
     private lateinit var edtDeskripsi: EditText
     private lateinit var edtKapasitas: EditText
     private lateinit var btnInput: Button
-
+    private var idRestoran: String? = null
+    private lateinit var tvNamaResto: TextView
+    private lateinit var tvAlamatResto: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            idRestoran = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -46,7 +49,6 @@ class addPaket : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_paket, container, false)
     }
 
@@ -58,32 +60,31 @@ class addPaket : Fragment() {
         edtDP = view.findViewById(R.id.edtDP)
         edtDeskripsi = view.findViewById(R.id.edtDeskripsi)
         edtKapasitas = view.findViewById(R.id.edtKapasitas)
-        btnInput = view.findViewById(R.id.btnInputResto)
+        btnInput = view.findViewById(R.id.btnInputPaket)
 
-        // Firebase Firestore instance
+        tvNamaResto = view.findViewById(R.id.tv_namaResto)
+        tvAlamatResto = view.findViewById(R.id.tv_alamatResto)
+        fetchDataRestoran()
+
         val db = FirebaseFirestore.getInstance()
 
         btnInput.setOnClickListener {
-            // Collecting data from the EditTexts
             val namaPaket = edtNamaPaket.text.toString().trim()
             val harga = edtHarga.text.toString().trim()
             val DP = edtDP.text.toString().trim()
             val Deskripsi = edtDeskripsi.text.toString().trim()
             val kapasitas = edtKapasitas.text.toString().trim()
 
+            val idResto = this.idRestoran ?: "defaultId" // Fallback if idRestoran is null
 
             if (namaPaket.isEmpty() || harga.isEmpty() || DP.isEmpty() || Deskripsi.isEmpty() || kapasitas.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Silahkan input semua field yang masih kosong!",
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
                 return@setOnClickListener
             }
-
-            // diubah dulu ini id restorannya
-            val idRestoran = "coba"
 
             val idPaket = UUID.randomUUID().toString()
             val paketRestoran = paketRestoran(
@@ -92,12 +93,11 @@ class addPaket : Fragment() {
                 kapasitas = kapasitas,
                 harga = harga,
                 uangDp = DP,
-                idRestoran = idRestoran,
+                idRestoran = idResto,
                 idPaket = idPaket
             )
 
-            // Simpan ke sub-koleksi 'paket'
-            db.collection("restoran").document(idRestoran)
+            db.collection("restoran").document(idResto)
                 .collection("paket").document(idPaket)
                 .set(paketRestoran)
                 .addOnSuccessListener {
@@ -107,6 +107,8 @@ class addPaket : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     clearFields()
+
+                    parentFragmentManager.popBackStack()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(
@@ -114,6 +116,27 @@ class addPaket : Fragment() {
                         "Gagal menambahkan paket: ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+        }
+    }
+
+    private fun fetchDataRestoran() {
+        val db = FirebaseFirestore.getInstance()
+
+        // cari nama resto di id restoran
+        idRestoran?.let {
+            db.collection("restoran").document(it)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val namaResto = document.getString("namaResto")
+                        val alamatResto = document.getString("lokasi")
+                        tvNamaResto.text = namaResto ?: "Nama tidak ditemukan"
+                        tvAlamatResto.text = alamatResto ?: "Alamat tidak ditemukan"
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Gagal memuat data restoran: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

@@ -52,10 +52,10 @@ class profile : Fragment() {
 
 
         _btnAddResto.setOnClickListener {
-            val mfEmpat = AddResto()
+            val mfEmpat = listAddResto()
             val mFragmentManager = parentFragmentManager
             mFragmentManager.beginTransaction().apply {
-                replace(R.id.frameContainer, mfEmpat, AddResto::class.java.simpleName)
+                replace(R.id.frameContainer, mfEmpat, listAddResto::class.java.simpleName)
                 addToBackStack(null)
                 commit()
             }

@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+
 //import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match
@@ -67,16 +69,16 @@ class detail_resto : Fragment() {
             _noTelp.text = it.noTelp
             _deskripsi.text = it.deskripsi
 
-//            if (it.foto.isNotEmpty()) {
-//                Picasso.get()
-//                    .load(it.foto) // Load the image from the URL
-//                    .placeholder(R.drawable.restoran) // Placeholder image while loading
-//                    .error(R.drawable.restoran) // Error image if loading fails
-//                    .into(_restoranImage) // Set the image into the ImageView
-//            } else {
-//                // Fallback if no photo URL is provided
-//                _restoranImage.setImageResource(R.drawable.restoran)
-//            }
+            if (it.foto.isNotEmpty()) {
+                Picasso.get()
+                    .load(it.foto) // Load the image from the URL
+                    .placeholder(R.drawable.restoran) // Placeholder image while loading
+                    .error(R.drawable.restoran) // Error image if loading fails
+                    .into(_restoranImage) // Set the image into the ImageView
+            } else {
+                // Fallback if no photo URL is provided
+                _restoranImage.setImageResource(R.drawable.restoran)
+            }
         }
 
         // Button for booking
@@ -103,8 +105,8 @@ class detail_resto : Fragment() {
                 parentFragmentManager.findFragmentByTag(paket::class.java.simpleName)
             if (existingFragment == null) {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.frameContainer, paketFragment) // Replace with the correct container ID
-                    .addToBackStack(null) // To enable back navigation
+                    .replace(R.id.frameContainer, paketFragment)
+                    .addToBackStack(null)
                     .commit()
             }
         }

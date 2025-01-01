@@ -12,14 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class paket : Fragment() {
+/**
+ * A simple [Fragment] subclass.
+ * Use the [listAddPaket.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class listAddPaket : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var paketListRecyclerView: RecyclerView
-    private lateinit var adapter: adapterPaket
+    private lateinit var adapter: addPaketAdapter
     private val paketData = mutableListOf<paketRestoran>()
     private var restoranId: String? = null
     private var namaRestoran: String? = null
@@ -30,8 +41,13 @@ class paket : Fragment() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        arguments?.let {
+            restoranId = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+
         // Mengambil id restoran dari argumen yang dikirim
-        restoranId = arguments?.getString("restoranId")
+
         Log.d("PaketFragment", "Restoran ID: $restoranId")
 
         fetchRestoranData()
@@ -41,17 +57,17 @@ class paket : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_paket, container, false)
+        return inflater.inflate(R.layout.fragment_list_add_paket, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize RecyclerView
-        paketListRecyclerView = view.findViewById(R.id.rvPaket)
+        paketListRecyclerView = view.findViewById(R.id.rvAddPaket)
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Set up the adapter
-        adapter = adapterPaket(paketData,restoranId) { paket ->
+        adapter = addPaketAdapter(paketData,restoranId) { paket ->
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
         paketListRecyclerView.adapter = adapter
@@ -134,10 +150,20 @@ class paket : Fragment() {
             }
     }
 
+
     companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment listAddPaket.
+         */
+        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            paket().apply {
+            listAddPaket().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -78,16 +78,10 @@ class AddBookingFragment : Fragment() {
             tvAddress.text = "Alamat Tidak Ditemukan"
         }
 
-        // Jika bookingId tidak null, fetch existing booking data
-        if (addEdit == 0) {
+        if (addEdit == 0 ) {
             btnBookingNow.visibility = View.VISIBLE
             btnUpdateBooking.visibility = View.GONE
-            fetchBookingData(bookingId!!)
-        } else { // masih salah
-            // Jika bookingId null, maka create baru, sembunyikan tombol update, kosongkan field
-//            btnUpdateBooking.isVisible = false
-            btnUpdateBooking.visibility=View.VISIBLE
-            btnBookingNow.visibility=View.GONE
+            // Kosongkan semua input jika `addEdit != 0`
             edtNama.text.clear()
             edtTanggal.text.clear()
             edtJam.text.clear()
@@ -96,7 +90,12 @@ class AddBookingFragment : Fragment() {
             edtJumlahOrang.text.clear()
             tvHargaTotal.text = "0"
             tvHargaDP.text = "0"
+        } else {
+            btnUpdateBooking.visibility = View.VISIBLE
+            btnBookingNow.visibility = View.GONE
+            fetchBookingData(bookingId!!)
         }
+
 
         // Date picker
         edtTanggal.setOnClickListener {

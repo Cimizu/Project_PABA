@@ -14,8 +14,8 @@ import project.paba.app.detail_resto
 import project.paba.app.restaurants
 
 class adapterRestoran(
-    private var restaurantList: List<dataRestoran>, // Menggunakan var untuk memungkinkan modifikasi data
-    private val onReserveClick: (dataRestoran) -> Unit // Menggunakan lambda untuk event handler
+    private var restaurantList: List<dataRestoran>,
+    private val onReserveClick: (dataRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterRestoran.RestaurantViewHolder>() {
 
     // Menambahkan metode untuk memperbarui data
@@ -46,18 +46,17 @@ class adapterRestoran(
 
         if (restaurants.foto.isNotEmpty()) {
             Picasso.get()
-                .load(restaurants.foto) // Load the image from the URL stored in the foto field
-                .placeholder(R.drawable.restoran) // Placeholder image while loading
-                .error(R.drawable.restoran) // Error image if loading fails
-                .into(holder.restaurantImage) // Set the image into the ImageView
+                .load(restaurants.foto)
+                .placeholder(R.drawable.restoran)
+                .error(R.drawable.restoran)
+                .into(holder.restaurantImage) // Ngest image dr yang link diksh
         } else {
-            // Fallback if no photo URL is provided
             holder.restaurantImage.setImageResource(R.drawable.restoran)
         }
 
         holder.reserveButton.setOnClickListener {
             val context = holder.itemView.context
-            if (context is androidx.fragment.app.FragmentActivity) { // Pastikan context adalah FragmentActivity
+            if (context is androidx.fragment.app.FragmentActivity) {
                 val detailFragment = detail_resto().apply {
                     arguments = Bundle().apply {
                         putParcelable(
@@ -72,8 +71,8 @@ class adapterRestoran(
                     .replace(
                         R.id.frameContainer,
                         detailFragment
-                    ) // Gunakan ID container dari layout utama
-                    .addToBackStack(null) // Untuk mendukung back navigation
+                    )
+                    .addToBackStack(null) // Buat back navigation
                     .commit()
             }
         }

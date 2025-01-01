@@ -1,5 +1,7 @@
 package project.paba.app
 
+import android.app.TimePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TimePicker
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -54,6 +57,9 @@ class AddResto : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
+
         super.onViewCreated(view, savedInstanceState)
         edtNama = view.findViewById(R.id.edt_nama_resto)
         edtAlamat = view.findViewById(R.id.edtAlamat)
@@ -64,11 +70,23 @@ class AddResto : Fragment() {
         btnUpdate = view.findViewById(R.id.btnMasuk)
         edtFoto = view.findViewById(R.id.edtFoto)
 
-        // Firebase Firestore instance
+        edtJamBuka.setOnClickListener {
+            showTimePicker { time ->
+                edtJamBuka.setText(time)
+            }
+        }
+
+
+        edtJamTutup.setOnClickListener {
+            showTimePicker { time ->
+                edtJamTutup.setText(time)
+            }
+        }
+
         val db = FirebaseFirestore.getInstance()
 
         btnUpdate.setOnClickListener {
-            // Collecting data from the EditTexts
+
             val namaResto = edtNama.text.toString().trim()
             val alamat = edtAlamat.text.toString().trim()
             val jamBuka = edtJamBuka.text.toString().trim()
@@ -78,15 +96,20 @@ class AddResto : Fragment() {
             val foto = edtFoto.text.toString().trim()
 
             if (namaResto.isEmpty() || alamat.isEmpty() || jamBuka.isEmpty() || jamTutup.isEmpty() || noTelp.isEmpty() || deskripsi.isEmpty()) {
-                Toast.makeText(requireContext(), "Silahkan input semua field yang masih kosong!", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    "Silahkan input semua field yang masih kosong!",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 return@setOnClickListener
+
             }
 
             // Create a new dataRestoran object
             val restoran = dataRestoran(
                 idResto = db.collection("restoran")
-                    .document().id, // Generate a unique ID for the restaurant
+                    .document().id,
                 namaResto = namaResto,
                 namaResto2 = namaResto,
                 deskripsi = deskripsi,
@@ -97,7 +120,7 @@ class AddResto : Fragment() {
                 jamtutup = jamTutup
             )
 
-            // Save to Firestore
+
             db.collection("restoran").document(restoran.idResto).set(restoran)
                 .addOnSuccessListener {
                     Toast.makeText(
@@ -105,6 +128,12 @@ class AddResto : Fragment() {
                         "Restoran berhasil terinput",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    val listAddRestoFragment = listAddResto() // Ganti dengan nama kelas fragment Anda
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.frameContainer, listAddRestoFragment)
+                        .addToBackStack(null)
+                        .commit()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(
@@ -117,6 +146,17 @@ class AddResto : Fragment() {
 
         }
     }
+    private fun showTimePicker(onTimeSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            val time = String.format("%02d:%02d", selectedHour, selectedMinute)
+            onTimeSelected(time)
+        }, hour, minute, true).show()
+    }
+
 
     companion object {
         /**
