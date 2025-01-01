@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 class adapterPaket(
     private val paketList: List<paketRestoran>,
     private val restoranId: String?,
-    private val idPaket:String?,
     private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterPaket.PaketViewHolder>() {
 
@@ -55,11 +54,12 @@ class adapterPaket(
         holder.pesanButton.setOnClickListener {
 
             val activity = holder.itemView.context as FragmentActivity
+
             val addBookingFragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
                     putString("idRestoran", restoranId)
                     putString("paketName", paket.namaPaket)
-                    putString("idPaket", idPaket)
+                    putString("idPaket", paket.idPaket)
 
                 }
             }

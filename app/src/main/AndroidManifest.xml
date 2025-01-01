@@ -22,14 +22,6 @@
             android:name=".register"
             android:exported="false" />
         <activity
-            android:name=".bookingList"
-            android:exported="false" />
-
-        <activity
-            android:name=".addBooking"
-            android:exported="false" />
-
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

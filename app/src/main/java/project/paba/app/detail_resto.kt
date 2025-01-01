@@ -89,7 +89,7 @@ class detail_resto : Fragment() {
 
         // Button to navigate to Paket (Fragment)
         _btnLihatpaket.setOnClickListener {
-            val restoranId = dataIntent?.idResto // Or use a restaurant ID if available
+            val restoranId = dataIntent?.idResto
 
             // Create new Fragment
             val paketFragment = paket().apply {

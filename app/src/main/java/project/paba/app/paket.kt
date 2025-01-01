@@ -24,7 +24,6 @@ class paket : Fragment() {
     private var restoranId: String? = null
     private var namaRestoran: String? = null
     private var alamatRestoran: String? = null
-    private var idPaketResto : String?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +51,7 @@ class paket : Fragment() {
         paketListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // Set up the adapter
-        adapter = adapterPaket(paketData,restoranId,idPaketResto) { paket ->
+        adapter = adapterPaket(paketData,restoranId) { paket ->
             Toast.makeText(requireContext(), "Memesan paket: ${paket.namaPaket}", Toast.LENGTH_SHORT).show()
         }
         paketListRecyclerView.adapter = adapter
@@ -115,7 +114,6 @@ class paket : Fragment() {
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
                         val idResto = document.getString("restoranId") ?: "ID tidak tersedia"
 
-                        idPaketResto = idPaket
                         paketData.add(
                             paketRestoran(
                                 namaPaket,
@@ -123,7 +121,8 @@ class paket : Fragment() {
                                 kapasitas,
                                 harga,
                                 uangDp,
-                                idResto
+                                idResto,
+                                idPaket
                             )
                         )
                     }
