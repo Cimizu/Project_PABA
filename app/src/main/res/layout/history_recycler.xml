@@ -7,10 +7,10 @@
     android:background="@drawable/kotak">
 
     <ImageView
-        android:id="@+id/ivGambarResto"
+        android:id="@+id/iv_GambarResto"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,27 +19,27 @@
         app:srcCompat="@drawable/resto" />
 
     <TextView
-        android:id="@+id/tvResto"
+        android:id="@+id/tv_resto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="13dp"
         android:textStyle="bold"
         android:textSize="24dp"
         android:text="Resto Jawa Surabaya"
-        app:layout_constraintStart_toEndOf="@+id/ivGambarResto"
-        app:layout_constraintTop_toTopOf="@+id/ivGambarResto" />
+        app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
+        app:layout_constraintTop_toTopOf="@+id/iv_GambarResto" />
 
     <ImageView
         android:id="@+id/ivLoc"
         android:layout_width="24dp"
         android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/ivGambarResto"
-        app:layout_constraintTop_toBottomOf="@+id/tvResto"
+        android:layout_marginStart="13dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resto"
         app:srcCompat="@drawable/loc" />
 
     <TextView
-        android:id="@+id/tvAlamat"
+        android:id="@+id/tv_address"
         android:layout_marginStart="8dp"
         android:layout_height="44dp"
         android:layout_width="200dp"
@@ -52,20 +52,31 @@
         android:id="@+id/llTanggal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/ivGambarResto"
+        android:layout_marginStart="13dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
         app:layout_constraintTop_toBottomOf="@+id/ivLoc">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tanggal : "/>
+            android:text="Tanggal, Jam : "/>
 
         <TextView
             android:id="@+id/tv_tanggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12 12 2024"/>
+            android:text="12-12-2024"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=", "/>
+
+        <TextView
+            android:id="@+id/tv_jam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18:00"/>
 
     </LinearLayout>
 
@@ -74,14 +85,15 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/ivGambarResto"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
         app:layout_constraintTop_toBottomOf="@+id/llTanggal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jam : " />
+            android:text="Status : " />
 
         <TextView
             android:id="@+id/tv_jam"
