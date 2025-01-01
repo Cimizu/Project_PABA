@@ -27,7 +27,7 @@ class history : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private lateinit var auth: FirebaseAuth
     private lateinit var historyListRecyclerView: RecyclerView
-    private lateinit var adapter: historyAdapter
+    private lateinit var adapter: HistoryAdapter
     private val restaurantData = mutableListOf<BookingInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

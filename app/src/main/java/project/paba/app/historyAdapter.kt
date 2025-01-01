@@ -1,54 +1,31 @@
 package project.paba.app
 
 import BookingInfo
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import project.paba.app.BookingAdapter.BookingViewHolder
 
-class historyAdapter (private val BookingInfoo: ArrayList<BookingInfo>,
-private val dataRestoran: ArrayList<dataRestoran>
-) : RecyclerView
-.Adapter<historyAdapter.HistoryHolder> () {
+class HistoryAdapter(private val BookingInfoo: ArrayList<BookingInfo>) : RecyclerView
+.Adapter<HistoryAdapter.HistoryHolder> () {
 
-    private lateinit var onItemClickCallback: OnItemClickCallback
-
-
-    interface OnItemClickCallback {
-        fun onItemClicked(data: BookingInfo, data2: dataRestoran)
-        fun delData(pos: Int)
-    }
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-
-    inner class HistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class HistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
         val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
-        val tvGambarResto: ImageView = itemView.findViewById(R.id.ivGambarResto)
-        val tvAddress: TextView = itemView.findViewById(R.id.tvAlamat)
+        val tvGambarResto: TextView = itemView.findViewById(R.id.iv_GambarResto)
+        val tvAddress: TextView = itemView.findViewById(R.id.tv_address)
         val tvDate: TextView = itemView.findViewById(R.id.tv_tanggal)
         val tvTime: TextView = itemView.findViewById(R.id.tv_jam)
-        val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
-        var _btnHapus = itemView.findViewById<ImageView>(R.id.btnDelete)
+        val tvStatus: TextView = itemView.findViewById(R.id.tv_status)
 
         fun bind(booking: BookingInfo, restoran: dataRestoran) {
             tvResto.text = restoran.namaResto
-//            tvGambarResto.sr = restoran.foto
-            tvAddress.text = restoran.lokasi
+            tvGambarResto.text = restoran.foto
+//            tvAddress.text = restoran.alamat
             tvDate.text = booking.date
             tvTime.text = booking.time
-            tvStatus.text = booking.status_aktif.toString()
-
-            Log.d("TEST", restoran.foto)
-            Picasso.get()
-                .load(restoran.foto)
-                .into(tvGambarResto)
-
+//            tvStatus.text = booking.status
         }
     }
 
@@ -59,36 +36,13 @@ private val dataRestoran: ArrayList<dataRestoran>
     }
 
     override fun getItemCount(): Int {
-        return maxOf(BookingInfoo.size, dataRestoran.size)
+        return BookingInfoo.size
     }
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
-        val booking = BookingInfoo.getOrNull(position)
-        val restoran = dataRestoran.getOrNull(position)
-
-        if (booking != null && restoran != null) {
-            holder.bind(booking, restoran)
-        }
-
-        holder.tvGambarResto.setOnClickListener {
-//            Toast.makeText(holder.itemView.context, wayang.nama, Toast.LENGTH_LONG).show()
-            onItemClickCallback.onItemClicked(BookingInfoo[position], dataRestoran[position])
-        }
-
-        holder._btnHapus.setOnClickListener {
-            onItemClickCallback.delData(position)
-        }
+        val booking = BookingInfoo[position]
+//        val restoran = dataRestoran[position]
+//        holder.bind(booking, restoran)
     }
 
-    // function update data
-    fun updateData(filteredBookings: List<BookingInfo>, filteredRestaurants: List<dataRestoran>) {
-        BookingInfoo.clear()
-        dataRestoran.clear()
-
-        BookingInfoo.addAll(filteredBookings)
-        dataRestoran.addAll(filteredRestaurants)
-
-        notifyDataSetChanged()
-    }
 }
-
