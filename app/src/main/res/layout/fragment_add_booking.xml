@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddBookingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/booking"
         android:background="@drawable/backgroundmain"
         android:layout_width="match_parent"
@@ -82,11 +83,11 @@
                 android:text="Jenis Paket"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/namaPaket"
+                app:layout_constraintTop_toTopOf="@id/tv_paketAdd"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/namaPaket"
+                android:id="@+id/tv_paketAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Paket Resto"
@@ -102,7 +103,7 @@
                 android:text="Nama"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/namaPaket"
+                app:layout_constraintTop_toBottomOf="@id/tv_paketAdd"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="4dp"/>
 
@@ -315,10 +316,9 @@
                 android:id="@+id/btn_updateBooking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="612dp"
                 android:text="Update Booking"
-                app:layout_constraintTop_toBottomOf="@id/btn_bookingNow"
-                tools:layout_editor_absoluteX="0dp" />
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@id/btn_bookingNow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
