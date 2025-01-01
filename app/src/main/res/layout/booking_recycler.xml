@@ -161,12 +161,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="8dp" />
 
+        <ImageView
+            android:id="@+id/iv_sisaIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="Icon Catatan"
+            app:srcCompat="@drawable/baseline_monetization_on_24"
+            app:layout_constraintStart_toStartOf="@id/iv_noteIcon"
+            app:layout_constraintTop_toBottomOf="@id/iv_noteIcon"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_sisa_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sisa Bayar (Rp)"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintStart_toEndOf="@id/iv_sisaIcon"
+            app:layout_constraintTop_toTopOf="@id/iv_sisaIcon"
+            android:layout_marginStart="8dp" />
+
+        <TextView
+            android:id="@+id/tv_sisaBayar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200000"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/tv_sisa_label"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <Button
             android:id="@+id/btn_cekStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cek Status Pembayaran"
-            app:layout_constraintTop_toBottomOf="@id/tv_cttn"
+            app:layout_constraintTop_toBottomOf="@id/tv_sisaBayar"
             android:layout_marginTop="10dp"/>
 
         <Button
@@ -184,12 +214,12 @@
             android:text="Batalkan Reservasi"
             app:layout_constraintTop_toBottomOf="@id/btn_checkin"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_trash"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="Hapus"
-            app:srcCompat="@drawable/trash"
+            android:src="@drawable/trash"
             app:layout_constraintTop_toBottomOf="@id/btn_batal"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />

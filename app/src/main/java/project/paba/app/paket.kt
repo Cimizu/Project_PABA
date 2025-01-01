@@ -106,6 +106,7 @@ class paket : Fragment() {
                     Log.d("fetchPaketData", "Tidak ada paket ditemukan.")
                 } else {
                     for (document in result) {
+                        val idPaket = document.id
                         val namaPaket = document.getString("namaPaket") ?: "Nama tidak tersedia"
                         val deskripsi = document.getString("deskripsi") ?: "Deskripsi tidak tersedia"
                         val kapasitas = document.getString("kapasitas") ?: "Kapasitas tidak tersedia"
@@ -113,7 +114,6 @@ class paket : Fragment() {
                         val uangDp = document.getString("uangDp") ?: "Uang DP tidak tersedia"
                         val idResto = document.getString("restoranId") ?: "ID tidak tersedia"
 
-                        // Menggunakan namaRestoran dan alamatRestoran dari fetchRestoranData
                         paketData.add(
                             paketRestoran(
                                 namaPaket,
@@ -121,9 +121,8 @@ class paket : Fragment() {
                                 kapasitas,
                                 harga,
                                 uangDp,
-                                namaRestoran ?: "Nama restoran tidak tersedia",
-                                alamatRestoran ?: "Alamat tidak tersedia",
-                                idResto
+                                idResto,
+                                idPaket
                             )
                         )
                     }

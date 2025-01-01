@@ -47,8 +47,19 @@ class profile : Fragment() {
 
         val _btnEdit = view.findViewById<ImageView>(R.id.btnEdit)
         val _btnPesanan = view.findViewById<Button>(R.id.btnPesanan)
+        val _btnAddResto = view.findViewById<Button>(R.id.btnInputResto)
 
 
+
+        _btnAddResto.setOnClickListener {
+            val mfEmpat = AddResto()
+            val mFragmentManager = parentFragmentManager
+            mFragmentManager.beginTransaction().apply {
+                replace(R.id.frameContainer, mfEmpat, AddResto::class.java.simpleName)
+                addToBackStack(null)
+                commit()
+            }
+        }
         _btnEdit.setOnClickListener {
             val mfDua = editProfile()
 

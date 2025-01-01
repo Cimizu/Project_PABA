@@ -85,6 +85,16 @@
         android:backgroundTint="#01C000" />
 
     <Button
+        android:id="@+id/btnInputResto"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#01C000"
+        android:text="Add Resto"
+        android:textSize="20sp" />
+
+
+    <Button
         android:id="@+id/btnSignOut"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
