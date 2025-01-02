@@ -38,12 +38,12 @@
                 android:textColor="@android:color/white" />
 
             <Button
-                android:id="@+id/btnActive"
+                android:id="@+id/btnUsed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:backgroundTint="#01C000"
-                android:text="Active"
+                android:text="Used"
                 android:textColor="@android:color/white" />
 
             <Button

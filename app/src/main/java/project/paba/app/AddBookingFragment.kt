@@ -40,6 +40,10 @@ class AddBookingFragment : Fragment() {
     private var restoid: String = ""
     private var paketid: String = ""
 
+    private var hargaDpTotal: Int? = null
+    private var hargaTotal: Int? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -181,7 +185,14 @@ class AddBookingFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val hargaTotal = newJumlahOrang * hargaTotal!!
+            val hargaDPTotal2 = newJumlahOrang * hargaDpTotal!!
 
+//            tvHargaDP.text = hargaDPTotal2.toString()
+//            tvHargaTotal.text = hargaTotal.toString()
+
+            tvHargaDP.text =String.format("Rp %,03d", hargaDPTotal2)
+            tvHargaTotal.text = String.format("Rp %,03d", hargaTotal)
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
 
                 // Create new booking
@@ -201,11 +212,13 @@ class AddBookingFragment : Fragment() {
                             true,
                             userId,
                             uniqueCode,
-                            hargaTotal = newHargaTotal,
-                            hargaDP = newHargaDP,
+                            hargaTotal = hargaTotal,
+                            hargaDP = hargaDPTotal2,
+                            hargaSisa = hargaTotal,
                             jumlahOrang = newJumlahOrang,
                             idResto = idRestoran,
-                            idPaket = idPaket
+                            idPaket = idPaket,
+                            statusString = "ACTIVE"
                         )
                         db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                             .addOnSuccessListener {
@@ -246,6 +259,11 @@ class AddBookingFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val hargaTotal = newJumlahOrang * hargaTotal!!
+            val hargaDPTotal2 = newJumlahOrang * hargaDpTotal!!
+
+            tvHargaDP.text =String.format("Rp %,03d", hargaDPTotal2)
+            tvHargaTotal.text = String.format("Rp %,03d", hargaTotal)
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 if (bookingId != null && restoid != "" && paketid !="") {
@@ -264,12 +282,13 @@ class AddBookingFragment : Fragment() {
                         true,
                         userId,
                         uniqueCode,
-                        hargaTotal = newHargaTotal,
-                        hargaDP = newHargaDP,
-                        hargaSisa = newHargaSisa,
+                        hargaTotal = hargaTotal,
+                        hargaDP = hargaDPTotal2,
+                        hargaSisa = hargaTotal,
                         jumlahOrang = newJumlahOrang,
                         idResto = restoid,
-                        idPaket = paketid
+                        idPaket = paketid,
+                        statusString = "ACTIVE"
                     )
                     db.collection("bookings").document(bookingId.toString())
                         .set(bookingInfo)
@@ -296,7 +315,15 @@ class AddBookingFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     maxJumlahOrang = document.getString("kapasitas")?.toInt() ?: 0
+                    val hargaDPPerOrangString = document.getString("uangDp") ?: "0"
+                    hargaDpTotal = hargaDPPerOrangString.replace(".", "").toIntOrNull() ?: 0
+
+                    val hargaTotalPerOrangString = document.getString("harga") ?: "0"
+                    hargaTotal = hargaTotalPerOrangString.replace(".", "").toIntOrNull() ?: 0
+
                     Log.d("AddBookingFragment", "Max Jumlah Orang: $maxJumlahOrang")
+                    Log.d("AddBookingFragment", "Harga DP: $hargaDpTotal")
+                    Log.d("AddBookingFragment", "Harga Total: $hargaTotal")
                 } else {
                     Log.e("AddBookingFragment", "Paket tidak ditemukan untuk ID: $idPaket")
                 }

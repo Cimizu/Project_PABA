@@ -16,6 +16,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
+import java.time.DateTimeException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
@@ -34,10 +37,13 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
         val ibTrash: ImageView = itemView.findViewById(R.id.ib_trash)
         val ibEdit: ImageButton = itemView.findViewById(R.id.ib_edit)
-        val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
+//        val btnCekStatus: Button = itemView.findViewById(R.id.btn_cekStatus)
         val btnBatal: Button = itemView.findViewById(R.id.btn_batal)
+        val tvsisa : TextView = itemView.findViewById(R.id.tv_sisaBayar)
 
         val btnCheckin : Button = itemView.findViewById(R.id.btn_checkin)
+        val btnPembayaran : Button = itemView.findViewById(R.id.btn_pembayaran)
+        val btn_detail : Button = itemView.findViewById(R.id.btn_detail)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
@@ -54,6 +60,32 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         holder.tvTanggal.text = booking.date
         holder.tvJam.text = booking.time
         holder.tvCttn.text = booking.notes
+        holder.tvsisa.text = String.format("Rp %,03d", booking.hargaSisa)
+
+
+        checkAndExpireBookings(booking, position)
+
+        holder.btnPembayaran.setOnClickListener {
+            val context = holder.itemView.context
+            if (context is androidx.fragment.app.FragmentActivity) {
+                val detailFragment = payment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(
+                            "kirimData",
+                            booking
+                        ) // Kirim data restoran sebagai Parcelable
+                    }
+                }
+                // Ganti fragment
+                context.supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frameContainer,
+                        detailFragment
+                    )
+                    .addToBackStack(null) // Buat back navigation
+                    .commit()
+            }
+        }
 
         // Check status_bayar and update button state
         val db = FirebaseFirestore.getInstance()
@@ -62,27 +94,36 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val statusBayar = document.getBoolean("status_bayar") ?: false
-                    if (statusBayar) {
-                        holder.btnCekStatus.isEnabled = false
-                        holder.btnCekStatus.text = "Pembayaran Berhasil"
-                        db.collection("bookings").document(booking.id.toString())
-                            .update("status_bayar", true)
-                            .addOnSuccessListener {
-                                Log.d("BookingAdapter", "Status bayar updated successfully")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.e("BookingAdapter", "Error updating status bayar", e)
-                            }
+                    val statusDP = document.getBoolean("statusDP") ?: false
+                    val statusSisa = document.getBoolean("statusSisa") ?: false
+                    val statusAktif = document.getBoolean("status_aktif") ?: false
 
+                    if (statusBayar && statusDP) {
+                        holder.btnCheckin.visibility = View.VISIBLE
                     } else {
-                        holder.btnCekStatus.isEnabled = true
-                        holder.btnCekStatus.text = "Cek Status"
+                        holder.btnCheckin.visibility = View.GONE
                     }
+
+                    if (statusBayar) {
+                        holder.ibEdit.visibility = View.GONE
+                    }
+                    if (statusBayar && statusDP && statusSisa && statusAktif) {
+                        holder.btnPembayaran.isEnabled = false
+                        holder.ibEdit.visibility = View.GONE
+                        holder.btnPembayaran.text = "Pembayaran Berhasil"
+                    } else {
+                        // Jika salah satu atau lebih kondisi tidak terpenuhi
+                        holder.btnPembayaran.isEnabled = true
+                        holder.btnPembayaran.text = "Lakukan Pembayaran"
+                    }
+                } else {
+                    Log.e("BookingAdapter", "Document tidak ditemukan atau null")
                 }
             }
             .addOnFailureListener { e ->
                 Log.e("BookingAdapter", "Error getting document", e)
             }
+
 //        cek status aktif
         val currentDate = Calendar.getInstance().time
         val bookingDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse("${booking.date} ${booking.time}")
@@ -99,7 +140,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status aktif", e)
                 }
         } else {
-            holder.btnCekStatus.isVisible = false
+            holder.btnPembayaran.isVisible = false
             holder.btnBatal.isEnabled = false
             holder.btnBatal.text = "Dibatalkan"
             db.collection("bookings").document(booking.id.toString())
@@ -139,27 +180,35 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 .commit()
         }
 
-        holder.btnCekStatus.setOnClickListener {
-            // Disable button
-//            holder.btnCekStatus.isEnabled = false
-//            holder.btnCekStatus.text = "Pembayaran Berhasil"
-//
-//            // Update status_bayar to true in Firestore
-//            val db = FirebaseFirestore.getInstance()
-//            db.collection("bookings").document(booking.id.toString())
-//                .update("status_bayar", true)
-//                .addOnSuccessListener {
-//                    Log.d("BookingAdapter", "Status bayar updated successfully")
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.e("BookingAdapter", "Error updating status bayar", e)
-//                }
-            updatePaymentStatus(booking)
-        }
+//        holder.btnCekStatus.setOnClickListener {
+//            updatePaymentStatus(booking)
+//        }
         fun generateUniqueCode(): String {
             // You can use UUID or combine with the timestamp to make it even more unique
             val uniqueCode = "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
             return uniqueCode
+        }
+        holder.btn_detail.setOnClickListener {
+            val context = holder.itemView.context
+            if (context is androidx.fragment.app.FragmentActivity) {
+                val detailFragment = konfirmasi_checkin().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(
+                            "kirimData",
+                            booking
+                        ) // Kirim data restoran sebagai Parcelable
+                    }
+                }
+                // Ganti fragment
+                context.supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frameContainer,
+                        detailFragment
+                    )
+                    .addToBackStack(null) // Buat back navigation
+                    .commit()
+            }
+
         }
 
         //kode unik
@@ -170,10 +219,12 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
                 // Update booking with unique code and timestamp
                 db.collection("bookings").document(booking.id.toString())
-                    .update(mapOf(
-                        "uniqueCode" to uniqueCode,
-                        "timestamp" to timestamp
-                    ))
+                    .update(
+                        "uniqueCode", uniqueCode,
+                        "timestamp" ,timestamp,
+                        "status_aktif", false,
+                        "statusString", "USED"
+                    )
                     .addOnSuccessListener {
                         Log.d("BookingAdapter", "Unique code and timestamp updated successfully")
 
@@ -187,13 +238,14 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             }
         }
 
+        // Batal button
         holder.btnBatal.setOnClickListener {
             // Disable button
             holder.btnBatal.isEnabled = false
             holder.btnBatal.text = "Dibatalkan"
-            holder.btnCekStatus.isEnabled = false
+            holder.btnPembayaran.isEnabled = false
             db.collection("bookings").document(booking.id.toString())
-                .update("status_aktif", false)
+                .update("status_aktif", false,"statusString", "BATAL")
                 .addOnSuccessListener {
                     Log.d("BookingAdapter", "Status aktif updated successfully")
                 }
@@ -206,28 +258,63 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
     override fun getItemCount(): Int {
         return bookingList.size
     }
+    private fun checkAndExpireBookings(booking: BookingInfo, position: Int) {
+        val db = FirebaseFirestore.getInstance()
+        try {
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.getDefault())
+            val bookingDateTime = LocalDateTime.parse("${booking.date} ${booking.time}", formatter)
+
+            val currentDateTime = LocalDateTime.now()
+
+            // Tambahkan toleransi 30 menit
+            val expirationDateTime = bookingDateTime.plusMinutes(30)
+
+            if (currentDateTime.isAfter(expirationDateTime)) {
+                // Update status di Firestore
+                db.collection("bookings").document(booking.id.toString())
+                    .update("status_aktif", false, "statusString", "EXPIRED")
+                    .addOnSuccessListener {
+                        Log.d("BookingAdapter", "Booking expired updated successfully")
+                        bookingList[position].status_aktif = false
+                        bookingList[position].statusString = "EXPIRED"
+                        notifyItemChanged(position) // Refresh adapter untuk item ini
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("BookingAdapter", "Error updating expired status", e)
+                    }
+            }
+        } catch (e: DateTimeException) {
+            Log.e("BookingAdapter", "Error parsing date or time", e)
+        }
+    }
+
+
 
     private fun deleteBooking(position: Int) {
         val booking = bookingList[position]
         val db = FirebaseFirestore.getInstance()
-        db.collection("bookings").whereEqualTo("name", booking.name)
-            .whereEqualTo("date", booking.date)
-            .whereEqualTo("time", booking.time)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    db.collection("bookings").document(document.id).delete()
-                        .addOnSuccessListener {
-                            bookingList.removeAt(position)
-                            notifyItemRemoved(position)
+        db.collection("bookings").document(booking.id.toString())
+            .update("status_aktif", false, "statusString", "BATAL")
+            .addOnSuccessListener {
+                db.collection("bookings").whereEqualTo("name", booking.name)
+                    .whereEqualTo("date", booking.date)
+                    .whereEqualTo("time", booking.time)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            db.collection("bookings").document(document.id).delete()
+                                .addOnSuccessListener {
+                                    bookingList.removeAt(position)
+                                    notifyItemRemoved(position)
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Firebase", "Error deleting document", e)
+                                }
                         }
-                        .addOnFailureListener { e ->
-                            Log.e("Firebase", "Error deleting document", e)
-                        }
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firebase", "Error finding document", e)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firebase", "Error finding document", e)
+                    }
             }
     }
 

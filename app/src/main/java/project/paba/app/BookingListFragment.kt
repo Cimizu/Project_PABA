@@ -40,6 +40,7 @@ class BookingListFragment : Fragment() {
         if (userId != null) {
             db.collection("bookings")
                 .whereEqualTo("userId", userId)
+                .whereEqualTo("status_aktif", true)
                 .get()
                 .addOnSuccessListener { result ->
                     bookingList.clear()

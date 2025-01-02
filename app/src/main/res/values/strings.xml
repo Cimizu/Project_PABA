@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in"><u>Sign In</u></string>
 
+        <string-array name="payment_methods">
+            <item>OVO</item>
+            <item>Gopay</item>
+            <item>BCA</item>
+            <item>Shopee Pay</item>
+        </string-array>
+
 </resources>

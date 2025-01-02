@@ -2,10 +2,14 @@ package project.paba.app
 
 import BookingInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,7 +32,9 @@ class history : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var historyListRecyclerView: RecyclerView
     private lateinit var adapter: HistoryAdapter
-    private val restaurantData = mutableListOf<BookingInfo>()
+    private val bookingList = arrayListOf<BookingInfo>()
+    private val originalBookingList = arrayListOf<BookingInfo>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +55,76 @@ class history : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        historyListRecyclerView = view.findViewById(R.id.rvHistory)
+        historyListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = HistoryAdapter(bookingList)
+        historyListRecyclerView.adapter = adapter
 
+        fetchBookingData()
+
+        val btnUsed: Button = view.findViewById(R.id.btnUsed)
+        val btnExpired: Button = view.findViewById(R.id.btnExpired)
+        val btnSemua : Button = view.findViewById(R.id.btnSemua)
+
+        btnSemua.setOnClickListener {
+            filterBooking(null)
+        }
+
+        // Listener for btnSurabaya
+        btnUsed.setOnClickListener {
+            filterbyStatus("USED")
+        }
+
+        // Listener for btnJakarta
+        btnExpired.setOnClickListener {
+            filterbyStatus("EXPIRED")
+        }
     }
+    private fun fetchBookingData() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            db.collection("bookings")
+                .whereEqualTo("userId", userId)
+                .whereEqualTo("status_aktif", false)
+                .get()
+                .addOnSuccessListener { result ->
+                    bookingList.clear()
+                    for (document in result) {
+                        val booking = document.toObject(BookingInfo::class.java)
+                        bookingList.add(booking)
+                        originalBookingList.add(booking)
+
+                    }
+                    adapter.notifyDataSetChanged()
+                    Log.d("Firebase", "Data fetched: ${bookingList.size} items")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Error reading documents", e)
+                }
+        } else {
+            Log.e("Firebase", "User ID is null")
+        }
+    }
+
+    private fun filterBooking(query: String?) {
+        val filteredList = if (query.isNullOrEmpty()) {
+            ArrayList(originalBookingList)
+        } else {
+            originalBookingList.filter { booking ->
+                booking.statusString.contains(query, ignoreCase = true)
+            }
+        }
+        adapter.updateData(filteredList)
+    }
+
+    private fun filterbyStatus(status: String) {
+        val filteredList = originalBookingList.filter { booking ->
+            booking.statusString.equals(status, ignoreCase = true)
+        }
+        adapter.updateData(filteredList)
+    }
+
+
 
     companion object {
         /**

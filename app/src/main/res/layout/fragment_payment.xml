@@ -1,10 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    android:orientation="vertical"
-
     android:padding="16dp"
     tools:context=".payment">
 
@@ -13,166 +13,347 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:text="Detail Reservasi"
+        android:text="Detail Pembayaran"
         android:textSize="24sp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center" />
 
     <TextView
+        android:id="@+id/info_pemesan_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
         android:text="Informasi Pemesan"
-        android:textStyle="bold" />
-    <!-- Informasi Pemesan -->
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/info_pemesan"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@drawable/bg_card"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_pemesan_label">
 
         <TextView
+            android:id="@+id/pemesan_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="John Doe" />
+            android:text="John Doe"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/pesanan_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nomor Pesanan: 2134382493894" />
+            android:layout_marginTop="8dp"
+            android:text="Nomor Pesanan:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pemesan_name" />
 
         <TextView
+            android:id="@+id/nomorPesenan"
+            android:layout_width="234dp"
+            android:layout_height="18dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="right"
+            android:maxLines="2"
+            android:text="book - djhdbedkdnkedn"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/pesanan_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pesanan_number"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <TextView
+            android:id="@+id/pemesan_restoran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waktu Pemesanan: 28 Nov 2024 | 08.00" />
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Reservasi"
-        android:textStyle="bold" />
-    <!-- Reservasi Section -->
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-
-
-        <!-- Reservasi Item -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="8dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/resto" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reservasi 20 Orang"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp 200.000" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <!-- Total -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
             android:layout_marginTop="16dp"
-            android:text="TOTAL"
-            android:textStyle="bold" />
+            android:text="Nama Restoran:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomorPesenan" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/namaResto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="Rp 200.000"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:gravity="right"
+            android:maxLines="2"
+            android:text="Papa Ronz"
+            app:layout_constraintBottom_toBottomOf="@+id/pemesan_restoran"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pesanan_number"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <TextView
+            android:id="@+id/pemesan_alamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Alamat Restoran:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pemesan_restoran" />
+
+        <TextView
+            android:id="@+id/alamatResto"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"
+            android:text="Jln Melatih"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/pemesan_alamat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pemesan_alamat"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <TextView
+            android:id="@+id/pemesan_telepon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="No. Telepon Restoran:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alamatResto" />
+
+        <TextView
+            android:id="@+id/nomorTelfon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="088767374"
+            app:layout_constraintBottom_toBottomOf="@+id/pemesan_telepon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alamatResto"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/pemesan_waktu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Waktu Booking: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pemesan_telepon" />
+
+        <TextView
+            android:id="@+id/jamTanggal"
+            android:layout_width="129dp"
+            android:layout_height="16dp"
+            android:gravity="right"
+            android:text="28 Nov 2024 | 20:00"
+            app:layout_constraintBottom_toBottomOf="@+id/pemesan_waktu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pemesan_waktu"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Footer -->
-    <LinearLayout
-        android:layout_marginTop="40sp"
-        android:layout_width="match_parent"
-        android:layout_height="408dp"
-        android:background="@drawable/bg_total"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <TextView
+        android:id="@+id/reservasi_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Reservasi"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_pemesan" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reservasi_section"
+        android:layout_width="375dp"
+        android:layout_height="189dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_card"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reservasi_label">
+
+
+        <TextView
+            android:id="@+id/reservasi_paket"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="10sp">
+            android:text="Paket Restoran"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/reservasi_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.153"
+            app:layout_constraintStart_toEndOf="@+id/reservasi_image"
+            app:layout_constraintTop_toTopOf="@+id/reservasi_image"
+            app:layout_constraintVertical_bias="0.518" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/reservasi_detail"
+            android:layout_width="154dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="Total Harga Reservasi (20 Orang)"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.047"
+            app:layout_constraintStart_toEndOf="@id/reservasi_image"
+            app:layout_constraintTop_toTopOf="@id/reservasi_image" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Rp 200.000"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 400.000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/reservasi_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/reservasi_detail" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/reservasi_dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Total Uang DP (20 Orang)"
+            app:layout_constraintStart_toStartOf="@+id/reservasi_detail"
+            app:layout_constraintTop_toBottomOf="@id/reservasi_detail" />
 
+
+        <TextView
+            android:id="@+id/hargaDP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Rp 200.000"
+            app:layout_constraintBottom_toBottomOf="@+id/reservasi_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/reservasi_dp" />
+
+        <ImageView
+            android:id="@+id/reservasi_image"
+            android:layout_width="72dp"
+            android:layout_height="79dp"
+            android:src="@drawable/resto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.157" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Sisa Pembayaran: "
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/reservasi_image"
+            app:layout_constraintTop_toBottomOf="@+id/reservasi_dp" />
+
+        <TextView
+            android:id="@+id/sisaPembayaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 1.000.000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/footer"
+        android:layout_width="372dp"
+        android:layout_height="286dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_total"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reservasi_section">
+
+
+        <TextView
+            android:id="@+id/payment_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Pilih Pembayaran "
+            android:textColor="#FFFF"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/payment_methods_spinner"
+            android:layout_width="335dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/kotak_putih"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_label"
+            tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btnPay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/payment_dp"
+            android:layout_width="146dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#FFFFFF"
-            android:text="Bayar"
-            android:textColor="@color/black" />
-    </LinearLayout>
-</LinearLayout>
+            android:text="Payment DP"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/payment_methods_spinner" />
+
+        <Button
+            android:id="@+id/payment_full"
+            android:layout_width="156dp"
+            android:layout_height="38dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Payment Full"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/payment_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/payment_dp"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/payment_sisa"
+            android:layout_width="156dp"
+            android:layout_height="38dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Payment Sisa"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/payment_methods_spinner"
+            app:layout_constraintStart_toStartOf="@+id/payment_methods_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/payment_methods_spinner" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -191,48 +192,64 @@
             app:layout_constraintTop_toTopOf="@id/tv_sisa_label"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/btn_cekStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cek Status Pembayaran"
-            app:layout_constraintTop_toBottomOf="@id/tv_sisaBayar"
-            android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/btn_checkin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Checkin Reservasi"
-            app:layout_constraintTop_toBottomOf="@id/btn_cekStatus"/>
 
         <Button
             android:id="@+id/btn_batal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#F01E2C"
             android:text="Batalkan Reservasi"
-            app:layout_constraintTop_toBottomOf="@id/btn_checkin"/>
+            app:layout_constraintTop_toBottomOf="@+id/btn_detail"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/btn_pembayaran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Pembayaran Booking"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sisaBayar"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/btn_checkin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Checkin Reservasi"
+            app:layout_constraintTop_toBottomOf="@+id/btn_pembayaran"
+            tools:layout_editor_absoluteX="16dp" />
+
+
+        <Button
+            android:id="@+id/btn_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Detail"
+            app:layout_constraintTop_toBottomOf="@+id/btn_checkin"
+            tools:layout_editor_absoluteX="16dp" />
 
         <ImageView
             android:id="@+id/ib_trash"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
             android:contentDescription="Hapus"
             android:src="@drawable/trash"
-            app:layout_constraintTop_toBottomOf="@id/btn_batal"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_batal" />
 
         <ImageButton
             android:id="@+id/ib_edit"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_edit_square_24"
+            android:layout_width="52dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="8dp"
             android:contentDescription="Edit"
-            app:layout_constraintTop_toTopOf="@id/ib_trash"
+            android:src="@drawable/baseline_edit_square_24"
             app:layout_constraintEnd_toStartOf="@id/ib_trash"
-            android:layout_marginRight="8dp"/>
+            app:layout_constraintTop_toTopOf="@id/ib_trash" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
