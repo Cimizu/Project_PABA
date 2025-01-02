@@ -37,8 +37,8 @@ class AddBookingFragment : Fragment() {
     private var jamTutup: String = "23:59"
     private var maxJumlahOrang: Int = 0
 
-
-
+    private var restoid: String = ""
+    private var paketid: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,13 +64,17 @@ class AddBookingFragment : Fragment() {
         val paketName = arguments?.getString("paketName")
         val idRestoran = arguments?.getString("idRestoran")?:""
         val addEdit = arguments?.getInt("addEdit")
-
-
         val idPaket = arguments?.getString("idPaket")?:""
 
         bookingId = arguments?.getInt("bookingId")
+        paketid = arguments?.getString("idPakett")?:""
+        restoid = arguments?.getString("idRestoo")?:""
+
 
         Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $idRestoran, bookingId: $bookingId , idPaket: $idPaket")
+        Log.d("AddBookingFragment", "Paket: $paketName, idRestoran: $restoid, bookingId: $bookingId , idPaket: $paketid")
+
+        Log.d("AddBookingFragment", "Jumlah Orang: $maxJumlahOrang")
 
 
 
@@ -233,9 +237,18 @@ class AddBookingFragment : Fragment() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val uniqueCode = generateUniqueCode()
 
+            if (newJumlahOrang > maxJumlahOrang) {
+                Toast.makeText(
+                    requireContext(),
+                    "Jumlah orang yang diinputkan tidak boleh lebih dari $maxJumlahOrang.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
-                if (bookingId != null) {
+                if (bookingId != null && restoid != "" && paketid !="") {
                     // Update existing booking
                     val bookingInfo = BookingInfo(
                         bookingId!!,
@@ -254,7 +267,9 @@ class AddBookingFragment : Fragment() {
                         hargaTotal = newHargaTotal,
                         hargaDP = newHargaDP,
                         hargaSisa = newHargaSisa,
-                        jumlahOrang = newJumlahOrang
+                        jumlahOrang = newJumlahOrang,
+                        idResto = restoid,
+                        idPaket = paketid
                     )
                     db.collection("bookings").document(bookingId.toString())
                         .set(bookingInfo)
@@ -349,6 +364,11 @@ class AddBookingFragment : Fragment() {
                     tvHargaTotal.text = oldHargaTotal.toString()
                     tvHargaDP.text = oldHargaDP.toString()
                     edtJumlahOrang.setText(oldJumlahOrang.toString())
+
+
+                    if (!paketid.isNullOrEmpty()) {
+                        fetchPaketData(restoid, paketid)
+                    }
 
                 } else {
                     Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $bookingId")

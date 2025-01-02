@@ -120,6 +120,8 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             val fragment = AddBookingFragment().apply {
                 arguments = Bundle().apply {
                     putInt("bookingId", booking.id)
+                    putString("idRestoo", booking.idResto)
+                    putString("idPakett", booking.idPaket)
                     putString("restoName", booking.resto)
                     putString("paketName", booking.paket)
                     putString("name", booking.name)
