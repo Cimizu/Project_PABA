@@ -22,7 +22,9 @@ data class BookingInfo(
     val hargaSisa: Int = 0, //17
     val statusDP: Boolean = false, //18
     val statusSisa: Boolean = false, //19
-    val jumlahOrang: Int = 0 // 20
+    val jumlahOrang: Int = 0 ,// 20,
+    val idResto:String="",
+    val idPaket:String=""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(), //1
@@ -44,7 +46,9 @@ data class BookingInfo(
         parcel.readInt(), //17
         parcel.readByte() != 0.toByte(), //18
         parcel.readByte() != 0.toByte(), //19
-        parcel.readInt() //20
+        parcel.readInt(), //20
+        parcel.readString() ?: "",//21
+        parcel.readString() ?: "", //22
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -68,6 +72,8 @@ data class BookingInfo(
         parcel.writeByte(if (statusDP) 1 else 0) //18
         parcel.writeByte(if (statusSisa) 1 else 0) //19
         parcel.writeInt(jumlahOrang) //20
+        parcel.writeString(idResto) //21
+        parcel.writeString(idPaket) //22
     }
 
     override fun describeContents(): Int {

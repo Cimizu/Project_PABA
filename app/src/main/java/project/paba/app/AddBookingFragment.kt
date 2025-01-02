@@ -33,6 +33,11 @@ class AddBookingFragment : Fragment() {
     private lateinit var tvRestoName: TextView
     private lateinit var tvAddress: TextView
     private var bookingId: Int? = null
+    private var jamBuka: String = "00:00"
+    private var jamTutup: String = "23:59"
+    private var maxJumlahOrang: Int = 0
+
+
 
 
     override fun onCreateView(
@@ -57,11 +62,11 @@ class AddBookingFragment : Fragment() {
 
         // Ambil data dari arguments
         val paketName = arguments?.getString("paketName")
-        val idRestoran = arguments?.getString("idRestoran")
+        val idRestoran = arguments?.getString("idRestoran")?:""
         val addEdit = arguments?.getInt("addEdit")
 
 
-        val idPaket = arguments?.getString("idPaket")
+        val idPaket = arguments?.getString("idPaket")?:""
 
         bookingId = arguments?.getInt("bookingId")
 
@@ -105,8 +110,21 @@ class AddBookingFragment : Fragment() {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-                edtTanggal.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
+                val selectedCalendar = Calendar.getInstance()
+                selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+
+                // Validasi H-1 hari
+                if (rangeDate(selectedCalendar)) {
+                    edtTanggal.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Tanggal tidak boleh sebelum hari ini!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }, year, month, day)
+
             datePickerDialog.show()
         }
 
@@ -116,11 +134,25 @@ class AddBookingFragment : Fragment() {
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
+            val selectedDate = edtTanggal.text.toString() // Ambil tanggal yang dipilih
+
             val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-                edtJam.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
+                val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+
+                if (rangeWaktu(selectedTime, selectedDate)) {
+                    edtJam.setText(selectedTime)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Jam yang dipilih harus antara $jamBuka dan $jamTutup dan bukan jam saat ini - 1 jam",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }, hour, minute, true)
+
             timePickerDialog.show()
         }
+
 
         // Tombol booking
         btnBookingNow.setOnClickListener {
@@ -135,7 +167,19 @@ class AddBookingFragment : Fragment() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val uniqueCode = generateUniqueCode()
 
+            // jika salah
+            if (newJumlahOrang > maxJumlahOrang) {
+                Toast.makeText(
+                    requireContext(),
+                    "Jumlah orang yang diinputkan tidak boleh lebih dari $maxJumlahOrang.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
+
                 // Create new booking
                 getNextId { nextId ->
                     if (nextId != -1) {
@@ -155,7 +199,9 @@ class AddBookingFragment : Fragment() {
                             uniqueCode,
                             hargaTotal = newHargaTotal,
                             hargaDP = newHargaDP,
-                            jumlahOrang = newJumlahOrang
+                            jumlahOrang = newJumlahOrang,
+                            idResto = idRestoran,
+                            idPaket = idPaket
                         )
                         db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                             .addOnSuccessListener {
@@ -186,6 +232,7 @@ class AddBookingFragment : Fragment() {
             val newHargaSisa = newHargaTotal - newHargaDP
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val uniqueCode = generateUniqueCode()
+
 
             if (newName.isNotEmpty() && newDate.isNotEmpty() && newTime.isNotEmpty() && newPhone.isNotEmpty() && newNotes.isNotEmpty()) {
                 if (bookingId != null) {
@@ -228,6 +275,22 @@ class AddBookingFragment : Fragment() {
         return view
     }
 
+    private fun fetchPaketData(idRestoran: String, idPaket: String) {
+        db.collection("restoran").document(idRestoran).collection("paket").document(idPaket)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    maxJumlahOrang = document.getString("kapasitas")?.toInt() ?: 0
+                    Log.d("AddBookingFragment", "Max Jumlah Orang: $maxJumlahOrang")
+                } else {
+                    Log.e("AddBookingFragment", "Paket tidak ditemukan untuk ID: $idPaket")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("AddBookingFragment", "Error mengambil data paket: ${exception.message}", exception)
+            }
+    }
+
     private fun fetchRestoranData(idRestoran: String) {
         db.collection("restoran").document(idRestoran)
             .get()
@@ -235,12 +298,18 @@ class AddBookingFragment : Fragment() {
                 if (document != null) {
                     val restoName = document.getString("namaResto") ?: "Nama Restoran Tidak Ditemukan"
                     val address = document.getString("lokasi") ?: "Alamat Tidak Ditemukan"
-
+                    jamBuka = document.getString("jambuka") ?: "00:00"
+                    jamTutup = document.getString("jamtutup") ?: "23:59"
                     val paketName = arguments?.getString("paketName")
+                    val idPaket = arguments?.getString("idPaket")
 
                     tvRestoName.text = restoName
                     tvAddress.text = address
                     tvPaketName.text = paketName
+
+                    if (!idPaket.isNullOrEmpty()) {
+                        fetchPaketData(idRestoran, idPaket)
+                    }
 
                 } else {
                     Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $idRestoran")
@@ -296,6 +365,55 @@ class AddBookingFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+
+    private fun rangeWaktu(selectedTime: String, selectedDate: String): Boolean {
+        val formatter = java.text.SimpleDateFormat("HH:mm", Locale.getDefault())
+        val dateFormatter = java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return try {
+            val selected = formatter.parse(selectedTime)!!
+            val buka = formatter.parse(jamBuka)!!
+            val tutup = formatter.parse(jamTutup)!!
+
+            // Waktu saat ini
+            val now = Calendar.getInstance()
+            val currentTime = formatter.parse(formatter.format(now.time))!!
+            val oneHourLater = Calendar.getInstance().apply {
+                add(Calendar.HOUR_OF_DAY, 1)
+            }.time
+            val oneHourLaterTime = formatter.parse(formatter.format(oneHourLater))!!
+
+            // Periksa tanggal yang dipilih
+            val selectedDateParsed = dateFormatter.parse(selectedDate)
+            val todayDate = dateFormatter.parse(dateFormatter.format(now.time))
+
+            if (selectedDateParsed != null && selectedDateParsed.compareTo(todayDate) == 0) {
+                // Jika tanggal adalah hari ini, waktu yang dipilih harus lebih besar dari waktu saat ini + 1 jam
+                return selected >= buka && selected <= tutup && selected >= oneHourLaterTime
+            } else {
+                // Jika tanggal bukan hari ini, cukup periksa rentang jam buka dan tutup
+                return selected >= buka && selected <= tutup
+            }
+        } catch (e: Exception) {
+            Log.e("AddBookingFragment", "Error parsing time: ${e.message}", e)
+            false
+        }
+    }
+
+
+
+    private fun rangeDate(selectedCalendar: Calendar): Boolean {
+        // Kalender hari ini
+        val todayCalendar = Calendar.getInstance()
+        // set 00:00:00
+        todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        todayCalendar.set(Calendar.MINUTE, 0)
+        todayCalendar.set(Calendar.SECOND, 0)
+        todayCalendar.set(Calendar.MILLISECOND, 0)
+        return selectedCalendar.timeInMillis >= todayCalendar.timeInMillis
+    }
+
+
+
 
     private fun getNextId(onComplete: (Int) -> Unit) {
         val idDocRef = db.collection("metadata").document("bookingId")
