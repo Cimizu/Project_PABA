@@ -189,6 +189,7 @@
                 android:layout_margin="4dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Masukkan no.telp"
+                android:inputType="number"
                 android:padding="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -291,7 +292,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Total DP (50%)"
+                        android:text="Total DP"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_totalHarga_label" />
