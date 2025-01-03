@@ -15,11 +15,11 @@
         android:id="@+id/kotakPutih"
         android:layout_width="378dp"
         android:layout_height="108dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="52dp"
         android:src="@drawable/kotak"
         app:layout_constraintBottom_toTopOf="@+id/info_pemesan"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -266,7 +266,7 @@
         <ImageView
             android:id="@+id/reservasi_image"
             android:layout_width="72dp"
-            android:layout_height="79dp"
+            android:layout_height="72dp"
             android:src="@drawable/resto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

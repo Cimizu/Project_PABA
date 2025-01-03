@@ -1,11 +1,13 @@
 package project.paba.app
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
 class addPaketAdapter (
@@ -13,6 +15,7 @@ class addPaketAdapter (
     private val restoranId: String?,
     private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<addPaketAdapter.PaketViewHolder>() {
+    private val db = FirebaseFirestore.getInstance()
 
     inner class PaketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val namaPaket: TextView = view.findViewById(R.id.namaPaket)
@@ -20,7 +23,7 @@ class addPaketAdapter (
         val kapasitas: TextView = view.findViewById(R.id.kapasitas)
         val harga: TextView = view.findViewById(R.id.harga)
         val uangDp: TextView = view.findViewById(R.id.uangDp)
-        val gambar: ImageView = view.findViewById(R.id.gambarPaket)
+        val gambarPaket: ImageView = view.findViewById(R.id.gambarPaket)
 
     }
 
@@ -38,19 +41,33 @@ class addPaketAdapter (
         holder.kapasitas.text = paket.kapasitas
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
-        if (paket.foto.isNotEmpty()) {
-            Picasso.get()
-                .load(paket.foto)
-                .placeholder(R.drawable.resto)
-                .error(R.drawable.resto)
-                .into(holder.gambar) // Ngest image dr yang link diksh
-        } else {
-            holder.gambar.setImageResource(R.drawable.resto)
-        }
 
 
+        db.collection("restoran").document(restoranId.toString()).collection("paket").document(paket.idPaket)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val fotoo = document.getString("foto") ?:""
+                    if (fotoo.isNotEmpty()) {
+                        Picasso.get()
+                            .load(fotoo)
+                            .placeholder(R.drawable.resto)
+                            .error(R.drawable.resto)
+                            .into(holder.gambarPaket)
+                    } else {
+                        holder.gambarPaket.setImageResource(R.drawable.resto)
+                    }
 
+
+                } else {
+                    Log.e("Addpaketadapter", "Document tidak ditemukan untuk ID: ${paket.idRestoran}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("addpaketadapter", "Error mengambil data restoran: ${exception.message}", exception)
+            }
     }
+
 
     override fun getItemCount(): Int {
         return paketList.size

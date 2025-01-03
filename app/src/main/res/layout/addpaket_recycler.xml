@@ -10,7 +10,6 @@
         android:id="@+id/gambarPaket"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:contentDescription="Gambar Resto"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
