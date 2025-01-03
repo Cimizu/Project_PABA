@@ -211,6 +211,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Pembayaran Booking"
+            android:backgroundTint="#72b63a"
             app:layout_constraintTop_toBottomOf="@+id/tv_sisaBayar"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -220,8 +221,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Checkin Reservasi"
-            app:layout_constraintTop_toBottomOf="@+id/btn_pembayaran"
-            tools:layout_editor_absoluteX="16dp" />
+            android:backgroundTint="#72b63a"
+            app:layout_constraintStart_toEndOf="@+id/btn_pembayaran"
+            app:layout_constraintTop_toBottomOf="@+id/btn_pembayaran" />
 
 
         <Button
@@ -229,6 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:backgroundTint="#72b63a"
             android:text="Detail"
             app:layout_constraintTop_toBottomOf="@+id/btn_checkin"
             tools:layout_editor_absoluteX="16dp" />
@@ -246,7 +249,7 @@
         <ImageButton
             android:id="@+id/ib_edit"
             android:layout_width="52dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_marginRight="8dp"
             android:contentDescription="Edit"
             android:src="@drawable/baseline_edit_square_24"
