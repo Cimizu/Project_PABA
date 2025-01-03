@@ -94,35 +94,14 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
-        app:layout_constraintTop_toBottomOf="@+id/llTanggal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status : " />
-
-        <TextView
-            android:id="@+id/tv_jam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12:12" />
-    </LinearLayout>
-
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Status: "
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintStart_toStartOf="@+id/llTanggal"
+        app:layout_constraintTop_toBottomOf="@+id/llTanggal" />
 
     <TextView
         android:id="@+id/tvStatus"

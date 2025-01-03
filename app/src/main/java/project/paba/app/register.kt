@@ -30,6 +30,7 @@ class register : AppCompatActivity() {
 
 
         val _btnResgiter = findViewById<Button>(R.id.btnRegister)
+        val _btnBack = findViewById<ImageView>(R.id.btnBack)
         val _isiNama = findViewById<EditText>(R.id.inputNama)
         val _isiTelfon = findViewById<EditText>(R.id.inputTelfon)
         val _isiPassword1 = findViewById<EditText>(R.id.inputPass1)
@@ -81,7 +82,9 @@ class register : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        _btnBack.setOnClickListener {
+            onBackPressed()
+        }
 
         _btnResgiter.setOnClickListener {
 

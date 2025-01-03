@@ -8,6 +8,17 @@
     android:background="@drawable/backgroundhome"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="37dp"
+        android:layout_height="39dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"

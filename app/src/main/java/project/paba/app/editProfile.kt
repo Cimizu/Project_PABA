@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,6 +32,8 @@ class editProfile : Fragment() {
     private lateinit var inputEmail: EditText
     private lateinit var inputPassword: EditText
     private lateinit var btnSimpan: Button
+    private lateinit var btnBack: ImageView
+
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
@@ -54,6 +57,7 @@ class editProfile : Fragment() {
         inputEmail = view.findViewById(R.id.inputEmail)
         inputPassword = view.findViewById(R.id.inputPassword)
         btnSimpan = view.findViewById(R.id.btnSimpan)
+        btnBack = view.findViewById(R.id.btnBack)
         val userId = auth.currentUser?.uid
         if (userId != null) {
             db.collection("Customer").document(userId).get().addOnSuccessListener { document ->
@@ -65,6 +69,9 @@ class editProfile : Fragment() {
             }.addOnFailureListener {
                 Toast.makeText(context, "Gagal memuat profil.", Toast.LENGTH_SHORT).show()
             }
+        }
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
         // Tombol Simpan

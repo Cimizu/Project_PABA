@@ -18,6 +18,15 @@
         android:layout_marginTop="40dp"/>
 
     <!-- CardView -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="37dp"
+        android:layout_height="39dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/back" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="370dp"
         android:layout_height="wrap_content"

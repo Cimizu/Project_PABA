@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,7 @@ class listAddResto : Fragment() {
     private lateinit var restaurantListRecyclerView: RecyclerView
     private lateinit var adapter: addRestoAdapter
     private val restaurantData = mutableListOf<dataRestoran>()
+    private lateinit var btnBack : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,10 @@ class listAddResto : Fragment() {
                 addToBackStack(null)
                 commit()
             }
+        }
+        btnBack = view.findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
         // Initialize RecyclerView

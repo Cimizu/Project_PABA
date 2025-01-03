@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,6 +59,11 @@ class paket : Fragment() {
 
         // Fetch data for the "paket"
         fetchPaketData()
+
+        val btnback = view.findViewById<ImageView>(R.id.btnBack)
+        btnback.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     /**

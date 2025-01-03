@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,8 @@ class listAddPaket : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var btnBack : ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -74,6 +77,11 @@ class listAddPaket : Fragment() {
 
         // Fetch data for the "paket"
         fetchPaketData()
+
+        btnBack = view.findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     /**
