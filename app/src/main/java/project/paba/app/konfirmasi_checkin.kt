@@ -30,7 +30,7 @@ class konfirmasi_checkin : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
     private var idRestoran: String? = null
-    private lateinit var pemesananTelefon: TextView
+    private lateinit var metode: TextView
 
     private lateinit var kotakPutih: ImageView
     private lateinit var pemesanName: TextView
@@ -79,6 +79,7 @@ class konfirmasi_checkin : Fragment() {
         hargaDP = view.findViewById(R.id.hargaDP)
         uangsisa = view.findViewById(R.id.uangsisa)
         statusReservasi = view.findViewById(R.id.statusReservasi)
+        metode = view.findViewById(R.id.metode)
 
         val dataIntent = arguments?.getParcelable<BookingInfo>("kirimData")
         dataIntent?.let {
@@ -96,18 +97,11 @@ class konfirmasi_checkin : Fragment() {
             reservasi_paket.text=it.paket
             idRestoran = it.idResto
             fetchRestoranData(idRestoran!!)
+            fetchfoto(idRestoran!!, it.idPaket)
             uangsisa.text=String.format("Rp %,03d", it.hargaSisa)
             statusReservasi.text = it.statusString
-//            if (it.foto.isNotEmpty()) {
-//                Picasso.get()
-//                    .load(it.foto) // Load the image from the URL
-//                    .placeholder(R.drawable.restoran) // Placeholder image while loading
-//                    .error(R.drawable.restoran) // Error image if loading fails
-//                    .into(_restoranImage) // Set the image into the ImageView
-//            } else {
-//                // Fallback if no photo URL is provided
-//                _restoranImage.setImageResource(R.drawable.restoran)
-//            }
+
+            metode.text=it.metode_pembayaran
 
             val statusBayar = it.status_bayar
 
@@ -128,20 +122,8 @@ class konfirmasi_checkin : Fragment() {
                 if (document != null) {
 
                     val no_telfon = document.getString("noTelp") ?: "Nomor Tidak Ditemukan"
-                    val foto = document.getString("foto")?:""
+//                    val foto = document.getString("foto")?:""
                     nomorTelfon.text = no_telfon
-                    if (foto.isNotEmpty()) {
-                        Picasso.get()
-                            .load(foto) // Load the image from the URL
-                            .placeholder(R.drawable.restoran) // Placeholder image while loading
-                            .error(R.drawable.restoran) // Error image if loading fails
-                            .into(kotakPutih) // Set the image into the ImageView
-                    } else {
-                        // Fallback if no photo URL is provided
-                        kotakPutih.setImageResource(R.drawable.restoran)
-                    }
-
-
 
                 } else {
                     Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $idRestoran")
@@ -149,6 +131,32 @@ class konfirmasi_checkin : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e("AddBookingFragment", "Error mengambil data restoran: ${exception.message}", exception)
+            }
+    }
+    private fun fetchfoto(idRestoran: String, idPaket: String) {
+        db.collection("restoran").document(idRestoran).collection("paket").document(idPaket)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val fotoo = document.getString("foto") ?:""
+                    if (fotoo.isNotEmpty()) {
+                        Picasso.get()
+                            .load(fotoo) // Load the image from the URL
+                            .placeholder(R.drawable.resto) // Placeholder image while loading
+                            .error(R.drawable.resto) // Error image if loading fails
+                            .into(kotakPutih) // Set the image into the ImageView
+                    } else {
+                        // Fallback if no photo URL is provided
+                        kotakPutih.setImageResource(R.drawable.resto)
+                    }
+
+
+                } else {
+                    Log.e("Konfirmasi check in", "Document tidak ditemukan untuk ID: $idRestoran")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Konfirmasi check in", "Error mengambil data restoran: ${exception.message}", exception)
             }
     }
 

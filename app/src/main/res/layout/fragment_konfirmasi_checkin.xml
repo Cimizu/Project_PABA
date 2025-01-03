@@ -196,8 +196,8 @@
     <!-- Footer -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reservasi_section"
-        android:layout_width="376dp"
-        android:layout_height="238dp"
+        android:layout_width="391dp"
+        android:layout_height="276dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_card"
         android:padding="16dp"
@@ -216,21 +216,21 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/reservasi_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.153"
+            app:layout_constraintHorizontal_bias="0.107"
             app:layout_constraintStart_toEndOf="@+id/reservasi_image"
             app:layout_constraintTop_toTopOf="@+id/reservasi_image"
-            app:layout_constraintVertical_bias="0.518" />
+            app:layout_constraintVertical_bias="0.629" />
 
         <TextView
             android:id="@+id/reservasi_detail"
             android:layout_width="154dp"
             android:layout_height="39dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:text="Total Harga Reservasi (20 Orang)"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/reservasi_image"
             app:layout_constraintTop_toTopOf="@id/reservasi_image" />
 
@@ -294,9 +294,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
-            android:id="@+id/statuss"
+            android:id="@+id/judul"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Metode Pembayaran: "
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
             android:id="@+id/uangsisa"
@@ -311,9 +316,8 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="____________________________________________________"
+            android:text="_______________________________________________________"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reservasi_dp" />
 
@@ -325,6 +329,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/metode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OVO"
+            app:layout_constraintBottom_toBottomOf="@+id/judul"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/judul" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -104,6 +104,7 @@ class payment : Fragment() {
             reseverasi_paket.text=it.paket
             idRestoran = it.idResto
             fetchRestoranData(idRestoran!!)
+            fetchfoto(idRestoran!!,it.idPaket)
             sisaPembayaran.text=String.format("Rp %,03d", it.hargaSisa)
 //            if (it.foto.isNotEmpty()) {
 //                Picasso.get()
@@ -150,12 +151,15 @@ class payment : Fragment() {
 
         payment_sisa.setOnClickListener {
             dataIntent?.let { bookingInfo ->
+                val selectedMethod = getSelectedPaymentMethod(paymentMethodSpinner)
                 val sisaPembayaran = 0
                 val updatedData: MutableMap<String, Any> = hashMapOf(
                     "statusDP" to true,
                     "statusSisa" to true,
                     "status_bayar" to true,
-                    "hargaSisa" to sisaPembayaran
+                    "hargaSisa" to sisaPembayaran,
+                    "metode_pembayaran" to selectedMethod
+
                 )
 
                 // Perbarui data di Firestore
@@ -178,12 +182,15 @@ class payment : Fragment() {
         // Tambahkan fungsi pada tombol pembayaran
         paymentDpButton.setOnClickListener {
             // Cek jika data ada
+            val selectedMethod = getSelectedPaymentMethod(paymentMethodSpinner)
             dataIntent?.let { bookingInfo ->
                 val sisaPembayaran = bookingInfo.hargaTotal - bookingInfo.hargaDP
                 val updatedData: MutableMap<String, Any> = hashMapOf(
                     "statusDP" to true,
                     "status_bayar" to true,
-                    "hargaSisa" to sisaPembayaran
+                    "hargaSisa" to sisaPembayaran,
+                    "metode_pembayaran" to selectedMethod
+
                 )
 
 
@@ -213,11 +220,14 @@ class payment : Fragment() {
         paymentFullButton.setOnClickListener {
             dataIntent?.let { bookingInfo ->
                 val sisaPembayaran = 0
+                val selectedMethod = getSelectedPaymentMethod(paymentMethodSpinner)
                 val updatedData: MutableMap<String, Any> = hashMapOf(
                     "statusDP" to true,
                     "statusSisa" to true,
                     "status_bayar" to true,
-                    "hargaSisa" to sisaPembayaran
+                    "hargaSisa" to sisaPembayaran,
+                    "metode_pembayaran" to selectedMethod
+
                 )
 
 
@@ -238,6 +248,13 @@ class payment : Fragment() {
         }
     }
 
+    private fun getSelectedPaymentMethod(paymentMethodSpinner: Spinner): String {
+        return paymentMethodSpinner.selectedItem.toString()
+    }
+
+
+
+
     private fun fetchRestoranData(idRestoran: String) {
         db.collection("restoran").document(idRestoran)
             .get()
@@ -246,6 +263,33 @@ class payment : Fragment() {
 
                     val no_telfon = document.getString("noTelp") ?: "Nomor Tidak Ditemukan"
                     pemesananTelefon.text = no_telfon.toString()
+//                    val fotoo = document.getString("foto") ?:""
+//                    if (fotoo.isNotEmpty()) {
+//                        Picasso.get()
+//                            .load(fotoo) // Load the image from the URL
+//                            .placeholder(R.drawable.restoran) // Placeholder image while loading
+//                            .error(R.drawable.restoran) // Error image if loading fails
+//                            .into(gambar) // Set the image into the ImageView
+//                    } else {
+//                        // Fallback if no photo URL is provided
+//                        gambar.setImageResource(R.drawable.restoran)
+//                    }
+
+
+                } else {
+                    Log.e("Payment", "Document tidak ditemukan untuk ID: $idRestoran")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Payment", "Error mengambil data restoran: ${exception.message}", exception)
+            }
+    }
+
+    private fun fetchfoto(idRestoran: String, idPaket: String) {
+        db.collection("restoran").document(idRestoran).collection("paket").document(idPaket)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
                     val fotoo = document.getString("foto") ?:""
                     if (fotoo.isNotEmpty()) {
                         Picasso.get()
@@ -260,13 +304,15 @@ class payment : Fragment() {
 
 
                 } else {
-                    Log.e("AddBookingFragment", "Document tidak ditemukan untuk ID: $idRestoran")
+                    Log.e("payment", "Document tidak ditemukan untuk ID: $idRestoran")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.e("AddBookingFragment", "Error mengambil data restoran: ${exception.message}", exception)
+                Log.e("payment", "Error mengambil data paket: ${exception.message}", exception)
             }
     }
+
+
 
     companion object {
         /**

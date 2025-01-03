@@ -11,8 +11,10 @@ import android.widget.TextView
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
 class HistoryAdapter(private val bookingList: ArrayList<BookingInfo>) : RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
+    private val db = FirebaseFirestore.getInstance()
 
     inner class HistoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvResto: TextView = itemView.findViewById(R.id.tv_resto)
@@ -40,12 +42,33 @@ class HistoryAdapter(private val bookingList: ArrayList<BookingInfo>) : Recycler
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
         val booking = bookingList[position]
         holder.tvResto.text = booking.resto
-//        holder.tvGambarResto.text = booking.foto // Assuming foto is a string, you may want to load an image here
         holder.tvAddress.text = booking.address
         holder.tvDate.text = booking.date
         holder.tvTime.text = booking.time
         holder.tvStatus.text = booking.statusString
 
+        db.collection("restoran").document(booking.idResto)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val imageUrl = document.getString("foto")
+                    if (!imageUrl.isNullOrEmpty()) {
+                        Picasso.get()
+                            .load(imageUrl)
+                            .placeholder(R.drawable.resto)
+                            .error(R.drawable.resto)
+                            .into(holder.tvGambarResto)
+                    } else {
+                        holder.tvGambarResto.setImageResource(R.drawable.resto)
+                    }
+                } else {
+                    holder.tvGambarResto.setImageResource(R.drawable.resto)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("BookingAdapter", "Error loading restaurant image: ", e)
+                holder.tvGambarResto.setImageResource(R.drawable.resto)
+            }
         holder.ivDelete.setOnClickListener {
             deleteBooking(position)
         }
@@ -94,6 +117,9 @@ class HistoryAdapter(private val bookingList: ArrayList<BookingInfo>) : Recycler
                         Log.e("Firebase", "Error finding document", e)
                     }
     }
+
+
+
 
     override fun getItemCount(): Int {
         return bookingList.size

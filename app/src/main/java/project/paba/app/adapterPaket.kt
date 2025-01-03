@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class adapterPaket(
     private val paketList: List<paketRestoran>,
@@ -23,6 +25,8 @@ class adapterPaket(
         val harga: TextView = view.findViewById(R.id.harga)
         val uangDp: TextView = view.findViewById(R.id.uangDp)
         val pesanButton: Button = view.findViewById(R.id.btnPesan)
+        val gambarPaket: ImageView = view.findViewById(R.id.gambarPaket)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaketViewHolder {
@@ -39,6 +43,16 @@ class adapterPaket(
         holder.kapasitas.text = paket.kapasitas
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
+
+        if (paket.foto.isNotEmpty()) {
+            Picasso.get()
+                .load(paket.foto)
+                .placeholder(R.drawable.resto)
+                .error(R.drawable.resto)
+                .into(holder.gambarPaket) // Ngest image dr yang link diksh
+        } else {
+            holder.gambarPaket.setImageResource(R.drawable.resto)
+        }
 
 
         if (paket.namaPaket.isNullOrEmpty() || paket.harga.isNullOrEmpty()) {

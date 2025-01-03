@@ -218,7 +218,9 @@ class AddBookingFragment : Fragment() {
                             jumlahOrang = newJumlahOrang,
                             idResto = idRestoran,
                             idPaket = idPaket,
-                            statusString = "ACTIVE"
+                            statusString = "ACTIVE",
+                            metode_pembayaran = "Belum dipilih"
+
                         )
                         db.collection("bookings").document(nextId.toString()).set(bookingInfo)
                             .addOnSuccessListener {
@@ -288,7 +290,8 @@ class AddBookingFragment : Fragment() {
                         jumlahOrang = newJumlahOrang,
                         idResto = restoid,
                         idPaket = paketid,
-                        statusString = "ACTIVE"
+                        statusString = "ACTIVE",
+                        metode_pembayaran = "Belum dipilih"
                     )
                     db.collection("bookings").document(bookingId.toString())
                         .set(bookingInfo)

@@ -36,6 +36,7 @@ class addPaket : Fragment() {
     private var idRestoran: String? = null
     private lateinit var tvNamaResto: TextView
     private lateinit var tvAlamatResto: TextView
+    private lateinit var inputFoto: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +62,10 @@ class addPaket : Fragment() {
         edtDeskripsi = view.findViewById(R.id.edtDeskripsi)
         edtKapasitas = view.findViewById(R.id.edtKapasitas)
         btnInput = view.findViewById(R.id.btnInputPaket)
-
+        inputFoto=view.findViewById(R.id.edtFoto)
         tvNamaResto = view.findViewById(R.id.tv_namaResto)
         tvAlamatResto = view.findViewById(R.id.tv_alamatResto)
+
         fetchDataRestoran()
 
         val db = FirebaseFirestore.getInstance()
@@ -74,6 +76,7 @@ class addPaket : Fragment() {
             val DP = edtDP.text.toString().trim()
             val Deskripsi = edtDeskripsi.text.toString().trim()
             val kapasitas = edtKapasitas.text.toString().trim()
+            val foto = inputFoto.text.toString().trim()
 
             val idResto = this.idRestoran ?: "defaultId" // Fallback if idRestoran is null
 
@@ -94,7 +97,8 @@ class addPaket : Fragment() {
                 harga = harga,
                 uangDp = DP,
                 idRestoran = idResto,
-                idPaket = idPaket
+                idPaket = idPaket,
+                foto = foto
             )
 
             db.collection("restoran").document(idResto)

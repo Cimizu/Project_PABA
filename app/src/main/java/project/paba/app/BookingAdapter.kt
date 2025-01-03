@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.DateTimeException
 import java.time.LocalDateTime
@@ -24,6 +25,8 @@ import java.util.Locale
 import java.util.UUID
 
 class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     class BookingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivGambarResto: ImageView = itemView.findViewById(R.id.iv_gambarResto)
@@ -61,6 +64,30 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
         holder.tvJam.text = booking.time
         holder.tvCttn.text = booking.notes
         holder.tvsisa.text = String.format("Rp %,03d", booking.hargaSisa)
+
+        db.collection("restoran").document(booking.idResto)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val imageUrl = document.getString("foto")
+                    if (!imageUrl.isNullOrEmpty()) {
+                        Picasso.get()
+                            .load(imageUrl)
+                            .placeholder(R.drawable.resto)
+                            .error(R.drawable.resto)
+                            .into(holder.ivGambarResto)
+                    } else {
+                        holder.ivGambarResto.setImageResource(R.drawable.resto)
+                    }
+                } else {
+                    holder.ivGambarResto.setImageResource(R.drawable.resto)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("BookingAdapter", "Error loading restaurant image: ", e)
+                holder.ivGambarResto.setImageResource(R.drawable.resto)
+            }
+
 
 
         checkAndExpireBookings(booking, position)

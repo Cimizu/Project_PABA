@@ -199,16 +199,41 @@
                 android:clickable="true" />
 
 
+            <TextView
+                android:id="@+id/tv_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Link Foto Paket "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtDeskripsi" />
+
+            <EditText
+                android:id="@+id/edtFoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="Masukkan Link Foto Paket"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_link" />
+
             <Button
                 android:id="@+id/btnInputPaket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Add Paket"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtDeskripsi" />
+                app:layout_constraintTop_toBottomOf="@+id/edtFoto" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
