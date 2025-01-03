@@ -88,10 +88,6 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 holder.ivGambarResto.setImageResource(R.drawable.resto)
             }
 
-
-
-        checkAndExpireBookings(booking, position)
-
         holder.btnPembayaran.setOnClickListener {
             val context = holder.itemView.context
             if (context is androidx.fragment.app.FragmentActivity) {
@@ -154,8 +150,15 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 //        cek status aktif
         val currentDate = Calendar.getInstance().time
         val bookingDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse("${booking.date} ${booking.time}")
+        val bookingDateWithTolerance = bookingDate?.let {
+            Calendar.getInstance().apply {
+                time = it
+                add(Calendar.MINUTE, 15) // toleransi 15 menit
+            }.time
+        }
 
-        if (bookingDate != null && currentDate.before(bookingDate)) {
+        if (bookingDateWithTolerance != null && currentDate.before(bookingDateWithTolerance)) {
+            // Booking masih dalam waktu toleransi, status tetap aktif
             holder.btnBatal.isEnabled = true
             holder.btnBatal.text = "Batal"
             db.collection("bookings").document(booking.id.toString())
@@ -167,11 +170,12 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status aktif", e)
                 }
         } else {
+            // Booking sudah melewati waktu toleransi, ubah status menjadi tidak aktif
             holder.btnPembayaran.isVisible = false
             holder.btnBatal.isEnabled = false
             holder.btnBatal.text = "Dibatalkan"
             db.collection("bookings").document(booking.id.toString())
-                .update("status_aktif", false)
+                .update("status_aktif", false, "statusString", "EXPIRED")
                 .addOnSuccessListener {
                     Log.d("BookingAdapter", "Status aktif updated successfully")
                 }
@@ -179,6 +183,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                     Log.e("BookingAdapter", "Error updating status aktif", e)
                 }
         }
+
 
         holder.ibTrash.setOnClickListener {
             deleteBooking(position)
@@ -285,38 +290,6 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
     override fun getItemCount(): Int {
         return bookingList.size
     }
-    private fun checkAndExpireBookings(booking: BookingInfo, position: Int) {
-        val db = FirebaseFirestore.getInstance()
-        try {
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.getDefault())
-            val bookingDateTime = LocalDateTime.parse("${booking.date} ${booking.time}", formatter)
-
-            val currentDateTime = LocalDateTime.now()
-
-            // Tambahkan toleransi 30 menit
-            val expirationDateTime = bookingDateTime.plusMinutes(30)
-
-            if (currentDateTime.isAfter(expirationDateTime)) {
-                // Update status di Firestore
-                db.collection("bookings").document(booking.id.toString())
-                    .update("status_aktif", false, "statusString", "EXPIRED")
-                    .addOnSuccessListener {
-                        Log.d("BookingAdapter", "Booking expired updated successfully")
-                        bookingList[position].status_aktif = false
-                        bookingList[position].statusString = "EXPIRED"
-                        notifyItemChanged(position) // Refresh adapter untuk item ini
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("BookingAdapter", "Error updating expired status", e)
-                    }
-            }
-        } catch (e: DateTimeException) {
-            Log.e("BookingAdapter", "Error parsing date or time", e)
-        }
-    }
-
-
-
     private fun deleteBooking(position: Int) {
         val booking = bookingList[position]
         val db = FirebaseFirestore.getInstance()
@@ -345,39 +318,4 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
             }
     }
 
-    private fun updatePaymentStatus(bookingInfo: BookingInfo) {
-        val db = FirebaseFirestore.getInstance()
-        // kalau sudah bayar dp
-        if (!bookingInfo.statusDP) {
-            db.collection("bookings").document(bookingInfo.id.toString())
-                .update("statusDP", true)
-                .addOnSuccessListener {
-                    Log.d("BookingAdapter", "Status dp updated successfully")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firebase", "Error updating document", e)
-                }
-        }
-        // kalau sudah bayar sisanya
-        else if (!bookingInfo.statusSisa) {
-            db.collection("bookings").document(bookingInfo.id.toString())
-                .update("statusSisa", true)
-                .addOnSuccessListener {
-                    Log.d("BookingAdapter", "Status sisa updated successfully")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firebase", "Error updating document", e)
-                }
-        } // kalau sudah bayar semua
-        else if (bookingInfo.statusDP && bookingInfo.statusSisa) {
-            db.collection("bookings").document(bookingInfo.id.toString())
-                .update("status_bayar", true)
-                .addOnSuccessListener {
-                    Log.d("BookingAdapter", "Status bayar updated successfully")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firebase", "Error updating document", e)
-                }
-        }
-    }
 }
