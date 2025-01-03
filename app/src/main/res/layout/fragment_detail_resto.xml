@@ -58,7 +58,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/baseline_star_24" />
+            android:src="@drawable/baseline_star_rate_24" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
             android:layout_marginLeft="45dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/baseline_star_24" />
+            android:src="@drawable/baseline_star_rate_24" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_marginLeft="70dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/baseline_star_24" />
+            android:src="@drawable/baseline_star_rate_24" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_marginLeft="95dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/baseline_star_24" />
+            android:src="@drawable/baseline_star_rate_24" />
 
         <ImageView
             android:layout_width="wrap_content"
