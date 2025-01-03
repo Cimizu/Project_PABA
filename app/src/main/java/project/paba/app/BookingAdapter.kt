@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -149,7 +151,10 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
 //        cek status aktif
         val currentDate = Calendar.getInstance().time
-        val bookingDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse("${booking.date} ${booking.time}")
+        val bookingDate = SimpleDateFormat(
+            "dd/MM/yyyy HH:mm",
+            Locale.getDefault()
+        ).parse("${booking.date} ${booking.time}")
         val bookingDateWithTolerance = bookingDate?.let {
             Calendar.getInstance().apply {
                 time = it
@@ -186,8 +191,61 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
 
         holder.ibTrash.setOnClickListener {
-            deleteBooking(position)
+            AlertDialog.Builder(holder.itemView.context)
+                .setTitle("Konfirmasi Hapus")
+                .setMessage("Apakah Anda yakin ingin menghapus booking ini?")
+                .setPositiveButton("Hapus") { dialog, _ ->
+                    val booking = bookingList[position]
+                    db.collection("bookings").document(booking.id.toString())
+                        .update("status_aktif", false, "statusString", "BATAL")
+                        .addOnSuccessListener {
+                            db.collection("bookings").whereEqualTo("name", booking.name)
+                                .whereEqualTo("date", booking.date)
+                                .whereEqualTo("time", booking.time)
+                                .get()
+                                .addOnSuccessListener { documents ->
+                                    for (document in documents) {
+                                        db.collection("bookings").document(document.id).delete()
+                                            .addOnSuccessListener {
+                                                bookingList.removeAt(position)
+                                                notifyItemRemoved(position)
+                                                Toast.makeText(
+                                                    holder.itemView.context,
+                                                    "Booking berhasil dihapus.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Log.e("Firebase", "Error deleting document", e)
+                                                Toast.makeText(
+                                                    holder.itemView.context,
+                                                    "Terjadi kesalahan saat menghapus.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    }
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Firebase", "Error finding document", e)
+                                    Toast.makeText(
+                                        holder.itemView.context,
+                                        "Dokumen tidak ditemukan.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
+                }
+                .setNegativeButton("Batal") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(
+                        holder.itemView.context,
+                        "Penghapusan dibatalkan.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .show()
         }
+
         holder.ibEdit.setOnClickListener {
             val context = holder.itemView.context
             val fragment = AddBookingFragment().apply {
@@ -212,12 +270,13 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 .commit()
         }
 
-//        holder.btnCekStatus.setOnClickListener {
+        //        holder.btnCekStatus.setOnClickListener {
 //            updatePaymentStatus(booking)
 //        }
         fun generateUniqueCode(): String {
             // You can use UUID or combine with the timestamp to make it even more unique
-            val uniqueCode = "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
+            val uniqueCode =
+                "BOOK-" + UUID.randomUUID().toString() // Generates a UUID-based unique code
             return uniqueCode
         }
         holder.btn_detail.setOnClickListener {
@@ -253,7 +312,7 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
                 db.collection("bookings").document(booking.id.toString())
                     .update(
                         "uniqueCode", uniqueCode,
-                        "timestamp" ,timestamp,
+                        "timestamp", timestamp,
                         "status_aktif", false,
                         "statusString", "USED"
                     )
@@ -262,7 +321,10 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
                         // Show QR code dialog
                         val qrCodeDialog = QRCodeDialogFragment.newInstance(uniqueCode)
-                        qrCodeDialog.show((holder.itemView.context as AppCompatActivity).supportFragmentManager, "QRCodeDialog")
+                        qrCodeDialog.show(
+                            (holder.itemView.context as AppCompatActivity).supportFragmentManager,
+                            "QRCodeDialog"
+                        )
                     }
                     .addOnFailureListener { e ->
                         Log.e("BookingAdapter", "Error updating unique code and timestamp", e)
@@ -272,50 +334,47 @@ class BookingAdapter(private val bookingList: MutableList<BookingInfo>) : Recycl
 
         // Batal button
         holder.btnBatal.setOnClickListener {
-            // Disable button
-            holder.btnBatal.isEnabled = false
-            holder.btnBatal.text = "Dibatalkan"
-            holder.btnPembayaran.isEnabled = false
-            db.collection("bookings").document(booking.id.toString())
-                .update("status_aktif", false,"statusString", "BATAL")
-                .addOnSuccessListener {
-                    Log.d("BookingAdapter", "Status aktif updated successfully")
+            val context = holder.itemView.context
+
+            AlertDialog.Builder(context)
+                .setTitle("Konfirmasi Pembatalan")
+                .setMessage("Apakah Anda yakin ingin membatalkan booking ini?")
+                .setPositiveButton("Ya") { _, _ ->
+                    // Disable button
+                    holder.btnBatal.isEnabled = false
+                    holder.btnBatal.text = "Dibatalkan"
+                    holder.btnPembayaran.isEnabled = false
+
+                    db.collection("bookings").document(booking.id.toString())
+                        .update("status_aktif", false, "statusString", "BATAL")
+                        .addOnSuccessListener {
+                            Log.d("BookingAdapter", "Status aktif updated successfully")
+                            Toast.makeText(
+                                context,
+                                "Booking berhasil dibatalkan.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("BookingAdapter", "Error updating status aktif", e)
+                            Toast.makeText(
+                                context,
+                                "Terjadi kesalahan saat membatalkan booking.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
-                .addOnFailureListener { e ->
-                    Log.e("BookingAdapter", "Error updating status aktif", e)
+                .setNegativeButton("Tidak") { dialog, _ ->
+                    dialog.dismiss()
+                    Toast.makeText(context, "Pembatalan dibatalkan.", Toast.LENGTH_SHORT).show()
                 }
+                .show()
         }
     }
 
-    override fun getItemCount(): Int {
+        override fun getItemCount(): Int {
         return bookingList.size
     }
-    private fun deleteBooking(position: Int) {
-        val booking = bookingList[position]
-        val db = FirebaseFirestore.getInstance()
-        db.collection("bookings").document(booking.id.toString())
-            .update("status_aktif", false, "statusString", "BATAL")
-            .addOnSuccessListener {
-                db.collection("bookings").whereEqualTo("name", booking.name)
-                    .whereEqualTo("date", booking.date)
-                    .whereEqualTo("time", booking.time)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            db.collection("bookings").document(document.id).delete()
-                                .addOnSuccessListener {
-                                    bookingList.removeAt(position)
-                                    notifyItemRemoved(position)
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.e("Firebase", "Error deleting document", e)
-                                }
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("Firebase", "Error finding document", e)
-                    }
-            }
-    }
+
 
 }

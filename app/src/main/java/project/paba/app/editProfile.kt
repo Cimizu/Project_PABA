@@ -65,6 +65,7 @@ class editProfile : Fragment() {
                     inputNama.setText(document.getString("nama"))
                     inputNomor.setText(document.getString("nomorTelepon"))
                     inputEmail.setText(document.getString("email"))
+                    inputPassword.setText(document.getString("password"))
                 }
             }.addOnFailureListener {
                 Toast.makeText(context, "Gagal memuat profil.", Toast.LENGTH_SHORT).show()
