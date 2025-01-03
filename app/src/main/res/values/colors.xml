@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="hijau">#4B833E</color>
+    <color name="abu">#D6D6D6</color>
+    <color name="hijau2">#6FCF35</color>
 </resources>
