@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/kotak_putih"
@@ -118,16 +119,27 @@
         app:layout_constraintTop_toBottomOf="@id/kapasitas" />
 
     <TextView
-        android:id="@+id/deskripsi"
-        android:layout_width="0dp"
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Deskripsi"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/gambarPaket"
+        app:layout_constraintTop_toBottomOf="@+id/dpLabel" />
+
+    <TextView
+        android:id="@+id/deskripsi"
+        android:layout_width="301dp"
+        android:layout_height="36dp"
         android:text="Deskripsi paket"
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gambarPaket" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <!-- Tombol Pesan -->
 

@@ -6,7 +6,8 @@
     android:id="@+id/frameContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F9F3F3"
+    android:paddingBottom="80dp"
     tools:context=".history">
 
     <LinearLayout

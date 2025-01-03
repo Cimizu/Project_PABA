@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/iv_GambarResto"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:clipToOutline="true"
-        android:background="@drawable/rounded_image"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_image"
+        android:clipToOutline="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,12 +24,16 @@
 
     <TextView
         android:id="@+id/tv_resto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="211dp"
+        android:layout_height="62dp"
         android:layout_marginStart="13dp"
-        android:textStyle="bold"
-        android:textSize="24dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="Resto Jawa Surabaya"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
         app:layout_constraintTop_toTopOf="@+id/iv_GambarResto" />
 
@@ -37,18 +41,23 @@
         android:id="@+id/ivLoc"
         android:layout_width="24dp"
         android:layout_height="44dp"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/iv_GambarResto"
         app:layout_constraintTop_toBottomOf="@+id/tv_resto"
         app:srcCompat="@drawable/loc" />
 
     <TextView
         android:id="@+id/tv_address"
+        android:layout_width="201dp"
+        android:layout_height="43dp"
         android:layout_marginStart="8dp"
-        android:layout_height="44dp"
-        android:layout_width="200dp"
-        android:textSize="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="jalan SIwalankerto no 121, Surabaya"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivLoc"
         app:layout_constraintTop_toTopOf="@+id/ivLoc" />
 
@@ -128,8 +137,8 @@
         android:id="@+id/btnDelete"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStatus"
         app:srcCompat="@drawable/trash" />
@@ -138,7 +147,7 @@
         android:id="@+id/btn_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="28dp"
         android:backgroundTint="#72b63a"
         android:text="Detail"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"
