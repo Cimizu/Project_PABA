@@ -20,11 +20,11 @@
 
     <Button
         android:id="@+id/AddResto"
-        android:layout_gravity="end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#42611E"
+        android:backgroundTint="#4B833E"
         android:text="Add Resto" />
 
 

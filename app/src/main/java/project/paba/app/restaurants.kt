@@ -21,6 +21,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class restaurants : Fragment() {
+    private var activeButton: Button? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var restaurantListRecyclerView: RecyclerView
@@ -73,18 +74,24 @@ class restaurants : Fragment() {
         val btnJakarta: Button = view.findViewById(R.id.btnJakarta)
         val btnSemua: Button = view.findViewById(R.id.btnSemua)
 
+        val defaultColor = btnSemua.currentTextColor
+        val activeColor = resources.getColor(R.color.white, null)
+
         // Listener for btnSemua
         btnSemua.setOnClickListener {
+            gantiWarnaButton(btnSemua, defaultColor, activeColor)
             filterRestaurants(null)
         }
 
         // Listener for btnSurabaya
         btnSurabaya.setOnClickListener {
+            gantiWarnaButton(btnSurabaya, defaultColor, activeColor)
             filterByLocation("Surabaya")
         }
 
         // Listener for btnJakarta
         btnJakarta.setOnClickListener {
+            gantiWarnaButton(btnJakarta, defaultColor, activeColor)
             filterByLocation("Jakarta")
         }
 
@@ -149,6 +156,17 @@ class restaurants : Fragment() {
             }
         }
         adapter.updateData(filteredList)
+    }
+
+    private fun gantiWarnaButton(selectedButton: Button, defaultColor: Int, activeColor: Int) {
+
+        activeButton?.setTextColor(defaultColor)
+        activeButton?.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
+
+        // Set active buttonnya
+        selectedButton.setTextColor(activeColor)
+        selectedButton.setBackgroundColor(resources.getColor(R.color.hijau, null))
+        activeButton = selectedButton
     }
 
     companion object {

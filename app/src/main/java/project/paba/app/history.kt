@@ -26,6 +26,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class history : Fragment() {
     // TODO: Rename and change types of parameters
+
+    private var activeButton: Button? = null
     private var param1: String? = null
     private var param2: String? = null
     private val db = FirebaseFirestore.getInstance()
@@ -66,17 +68,25 @@ class history : Fragment() {
         val btnExpired: Button = view.findViewById(R.id.btnExpired)
         val btnSemua : Button = view.findViewById(R.id.btnSemua)
 
+        val defaultColor = btnSemua.currentTextColor
+        val activeColor = resources.getColor(R.color.white, null)
+
+
+        // btn semua error
         btnSemua.setOnClickListener {
+            gantiWarnaButton(btnSemua, defaultColor, activeColor)
             filterBooking(null)
         }
 
         // Listener for btnSurabaya
         btnUsed.setOnClickListener {
+            gantiWarnaButton(btnUsed, defaultColor, activeColor)
             filterbyStatus("USED")
         }
 
         // Listener for btnJakarta
         btnExpired.setOnClickListener {
+            gantiWarnaButton(btnExpired, defaultColor, activeColor)
             filterbyStatus("EXPIRED")
         }
     }
@@ -122,6 +132,16 @@ class history : Fragment() {
             booking.statusString.equals(status, ignoreCase = true)
         }
         adapter.updateData(filteredList)
+    }
+    private fun gantiWarnaButton(selectedButton: Button, defaultColor: Int, activeColor: Int) {
+
+        activeButton?.setTextColor(defaultColor)
+        activeButton?.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
+
+        // Set active buttonnya
+        selectedButton.setTextColor(activeColor)
+        selectedButton.setBackgroundColor(resources.getColor(R.color.hijau, null))
+        activeButton = selectedButton
     }
 
 
