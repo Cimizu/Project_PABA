@@ -141,12 +141,12 @@ class konfirmasi_checkin : Fragment() {
                     val fotoo = document.getString("foto") ?:""
                     if (fotoo.isNotEmpty()) {
                         Picasso.get()
-                            .load(fotoo) // Load the image from the URL
-                            .placeholder(R.drawable.resto) // Placeholder image while loading
-                            .error(R.drawable.resto) // Error image if loading fails
+                            .load(fotoo)
+                            .placeholder(R.drawable.resto)
+                            .error(R.drawable.resto)
                             .into(kotakPutih) // Set the image into the ImageView
                     } else {
-                        // Fallback if no photo URL is provided
+                        // Fallback jika ga ad photo URL
                         kotakPutih.setImageResource(R.drawable.resto)
                     }
 

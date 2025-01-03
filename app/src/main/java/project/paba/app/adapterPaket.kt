@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
 class adapterPaket(
@@ -17,6 +18,8 @@ class adapterPaket(
     private val restoranId: String?,
     private val onReserveClick: (paketRestoran) -> Unit
 ) : RecyclerView.Adapter<adapterPaket.PaketViewHolder>() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     inner class PaketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val namaPaket: TextView = view.findViewById(R.id.namaPaket)
@@ -44,18 +47,33 @@ class adapterPaket(
         holder.harga.text = paket.harga
         holder.uangDp.text = paket.uangDp
 
-        if (paket.foto.isNotEmpty()) {
-            Picasso.get()
-                .load(paket.foto)
-                .placeholder(R.drawable.resto)
-                .error(R.drawable.resto)
-                .into(holder.gambarPaket) // Ngest image dr yang link diksh
-        } else {
-            holder.gambarPaket.setImageResource(R.drawable.resto)
-        }
+
+        db.collection("restoran").document(restoranId.toString()).collection("paket").document(paket.idPaket)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val fotoo = document.getString("foto") ?:""
+                    if (fotoo.isNotEmpty()) {
+                        Picasso.get()
+                            .load(fotoo)
+                            .placeholder(R.drawable.resto)
+                            .error(R.drawable.resto)
+                            .into(holder.gambarPaket)
+                    } else {
+                        holder.gambarPaket.setImageResource(R.drawable.resto)
+                    }
 
 
-        if (paket.namaPaket.isNullOrEmpty() || paket.harga.isNullOrEmpty()) {
+                } else {
+                    Log.e("Addpaketadapter", "Document tidak ditemukan untuk ID: ${paket.idRestoran}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("addpaketadapter", "Error mengambil data restoran: ${exception.message}", exception)
+            }
+
+
+    if (paket.namaPaket.isNullOrEmpty() || paket.harga.isNullOrEmpty()) {
 
             holder.pesanButton.isEnabled = false
             holder.pesanButton.alpha = 0.5f
