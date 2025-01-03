@@ -107,7 +107,7 @@
        android:layout_width="377dp"
        android:layout_height="70dp"
        android:layout_marginBottom="92dp"
-       android:backgroundTint="#01C000"
+       android:backgroundTint="#72b63a"
        android:text="Log In"
        android:textSize="20sp"
        app:layout_constraintBottom_toTopOf="@+id/textView6"

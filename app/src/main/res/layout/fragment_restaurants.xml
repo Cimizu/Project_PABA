@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:backgroundTint="#01C000"
+                android:backgroundTint="#72b63a"
                 android:text="Semua"
                 android:textColor="@android:color/white" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:backgroundTint="#01C000"
+                android:backgroundTint="#72b63a"
                 android:text="Surabaya"
                 android:textColor="@android:color/white" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:backgroundTint="#01C000"
+                android:backgroundTint="#72b63a"
                 android:text="Jakarta"
                 android:textColor="@android:color/white" />
         </LinearLayout>

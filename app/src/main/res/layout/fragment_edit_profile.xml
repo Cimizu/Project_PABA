@@ -109,7 +109,7 @@
                 android:layout_marginTop="20dp"
                 android:padding="10dp"
                 android:text="Simpan"
-                android:backgroundTint="#01C000"
+                android:backgroundTint="#72b63a"
                 android:textColor="@color/white" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

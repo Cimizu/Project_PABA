@@ -199,7 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="120dp"
-            android:backgroundTint="#01C000"
+            android:backgroundTint="#72b63a"
             android:text="Lihat Paket"
             android:textColor="@color/black"
             android:textSize="20sp" />

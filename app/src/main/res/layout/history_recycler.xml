@@ -137,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="#72b63a"
         android:text="Detail"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"
         app:layout_constraintTop_toTopOf="@+id/btnDelete" />

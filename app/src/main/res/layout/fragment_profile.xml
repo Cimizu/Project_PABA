@@ -82,14 +82,14 @@
         android:layout_marginTop="40dp"
         android:text="Pesanan"
         android:textSize="20sp"
-        android:backgroundTint="#01C000" />
+        android:backgroundTint="#72b63a" />
 
     <Button
         android:id="@+id/btnInputResto"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#01C000"
+        android:backgroundTint="#72b63a"
         android:text="Add Resto"
         android:textSize="20sp" />
 

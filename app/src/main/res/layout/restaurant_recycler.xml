@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="10dp"
-            android:backgroundTint="#01C000"
+            android:backgroundTint="#72b63a"
             android:text="Reservasi"
             android:textColor="@android:color/white"
             tools:layout_editor_absoluteX="271dp"

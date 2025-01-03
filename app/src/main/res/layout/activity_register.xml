@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Ready To Join Us ?"
-            android:textColor="#72B63A"
+            android:textColor="#72b63a"
             android:textSize="50dp"
             android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
         android:layout_width="377dp"
         android:layout_height="70dp"
         android:layout_marginBottom="28dp"
-        android:backgroundTint="#01C000"
+        android:backgroundTint="#72b63a"
         android:text="Register Now"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
