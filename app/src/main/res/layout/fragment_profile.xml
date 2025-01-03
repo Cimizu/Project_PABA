@@ -75,32 +75,53 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnPesanan"
-        android:layout_width="380dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Pesanan"
-        android:textSize="20sp"
-        android:backgroundTint="#72b63a" />
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/btnPesanan"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Pesanan"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:drawableLeft="@drawable/baseline_pesanan"
+            android:textSize="20sp"
+            android:backgroundTint="#f5f2f2" />
 
-    <Button
-        android:id="@+id/btnInputResto"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#72b63a"
-        android:text="Add Resto"
-        android:textSize="20sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+        android:background="#363739" />
+        <Button
+            android:id="@+id/btnInputResto"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f5f2f2"
+            android:gravity="start"
+            android:drawableLeft="@drawable/baseline_add_resto"
+            android:textColor="@color/black"
+            android:text="Add Resto"
+            android:textSize="20sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#363739" />
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f5f2f2"
+            android:textColor="@color/black"
+            android:text="Sign out"
+            android:gravity="start"
+            android:drawableLeft="@drawable/baseline_logout_24"
+            android:textSize="20sp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#C53024"
-        android:text="Sign out"
-        android:textSize="20sp" />
 
 </LinearLayout>
