@@ -79,7 +79,7 @@ class HistoryAdapter(private val bookingList: ArrayList<BookingInfo>) : Recycler
                 .setTitle("Hapus Data")
                 .setMessage("Apakah Anda yakin ingin menghapus data booking untuk ${booking.resto}?")
                 .setPositiveButton("HAPUS") { _, _ ->
-                    db.collection("bookings").whereEqualTo("name", booking.name)
+                    db.collection("bookings").whereEqualTo("id", booking.id)
                         .get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
